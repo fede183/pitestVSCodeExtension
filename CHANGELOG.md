@@ -1,9 +1,5 @@
 # Change Log
-
-All notable changes to the "pitest" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- First Commit added
 
 ## [Unreleased]
-
 - Initial release
