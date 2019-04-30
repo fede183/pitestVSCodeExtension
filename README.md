@@ -2,7 +2,7 @@
 
 ## Features
 
-For anyone how need or want to use mutation testing in java is necesary use a program like pitest. This is an extension which in build to make the execution and the result checking a lot easy.  
+For anyone how need or want to use mutation testing in java is necesary use a program like pitest. This is an extension which in build to make the execution and the result checking a lot more easy.  
 
 ## Requirements
 
