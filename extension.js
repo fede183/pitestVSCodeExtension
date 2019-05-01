@@ -8,15 +8,13 @@ const vscode = require('vscode');
 function activate(context) {
 	console.log('Congratulations, your extension "pitest" is now active!');
 
-	let disposable = vscode.commands.registerCommand('extension.buildProgram', function () {
-		const stackDirectory = __dirname + "/test/Stack"
+	const buildProgram = vscode.commands.registerCommand('extension.buildProgram', function () {
 		const terminal = vscode.window.createTerminal();
 		terminal.show();
-		terminal.sendText('cd ' + stackDirectory);
 		terminal.sendText('mvn clean install');
 	});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(buildProgram);
 }
 exports.activate = activate;
 

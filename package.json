@@ -31,5 +31,8 @@
 		"eslint": "^5.13.0",
 		"@types/node": "^10.12.21",
 		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"mocha": "^6.1.4"
 	}
 }

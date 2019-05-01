@@ -1,4 +1,4 @@
-/* global suite, test */
+/* global describe, it, before */
 
 //
 // Note: This example test is leveraging the Mocha test framework.
@@ -22,23 +22,29 @@ const rimraf = require('rimraf');
 //StackDirectory
 const stackDirectory = __dirname + "/Stack"
 
-suite("Stack Extension Tests", function() {
+describe("Stack Extension Tests", function() {
 
-	test("Stack Project directory exists", function() {
+	before(function() {
+		const terminal = vscode.window.createTerminal();
+		terminal.show();
+		terminal.sendText('cd ' + __dirname + "/Stack");	
+	});
+	
+	it("Stack Project directory exists", function() {
 		assert.ok(fs.existsSync(stackDirectory));
 	});
 
-	test("Stack Project directory structure is correct", function() {
+	it("Stack Project directory structure is correct", function() {
 		assert.ok(fs.existsSync(stackDirectory + "/src"));
 		assert.ok(fs.existsSync(stackDirectory + "/pom.xml"));
 	});
 
-	test("Stack Project src directory structure is correct", function() {
+	it("Stack Project src directory structure is correct", function() {
 		assert.ok(fs.existsSync(stackDirectory + "/src/main"));
 		assert.ok(fs.existsSync(stackDirectory + "/src/test"));
 	});
 
-	test("Stack Project build target directory exists", function() {
+	it("Stack Project build target directory exists", function() {
 		if(fs.existsSync(stackDirectory + "/target")){
 			rimraf(stackDirectory + "/target", () => null);
 		}
@@ -51,7 +57,7 @@ suite("Stack Extension Tests", function() {
 		});
 	});
 
-	test("Stack Project build target directory structure is correct", function() {
+	it("Stack Project build target directory structure is correct", function() {
 		const targetDirectory = stackDirectory + "/target";
 		Promise.all([vscode.commands.executeCommand('extension.buildProgram')]).then(
 		() => {
