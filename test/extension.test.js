@@ -24,7 +24,7 @@ const stackDirectory = __dirname + "/Stack"
 
 suite("Stack Extension Tests", function() {
 
-	test("Stack Project directory exits", function() {
+	test("Stack Project directory exists", function() {
 		assert.ok(fs.existsSync(stackDirectory));
 	});
 
@@ -38,17 +38,35 @@ suite("Stack Extension Tests", function() {
 		assert.ok(fs.existsSync(stackDirectory + "/src/test"));
 	});
 
-	test("Stack Project build", function() {
+	test("Stack Project build target directory exists", function() {
 		if(fs.existsSync(stackDirectory + "/target")){
 			rimraf(stackDirectory + "/target", () => null);
 		}
-		assert.ok(!fs.existsSync(stackDirectory + "/target"));
 
 		Promise.all([vscode.commands.executeCommand('extension.buildProgram')]).then(
 		() => {
 			assert.ok(fs.existsSync(stackDirectory + "/target"));
 			rimraf(stackDirectory + "/target", () => null);
 			assert.ok(!fs.existsSync(stackDirectory + "/target"));
+		});
+	});
+
+	test("Stack Project build target directory structure is correct", function() {
+		const targetDirectory = stackDirectory + "/target";
+		Promise.all([vscode.commands.executeCommand('extension.buildProgram')]).then(
+		() => {
+			assert.ok(fs.existsSync(targetDirectory));			
+			assert.ok(fs.existsSync(targetDirectory + "/classes"));
+			assert.ok(fs.existsSync(targetDirectory + "/coverage-reports"));
+			assert.ok(fs.existsSync(targetDirectory + "/maven-archiver"));
+			assert.ok(fs.existsSync(targetDirectory + "/maven-status"));
+			assert.ok(fs.existsSync(targetDirectory + "/site"));
+			assert.ok(fs.existsSync(targetDirectory + "/surefire-reports"));
+			assert.ok(fs.existsSync(targetDirectory + "/test-classes"));
+			assert.ok(fs.existsSync(targetDirectory + "/stackar-1.0-SNAPSHOT.jar"));
+
+			rimraf(targetDirectory, () => null);
+			assert.ok(!fs.existsSync(targetDirectory));
 		});
 	});
 });
