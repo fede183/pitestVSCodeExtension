@@ -9,9 +9,7 @@ function activate(context) {
 	console.log('Congratulations, your extension "pitest" is now active!');
 
 	const buildProgram = vscode.commands.registerCommand('extension.buildProgram', function () {
-		const terminal = vscode.window.createTerminal();
-		terminal.show();
-		terminal.sendText('mvn clean install');
+	
 	});
 
 	context.subscriptions.push(buildProgram);
