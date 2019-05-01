@@ -16,6 +16,9 @@ const vscode = require('vscode');
 //FileSystem
 const fs = require("fs");
 
+//rm -rf
+const rimraf = require('rimraf');
+
 //StackDirectory
 const stackDirectory = __dirname + "/Stack"
 
@@ -36,7 +39,16 @@ suite("Stack Extension Tests", function() {
 	});
 
 	test("Stack Project build", function() {
+		if(fs.existsSync(stackDirectory + "/target")){
+			rimraf(stackDirectory + "/target", () => null);
+		}
+		assert.ok(!fs.existsSync(stackDirectory + "/target"));
+
 		Promise.all([vscode.commands.executeCommand('extension.buildProgram')]).then(
-		() => assert.ok(fs.existsSync(stackDirectory + "/target")));
+		() => {
+			assert.ok(fs.existsSync(stackDirectory + "/target"));
+			rimraf(stackDirectory + "/target", () => null);
+			assert.ok(!fs.existsSync(stackDirectory + "/target"));
+		});
 	});
 });
