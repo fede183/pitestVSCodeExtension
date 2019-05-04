@@ -1,4 +1,4 @@
-/* global suite, test */
+/* global suite, test, teardown */
 
 //
 // Note: This example test is leveraging the Mocha test framework.
@@ -17,7 +17,10 @@ const vscode = require('vscode');
 const fs = require("fs");
 
 //StackDirectory
-const stackDirectory = __dirname + "/Stack"
+const stackDirectory = __dirname + "/Stack";
+
+//TargetDirectory
+const targetDirectory = stackDirectory + "/target";
 
 //Build Project
 const buildProgram = () => {
@@ -28,6 +31,13 @@ const buildProgram = () => {
 }
 
 suite("Stack Extension Tests", function() {
+
+	teardown("Clean", function() {
+		if(fs.existsSync(targetDirectory)){
+			const rimraf = require('rimraf');
+			rimraf(targetDirectory, () => {});
+		}
+	});
 
 	test("Stack Project directory exists", function() {
 		assert(fs.existsSync(stackDirectory));
@@ -55,7 +65,6 @@ suite("Stack Extension Tests", function() {
 	}).timeout('6s');
 
 	test("Stack Project build target directory structure is correct", function() {
-		const targetDirectory = stackDirectory + "/target";
 		buildProgram();
 		return new Promise((resolve, reject) => setTimeout(function(){
 			if(!fs.existsSync(targetDirectory)){
