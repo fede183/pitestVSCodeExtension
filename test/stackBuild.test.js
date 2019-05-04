@@ -1,10 +1,5 @@
 /* global suite, test, teardown */
 
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
-
 // The module 'assert' provides assertion methods from node
 const assert = require('assert');
 
@@ -30,7 +25,7 @@ const buildProgram = () => {
 	terminal.sendText('mvn clean install');
 }
 
-suite("Stack Extension Tests", function() {
+suite("Stack build Extension Tests", function() {
 
 	teardown("Clean", function() {
 		if(fs.existsSync(targetDirectory)){
