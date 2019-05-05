@@ -10,13 +10,13 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.buildProgram"
+		"onCommand:extension.pitest"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.buildProgram",
+				"command": "extension.pitest",
 				"title": "Pitest Extension"
 			}
 		]

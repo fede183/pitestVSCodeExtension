@@ -11,27 +11,35 @@ const vscode = require('vscode');
 //FileSystem
 const fs = require("fs");
 
-//StackDirectory
 const stackDirectory = __dirname + "/Stack";
 
-//TargetDirectory
+const emptyDirectory = stackDirectory + "/Empty";
+
 const targetDirectory = stackDirectory + "/target";
 
 //Build Project
-const buildProgram = () => {
+const buildProgram = (projectDirectory) => {
+	if (!fs.existsSync(projectDirectory + "/pom.xml")) {
+		return;
+	}
 	const terminal = vscode.window.createTerminal();
 	terminal.show();
-	terminal.sendText('cd ' + stackDirectory);
+	terminal.sendText('cd ' + projectDirectory);
 	terminal.sendText('mvn clean install');
 }
 
-suite("Stack build Extension Tests", function() {
+//Build Project
+const cleanProgram = () => {
+	if(fs.existsSync(targetDirectory)){
+		const rimraf = require('rimraf');
+		rimraf(targetDirectory, () => {});
+	}
+}
+
+suite("Stack Build Extension Tests", function() {
 
 	teardown("Clean", function() {
-		if(fs.existsSync(targetDirectory)){
-			const rimraf = require('rimraf');
-			rimraf(targetDirectory, () => {});
-		}
+		cleanProgram();
 	});
 
 	test("Stack Project directory exists", function() {
@@ -49,7 +57,7 @@ suite("Stack build Extension Tests", function() {
 	});
 
 	test("Stack Project build taget directory exists", function() {
-		buildProgram();
+		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			// Assert here.
 			if(!fs.existsSync(stackDirectory + "/target")){
@@ -60,7 +68,7 @@ suite("Stack build Extension Tests", function() {
 	}).timeout('6s');
 
 	test("Stack Project build target directory structure is correct", function() {
-		buildProgram();
+		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			if(!fs.existsSync(targetDirectory)){
 				reject("target");	
@@ -92,4 +100,30 @@ suite("Stack build Extension Tests", function() {
 			resolve();
 		  }, 5000));
 	}).timeout('6s');
+});
+
+suite("Stack Pitest Execution Extension Tests", function() {
+	teardown("Clean", function() {
+		cleanProgram();
+	});
+
+	test("Stack Project pitest directories exists", function() {
+		buildProgram(stackDirectory);
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve, reject) => setTimeout(function(){
+			// Assert here.
+			if(!fs.existsSync(targetDirectory + "/pit-reports")){
+				reject();	
+			}
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
+
+	test("Stack Project pitest in file without pom file", function() {
+		buildProgram(emptyDirectory);
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve) => setTimeout(function(){
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
 });
