@@ -34,6 +34,9 @@ const cleanProgram = () => {
 		const rimraf = require('rimraf');
 		rimraf(targetDirectory, () => {});
 	}
+	vscode.window.terminals.forEach(terminal => {
+		terminal.dispose();
+	});
 }
 
 suite("Stack Build Extension Tests", function() {
@@ -121,6 +124,13 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 	test("Stack Project pitest in file without pom file", function() {
 		buildProgram(emptyDirectory);
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve) => setTimeout(function(){
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
+
+	test("Stack Project pitest without an open terminal", function() {
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
 		return new Promise((resolve) => setTimeout(function(){
 			resolve();

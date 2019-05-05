@@ -9,10 +9,10 @@ function activate(context) {
 
 	const pitest = vscode.commands.registerCommand('extension.pitest', function () {
 		let terminal = vscode.window.activeTerminal;
-		// if (!terminal) {
-		// 	terminal = vscode.window.createTerminal();
-		// 	terminal.sendText('cd ' + __dirname);	
-		// }
+		if (!terminal) {
+			terminal = vscode.window.createTerminal();
+			terminal.sendText('cd ' + __dirname);	
+		}
 		terminal.show();
 		terminal.sendText('mvn org.pitest:pitest-maven:mutationCoverage');
 	});
