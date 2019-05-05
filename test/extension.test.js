@@ -18,7 +18,7 @@ const emptyDirectory = stackDirectory + "/Empty";
 const targetDirectory = stackDirectory + "/target";
 
 //Build Project
-const buildProgram = (projectDirectory) => {
+const buildProgram = function(projectDirectory) {
 	if (!fs.existsSync(projectDirectory + "/pom.xml")) {
 		return;
 	}

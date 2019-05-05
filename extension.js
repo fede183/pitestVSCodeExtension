@@ -13,6 +13,8 @@ function activate(context) {
 			terminal = vscode.window.createTerminal();	
 		}
 		terminal.show();
+		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path;
+		terminal.sendText('cd ' + workspaceFolder);
 		terminal.sendText('mvn org.pitest:pitest-maven:mutationCoverage');
 	});
 
