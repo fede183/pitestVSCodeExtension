@@ -59,7 +59,7 @@ suite("Stack Build Extension Tests", function() {
 		assert(fs.existsSync(stackDirectory + "/src/test"));
 	});
 
-	test("Stack Project build taget directory exists", function() {
+	test("Stack Project build target directory exists", function() {
 		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			// Assert here.
@@ -101,8 +101,8 @@ suite("Stack Build Extension Tests", function() {
 				reject("stackar-1.0-SNAPSHOT.jar");	
 			}
 			resolve();
-		  }, 5000));
-	}).timeout('6s');
+		  }, 6000));
+	}).timeout('7s');
 });
 
 suite("Stack Pitest Execution Extension Tests", function() {
