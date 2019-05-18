@@ -19,7 +19,23 @@
 				"command": "extension.pitest",
 				"title": "Pitest Extension"
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Pitest Configuration",
+			"properties": {
+				"saveResult.saveInOutPutFile": {
+					"type": "boolean",
+					"default": false,
+					"description": "If true then save the output in the outPutFile."
+				},
+				"saveResult.outPutFile": {
+					"type": ["string", "null"],
+					"default": null,
+					"description": "Specifies the file path where the output will be saved."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"postinstall": "node ./node_modules/vscode/bin/install",

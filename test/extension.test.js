@@ -152,6 +152,4 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			resolve();
 		  }, 10000));
 	}).timeout('11s');
-
-	
 });
