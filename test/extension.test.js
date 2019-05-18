@@ -17,6 +17,8 @@ const emptyDirectory = stackDirectory + "/Empty";
 
 const targetDirectory = stackDirectory + "/target";
 
+const testCommandLineResults = __dirname + '/testCommandLineResults';
+
 //Build Project
 const buildProgram = function(projectDirectory) {
 	if (!fs.existsSync(projectDirectory + "/pom.xml")) {
@@ -25,14 +27,23 @@ const buildProgram = function(projectDirectory) {
 	const terminal = vscode.window.createTerminal();
 	terminal.show();
 	terminal.sendText('cd ' + projectDirectory);
-	terminal.sendText('mvn clean install');
+	printCommandResults(terminal, 'mvn clean install');
+	//terminal.sendText('mvn clean install');
 }
 
-//Build Project
+//Print command results
+const printCommandResults = (terminal, command) => {
+	terminal.sendText(command + '> ' + testCommandLineResults);
+}
+
+//Clean Project
 const cleanProgram = () => {
 	if(fs.existsSync(targetDirectory)){
 		const rimraf = require('rimraf');
 		rimraf(targetDirectory, () => {});
+	}
+	if(fs.existsSync(testCommandLineResults)){
+		fs.unlinkSync(testCommandLineResults);
 	}
 	vscode.window.terminals.forEach(terminal => {
 		terminal.dispose();
@@ -59,20 +70,13 @@ suite("Stack Build Extension Tests", function() {
 		assert(fs.existsSync(stackDirectory + "/src/test"));
 	});
 
-	test("Stack Project build target directory exists", function() {
+	test("Stack Project build target structure is correct", function() {
 		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			// Assert here.
 			if(!fs.existsSync(stackDirectory + "/target")){
 				reject();	
 			}
-			resolve();
-		  }, 5000));
-	}).timeout('6s');
-
-	test("Stack Project build target directory structure is correct", function() {
-		buildProgram(stackDirectory);
-		return new Promise((resolve, reject) => setTimeout(function(){
 			if(!fs.existsSync(targetDirectory)){
 				reject("target");	
 			}
@@ -101,8 +105,20 @@ suite("Stack Build Extension Tests", function() {
 				reject("stackar-1.0-SNAPSHOT.jar");	
 			}
 			resolve();
-		  }, 6000));
-	}).timeout('7s');
+		  }, 5000));
+	}).timeout('6s');
+
+	test("Stack Project build no errors in build", function() {
+		buildProgram(stackDirectory);
+		return new Promise((resolve, reject) => setTimeout(function(){
+			// Assert here.
+			const fileContent = fs.readFileSync(testCommandLineResults, "utf8");
+			if(fileContent.includes("[ERROR]")){
+				reject();	
+			}
+			resolve();
+		  }, 5000));
+	}).timeout('6s');
 });
 
 suite("Stack Pitest Execution Extension Tests", function() {
@@ -118,6 +134,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			if(!fs.existsSync(targetDirectory + "/pit-reports")){
 				reject();	
 			}
+			
 			resolve();
 		  }, 10000));
 	}).timeout('11s');
@@ -136,4 +153,6 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			resolve();
 		  }, 10000));
 	}).timeout('11s');
+
+	
 });
