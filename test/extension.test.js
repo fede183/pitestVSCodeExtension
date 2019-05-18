@@ -32,7 +32,7 @@ const buildProgram = function(projectDirectory) {
 
 //Print command results
 const printCommandResults = (terminal, command) => {
-	terminal.sendText(command + '> ' + testCommandLineResults);
+	terminal.sendText(command + ' > ' + testCommandLineResults);
 }
 
 //Clean Project
@@ -44,9 +44,36 @@ const cleanProgram = () => {
 	if(fs.existsSync(testCommandLineResults)){
 		fs.unlinkSync(testCommandLineResults);
 	}
+	cleanOutputFileConfiguration();
 	vscode.window.terminals.forEach(terminal => {
 		terminal.dispose();
 	});
+}
+
+//Set output file configuration
+const setOutputFileConfiguration = () => {
+	let config = vscode.workspace.getConfiguration("saveResult");
+
+	let saveInOutPutFile = "saveInOutPutFile";
+	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
+	config.update(saveInOutPutFile, true, setAsGlobal);
+
+	let outPutFile = "outPutFile";
+	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
+	config.update(outPutFile, testCommandLineResults, setAsGlobal);
+}
+
+//Clean output file configuration
+const cleanOutputFileConfiguration = () => {
+	let config = vscode.workspace.getConfiguration("saveResult");
+
+	let saveInOutPutFile = "saveInOutPutFile";
+	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
+	config.update(saveInOutPutFile, false, setAsGlobal);
+
+	let outPutFile = "outPutFile";
+	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
+	config.update(outPutFile, null, setAsGlobal);
 }
 
 suite("Stack Build Extension Tests", function() {
@@ -104,8 +131,8 @@ suite("Stack Build Extension Tests", function() {
 				reject("stackar-1.0-SNAPSHOT.jar");	
 			}
 			resolve();
-		  }, 5000));
-	}).timeout('6s');
+		  }, 6000));
+	}).timeout('7s');
 
 	test("Stack Project build no errors in build", function() {
 		buildProgram(stackDirectory);
@@ -149,6 +176,52 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest without an open terminal", function() {
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
 		return new Promise((resolve) => setTimeout(function(){
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
+
+	test("Stack Project pitest directories exists(with output file configuration)", function() {
+		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve, reject) => setTimeout(function(){
+			// Assert here.
+			if(!fs.existsSync(targetDirectory + "/pit-reports")){
+				reject();	
+			}
+
+			const fileContent = fs.readFileSync(testCommandLineResults, "utf8");
+			if(fileContent.includes("[ERROR]")){
+				reject();	
+			}
+
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
+
+	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
+		buildProgram(emptyDirectory);
+		setOutputFileConfiguration();
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve, reject) => setTimeout(function(){
+			const fileContent = fs.readFileSync(testCommandLineResults, "utf8");
+			if(!fileContent.includes("[ERROR]")){
+				reject();	
+			}
+
+			resolve();
+		  }, 10000));
+	}).timeout('11s');
+
+	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
+		setOutputFileConfiguration();
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), 5000);
+		return new Promise((resolve, reject) => setTimeout(function(){
+			const fileContent = fs.readFileSync(testCommandLineResults, "utf8");
+			if(!fileContent.includes("[ERROR]")){
+				reject();	
+			}
+
 			resolve();
 		  }, 10000));
 	}).timeout('11s');

@@ -15,7 +15,14 @@ function activate(context) {
 		terminal.show();
 		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path;
 		terminal.sendText('cd ' + workspaceFolder);
-		terminal.sendText('mvn org.pitest:pitest-maven:mutationCoverage');
+		const saveResult = vscode.workspace.getConfiguration('saveResult');
+		const saveOutpuInFile = saveResult.get('saveInOutPutFile');
+		const outPutFile = saveResult.get('outPutFile'); 
+		const mutationCommand = 'mvn org.pitest:pitest-maven:mutationCoverage' + 
+		(saveOutpuInFile && outPutFile ? 
+		` > ${outPutFile}` : '');
+
+		terminal.sendText(mutationCommand);
 	});
 
 	context.subscriptions.push(pitest);
