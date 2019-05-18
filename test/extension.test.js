@@ -28,7 +28,6 @@ const buildProgram = function(projectDirectory) {
 	terminal.show();
 	terminal.sendText('cd ' + projectDirectory);
 	printCommandResults(terminal, 'mvn clean install');
-	//terminal.sendText('mvn clean install');
 }
 
 //Print command results
@@ -134,7 +133,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			if(!fs.existsSync(targetDirectory + "/pit-reports")){
 				reject();	
 			}
-			
+
 			resolve();
 		  }, 10000));
 	}).timeout('11s');
