@@ -66,7 +66,7 @@ const cleanOutputFileConfiguration = () => {
 	config.update(outPutFile, null, setAsGlobal);
 }
 
-const defaultTimeout = 10000;
+const defaultTimeout = 50000;
 
 const timeoutToStringTime = (timeout) => (timeout/1000) + 's';
 
@@ -91,12 +91,10 @@ suite("Stack Build Extension Tests", function() {
 		assert(fs.existsSync(stackSrcDirectory.addDir("test")));
 	});
 
-	test("Stack Project build target structure is correct", function() {
+	test("Stack Project build target structure is correct", function() {		
 		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
-			if(!fs.existsSync(stackDirectory.addDir("target"))){
-				reject();	
-			}
+			//debugger
 			if(!fs.existsSync(targetDirectory.getDir())){
 				reject("target");	
 			}
@@ -126,7 +124,7 @@ suite("Stack Build Extension Tests", function() {
 			}
 			resolve();
 		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + 5000));
+	}).timeout(timeoutToStringTime(defaultTimeout + 10000));
 
 	test("Stack Project build no errors in build", function() {
 		buildProgram(stackDirectory);
@@ -137,5 +135,5 @@ suite("Stack Build Extension Tests", function() {
 			}
 			resolve();
 		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + 5000));
+	}).timeout(timeoutToStringTime(defaultTimeout + 10000));
 });
