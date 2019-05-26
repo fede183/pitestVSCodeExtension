@@ -25,6 +25,21 @@
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/test"
 			]
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Components Tests",
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"-u",
+				"tdd",
+				"--timeout",
+				"999999",
+				"--colors",
+				"${workspaceFolder}/components/test"
+			],
+			"internalConsoleOptions": "openOnSessionStart"
 		}
 	]
 }
