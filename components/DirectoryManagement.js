@@ -1,13 +1,17 @@
-export default class DirectoryManagement {
+class DirectoryManagement {
     constructor(dir) {
         this.dir = dir;
     }
 
-    get getDir() {
+    getDir() {
         return this.dir;
     }
 
-    set addDir(fileOrDirectory) {
+    addDir(fileOrDirectory) {
         this.dir += "/" + fileOrDirectory;
     }
+}
+
+module.exports = {
+    directoryManagement: DirectoryManagement,
 }
