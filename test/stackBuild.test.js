@@ -11,36 +11,41 @@ const vscode = require('vscode');
 //FileSystem
 const fs = require("fs");
 
-const stackDirectory = __dirname + "/Stack";
+//Directory management
+const { DirectoryManagement } = require('../components/DirectoryManagement');
 
-const targetDirectory = stackDirectory + "/target";
+const dirName = new DirectoryManagement(__dirname);
 
-const testCommandLineResults = __dirname + '/testCommandLineResults';
+const stackDirectory = new DirectoryManagement(dirName.addDir("Stack"));
+
+const targetDirectory = new DirectoryManagement(stackDirectory.addDir("target"));
+
+const testCommandLineResults = new DirectoryManagement(dirName.addDir("testCommandLineResults"));
 
 //Build Project
 const buildProgram = function(projectDirectory) {
-	if (!fs.existsSync(projectDirectory + "/pom.xml")) {
+	if (!fs.existsSync(projectDirectory.addDir("pom.xml"))) {
 		return;
 	}
 	const terminal = vscode.window.createTerminal();
 	terminal.show();
-	terminal.sendText('cd ' + projectDirectory);
+	terminal.sendText('cd ' + projectDirectory.getDir());
 	printCommandResults(terminal, 'mvn clean install');
 }
 
 //Print command results
 const printCommandResults = (terminal, command) => {
-	terminal.sendText(command + ' > ' + testCommandLineResults);
+	terminal.sendText(command + ' > ' + testCommandLineResults.getDir());
 }
 
 //Clean Project
 const cleanProgram = () => {
-	if(fs.existsSync(targetDirectory)){
+	if(fs.existsSync(targetDirectory.getDir())){
 		const rimraf = require('rimraf');
-		rimraf(targetDirectory, () => {});
+		rimraf(targetDirectory.getDir(), () => {});
 	}
-	if(fs.existsSync(testCommandLineResults)){
-		fs.unlinkSync(testCommandLineResults);
+	if(fs.existsSync(testCommandLineResults.getDir())){
+		fs.unlinkSync(testCommandLineResults.getDir());
 	}
 	cleanOutputFileConfiguration();
 	vscode.window.terminals.forEach(terminal => {
@@ -61,6 +66,10 @@ const cleanOutputFileConfiguration = () => {
 	config.update(outPutFile, null, setAsGlobal);
 }
 
+const defaultTimeout = 10000;
+
+const timeoutToStringTime = (timeout) => (timeout/1000) + 's';
+
 suite("Stack Build Extension Tests", function() {
 
 	teardown("Clean", function() {
@@ -68,66 +77,65 @@ suite("Stack Build Extension Tests", function() {
 	});
 
 	test("Stack Project directory exists", function() {
-		assert(fs.existsSync(stackDirectory));
+		assert(fs.existsSync(stackDirectory.getDir()));
 	});
 
 	test("Stack Project directory structure is correct", function() {
-		assert(fs.existsSync(stackDirectory + "/src"));
-		assert(fs.existsSync(stackDirectory + "/pom.xml"));
+		assert(fs.existsSync(stackDirectory.addDir("src")));
+		assert(fs.existsSync(stackDirectory.addDir("pom.xml")));
 	});
 
 	test("Stack Project src directory structure is correct", function() {
-		assert(fs.existsSync(stackDirectory + "/src/main"));
-		assert(fs.existsSync(stackDirectory + "/src/test"));
+		const stackSrcDirectory = new DirectoryManagement(stackDirectory.addDir("src"));
+		assert(fs.existsSync(stackSrcDirectory.addDir("main")));
+		assert(fs.existsSync(stackSrcDirectory.addDir("test")));
 	});
 
 	test("Stack Project build target structure is correct", function() {
 		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
-			// Assert here.
-			if(!fs.existsSync(stackDirectory + "/target")){
+			if(!fs.existsSync(stackDirectory.addDir("target"))){
 				reject();	
 			}
-			if(!fs.existsSync(targetDirectory)){
+			if(!fs.existsSync(targetDirectory.getDir())){
 				reject("target");	
 			}
-			if(!fs.existsSync(targetDirectory + "/classes")){
+			if(!fs.existsSync(targetDirectory.addDir("classes"))){
 				reject("classes");	
 			}
-			if(!fs.existsSync(targetDirectory + "/coverage-reports")){
+			if(!fs.existsSync(targetDirectory.addDir("coverage-reports"))){
 				reject("coverage-reports");	
 			}
-			if(!fs.existsSync(targetDirectory + "/maven-archiver")){
+			if(!fs.existsSync(targetDirectory.addDir("maven-archiver"))){
 				reject("maven-archiver");	
 			}
-			if(!fs.existsSync(targetDirectory + "/maven-status")){
+			if(!fs.existsSync(targetDirectory.addDir("maven-status"))){
 				reject("maven-status");	
 			}
-			if(!fs.existsSync(targetDirectory + "/site")){
+			if(!fs.existsSync(targetDirectory.addDir("site"))){
 				reject("site");	
 			}
-			if(!fs.existsSync(targetDirectory + "/surefire-reports")){
+			if(!fs.existsSync(targetDirectory.addDir("surefire-reports"))){
 				reject("surefire-reports");	
 			}
-			if(!fs.existsSync(targetDirectory + "/test-classes")){
+			if(!fs.existsSync(targetDirectory.addDir("test-classes"))){
 				reject("test-classes");	
 			}
-			if(!fs.existsSync(targetDirectory + "/stackar-1.0-SNAPSHOT.jar")){
+			if(!fs.existsSync(targetDirectory.addDir("stackar-1.0-SNAPSHOT.jar"))){
 				reject("stackar-1.0-SNAPSHOT.jar");	
 			}
 			resolve();
-		  }, 6000));
-	}).timeout('7s');
+		  }, defaultTimeout));
+	}).timeout(timeoutToStringTime(defaultTimeout + 5000));
 
 	test("Stack Project build no errors in build", function() {
 		buildProgram(stackDirectory);
 		return new Promise((resolve, reject) => setTimeout(function(){
-			// Assert here.
-			const fileContent = fs.readFileSync(testCommandLineResults, "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 			if(fileContent.includes("[ERROR]")){
 				reject();	
 			}
 			resolve();
-		  }, 5000));
-	}).timeout('6s');
+		  }, defaultTimeout));
+	}).timeout(timeoutToStringTime(defaultTimeout + 5000));
 });

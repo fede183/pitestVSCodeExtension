@@ -1,6 +1,11 @@
 class DirectoryManagement {
     constructor(dir) {
-        this.dir = dir;
+        if(dir instanceof DirectoryManagement){
+            this.dir = dir.getDir();
+        }
+        else {
+            this.dir = dir;
+        }
     }
 
     getDir() {
@@ -8,10 +13,10 @@ class DirectoryManagement {
     }
 
     addDir(fileOrDirectory) {
-        this.dir += "/" + fileOrDirectory;
+        return this.dir + "/" + fileOrDirectory;
     }
 }
 
 module.exports = {
-    directoryManagement: DirectoryManagement,
+    DirectoryManagement: DirectoryManagement,
 }
