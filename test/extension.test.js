@@ -11,14 +11,16 @@ const fs = require("fs");
 //Test Module
 const { stackDirectory,
 	emptyDirectory,
-    targetDirectory,
-    testCommandLineResults,
-    buildProgram,
+  	targetDirectory,
+  	testCommandLineResults,
+  	buildProgram,
 	cleanProgram,
 	setOutputFileConfiguration,
-	defaultTimeout,
+	defaultLargeTimeout,
 	defaultSmallTimeout,
-    timeoutToStringTime } = require('./testModule');
+	defaultMediumTimeout,
+	timeoutForMedium,
+	timeoutForLarge, } = require('./testModule');
 
 suite("Stack Pitest Execution Extension Tests", function() {
 	setup("Clean", function() {
@@ -38,28 +40,28 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			}
 
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout + 1000));
+		  }, defaultMediumTimeout));
+	}).timeout(timeoutForMedium);
 
 	test("Stack Project pitest in file without pom file", function() {
 		buildProgram(emptyDirectory);
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
 		return new Promise((resolve) => setTimeout(function(){
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout + 1000));
+		  }, defaultMediumTimeout));
+	}).timeout(timeoutForMedium);
 
 	test("Stack Project pitest without an open terminal", function() {
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
 		return new Promise((resolve) => setTimeout(function(){
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout));
+		  }, defaultMediumTimeout));
+	}).timeout(timeoutForMedium);
 
 	test("Stack Project pitest directories exists(with output file configuration)", function() {
 		buildProgram(stackDirectory);
-		setOutputFileConfiguration();
-		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
+		setTimeout(() => setOutputFileConfiguration(), defaultSmallTimeout);
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultMediumTimeout);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
 				reject();	
@@ -71,13 +73,13 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			}
 
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout));
+		  }, defaultLargeTimeout));
+	}).timeout(timeoutForLarge);
 
 	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
 		buildProgram(emptyDirectory);
-		setOutputFileConfiguration();
-		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
+		setTimeout(() => setOutputFileConfiguration(), defaultSmallTimeout);
+		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultMediumTimeout);
 		return new Promise((resolve, reject) => setTimeout(function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 			if(!fileContent.includes("[ERROR]")){
@@ -85,8 +87,8 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			}
 
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout));
+		  }, defaultLargeTimeout));
+	}).timeout(timeoutForLarge);
 
 	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
 		setOutputFileConfiguration();
@@ -98,6 +100,6 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			}
 
 			resolve();
-		  }, defaultTimeout));
-	}).timeout(timeoutToStringTime(defaultTimeout + defaultSmallTimeout));
+		  }, defaultMediumTimeout));
+	}).timeout(timeoutForMedium);
 });

@@ -13,11 +13,14 @@ function activate(context) {
 			terminal = vscode.window.createTerminal();	
 		}
 		terminal.show();
-		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path;
+		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path.startsWith("/c:") ? 
+		vscode.workspace.workspaceFolders[0].uri.path.substring(1) : 
+		vscode.workspace.workspaceFolders[0].uri.path;
+
 		terminal.sendText('cd ' + workspaceFolder);
 		const saveResult = vscode.workspace.getConfiguration('saveResult');
 		const saveOutpuInFile = saveResult.get('saveInOutPutFile');
-		const outPutFile = saveResult.get('outPutFile'); 
+		const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
 		const mutationCommand = 'mvn org.pitest:pitest-maven:mutationCoverage' + 
 		(saveOutpuInFile && outPutFile ? 
 		` > ${outPutFile}` : '');
