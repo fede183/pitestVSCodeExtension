@@ -21,7 +21,9 @@ const { stackDirectory,
     buildProgram,
     cleanProgram,
     defaultSmallTimeout,
-	timeoutForSmall } = require('./testModule');
+		timeoutForSmall,
+		defaultMediumTimeout,
+		timeoutForMedium } = require('./testModule');
 
 suite("Stack Build Extension Tests", function() {
 
@@ -87,6 +89,6 @@ suite("Stack Build Extension Tests", function() {
 				reject();	
 			}
 			resolve();
-		  }, defaultSmallTimeout));
-	}).timeout(timeoutForSmall);
+		  }, defaultMediumTimeout));
+	}).timeout(timeoutForMedium);
 });

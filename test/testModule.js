@@ -76,7 +76,7 @@ const setOutputFileConfiguration = () => {
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
 
-const defaultSmallTimeout = 20000;
+const defaultSmallTimeout = 18000;
 
 const defaultMediumTimeout = defaultSmallTimeout*2;
 
@@ -84,11 +84,13 @@ const defaultLargeTimeout = defaultSmallTimeout*3;
 
 const timeoutToStringTime = (timeout) => (timeout/1000) + 's';
 
-const timeoutForSmall = timeoutToStringTime(defaultSmallTimeout + 20000);
+const extraTimeForVerifications = 100;
 
-const timeoutForMedium = timeoutToStringTime(defaultMediumTimeout + 20000);
+const timeoutForSmall = timeoutToStringTime(defaultSmallTimeout + extraTimeForVerifications);
 
-const timeoutForLarge = timeoutToStringTime(defaultLargeTimeout + 20000);
+const timeoutForMedium = timeoutToStringTime(defaultMediumTimeout + extraTimeForVerifications);
+
+const timeoutForLarge = timeoutToStringTime(defaultLargeTimeout + extraTimeForVerifications);
 
 module.exports = {
     dirName,
@@ -105,6 +107,7 @@ module.exports = {
 	defaultSmallTimeout,
 	defaultMediumTimeout,
 	timeoutToStringTime,
+	timeoutForSmall,
 	timeoutForMedium,
 	timeoutForLarge,
 }
