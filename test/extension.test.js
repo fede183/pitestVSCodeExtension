@@ -81,7 +81,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		setTimeout(() => setOutputFileConfiguration(), defaultSmallTimeout);
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultMediumTimeout);
 		return new Promise((resolve, reject) => setTimeout(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject();	
 			}
@@ -94,7 +94,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		setOutputFileConfiguration();
 		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
 		return new Promise((resolve, reject) => setTimeout(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject();	
 			}

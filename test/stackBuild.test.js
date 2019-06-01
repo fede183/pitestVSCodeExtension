@@ -1,4 +1,4 @@
-/* global suite, test, teardown */
+/* global suite, test, teardown, setup */
 
 // The module 'assert' provides assertion methods from node
 const assert = require('assert');
@@ -22,7 +22,10 @@ const { stackDirectory,
 		timeoutForMedium } = require('./testModule');
 
 suite("Stack Build Extension Tests", function() {
-
+    setup("Clean", function() {
+		cleanProgram();
+    });
+    
 	teardown("Clean", function() {
 		cleanProgram();
 	});
