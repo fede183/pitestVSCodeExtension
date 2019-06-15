@@ -5,6 +5,7 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+
 		{
 			"name": "Extension",
 			"type": "extensionHost",
@@ -24,6 +25,17 @@
 				"${workspaceFolder}/test/Stack",
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/test"
+			]
+		},
+		{
+			"name": "Stack Build Tests",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"${workspaceFolder}/test/Stack",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/test/stackTest"
 			]
 		},
 		{

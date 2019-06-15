@@ -76,7 +76,7 @@ const setOutputFileConfiguration = () => {
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
 
-const defaultSmallTimeout = 18000;
+const defaultSmallTimeout = 30000;
 
 const defaultMediumTimeout = defaultSmallTimeout*2;
 

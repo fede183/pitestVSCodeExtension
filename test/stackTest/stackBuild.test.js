@@ -8,7 +8,7 @@ const assert = require('assert');
 const fs = require("fs");
 
 //Directory management
-const { DirectoryManagement } = require('../components/DirectoryManagement');
+const { DirectoryManagement } = require('../../components/DirectoryManagement');
 
 //Test Module
 const { stackDirectory,
@@ -19,7 +19,7 @@ const { stackDirectory,
     defaultSmallTimeout,
 		timeoutForSmall,
 		defaultMediumTimeout,
-		timeoutForMedium } = require('./testModule');
+		timeoutForMedium } = require('../testModule');
 
 suite("Stack Build Extension Tests", function() {
     setup("Clean", function() {
