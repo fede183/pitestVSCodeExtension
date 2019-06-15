@@ -20,7 +20,7 @@ const { stackDirectory,
 	defaultSmallTimeout,
 	defaultMediumTimeout,
 	timeoutForMedium,
-	timeoutForLarge, } = require('./testModule');
+	timeoutForLarge, } = require('../testModule');
 
 suite("Stack Pitest Execution Extension Tests", function() {
 	setup("Clean", function() {

@@ -24,7 +24,7 @@
 			"args": [
 				"${workspaceFolder}/test/Stack",
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/test"
+				"--extensionTestsPath=${workspaceFolder}/test/extensionTest"
 			]
 		},
 		{
