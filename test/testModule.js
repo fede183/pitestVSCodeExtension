@@ -20,7 +20,10 @@ const targetDirectory = new DirectoryManagement(stackDirectory.addDir("target"))
 const testCommandLineResults = new DirectoryManagement(dirName.addDir("testCommandLineResults"));
 
 //Build Project
-const buildProgram = function(projectDirectory) {
+const buildProgram = /**
+ * @param {{ addDir: (arg0: string) => import("fs").PathLike; getDir: () => string; }} projectDirectory
+ */
+ function(projectDirectory) {
 	if (!fs.existsSync(projectDirectory.addDir("pom.xml"))) {
 		return;
 	}
@@ -31,6 +34,10 @@ const buildProgram = function(projectDirectory) {
 }
 
 //Print command results
+/**
+ * @param {import("vscode").Terminal} terminal
+ * @param {string} command
+ */
 const printCommandResults = (terminal, command) => {
 	terminal.sendText(command + ' > ' + testCommandLineResults.getDir());
 }
@@ -82,6 +89,9 @@ const defaultMediumTimeout = defaultSmallTimeout*2;
 
 const defaultLargeTimeout = defaultSmallTimeout*3;
 
+/**
+ * @param {number} timeout
+ */
 const timeoutToStringTime = (timeout) => (timeout/1000) + 's';
 
 const extraTimeForVerifications = 100;
@@ -91,6 +101,30 @@ const timeoutForSmall = timeoutToStringTime(defaultSmallTimeout + extraTimeForVe
 const timeoutForMedium = timeoutToStringTime(defaultMediumTimeout + extraTimeForVerifications);
 
 const timeoutForLarge = timeoutToStringTime(defaultLargeTimeout + extraTimeForVerifications);
+
+/**
+ * @param {string} filePath
+ * @param {() => void} program
+ */
+const executeWhenFileIsAvailable = (filePath, program) => {
+	var delInterval = setInterval(checkIfFileIsAvailable, 1000);
+	function checkIfFileIsAvailable() {
+		if(fs.existsSync(filePath)){
+			fs.open(filePath, 'r+', function(err, fd){
+				if (err && err.code === 'EBUSY'){
+					//do nothing till next loop
+				} else if (err && err.code === 'ENOENT'){
+					clearInterval(delInterval);
+				} else {
+					fs.close(fd, function(){
+						clearInterval(delInterval);
+						program();
+					});
+				}
+			});
+		}
+	}	
+}
 
 module.exports = {
     dirName,
@@ -110,4 +144,5 @@ module.exports = {
 	timeoutForSmall,
 	timeoutForMedium,
 	timeoutForLarge,
+	executeWhenFileIsAvailable,
 }

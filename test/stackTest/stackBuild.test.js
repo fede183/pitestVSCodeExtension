@@ -18,17 +18,17 @@ const { stackDirectory,
     cleanProgram,
     defaultSmallTimeout,
 		timeoutForSmall,
-		defaultMediumTimeout,
-		timeoutForMedium } = require('../testModule');
+		timeoutForMedium,
+		executeWhenFileIsAvailable } = require('../testModule');
 
 suite("Stack Build Extension Tests", function() {
     setup("Clean", function() {
 		cleanProgram();
     });
-    
+
 	teardown("Clean", function() {
 		cleanProgram();
-	});
+    });
 
 	test("Stack Project directory exists", function() {
 		assert(fs.existsSync(stackDirectory.getDir()));
@@ -82,12 +82,14 @@ suite("Stack Build Extension Tests", function() {
 
 	test("Stack Project build no errors in build", function() {
 		buildProgram(stackDirectory);
-		return new Promise((resolve, reject) => setTimeout(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
-			if(fileContent.includes("[ERROR]")){
-				reject();	
-			}
-			resolve();
-		  }, defaultMediumTimeout));
+		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
+			testCommandLineResults.getDir(), 
+			function(){
+				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+				if(fileContent.includes("[ERROR]")){
+					reject();	
+				}
+				resolve();
+			}));
 	}).timeout(timeoutForMedium);
 });
