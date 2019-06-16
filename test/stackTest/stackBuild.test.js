@@ -16,8 +16,9 @@ const { stackDirectory,
     testCommandLineResults,
     buildProgram,
     cleanProgram,
-	timeoutForSmall,
-	executeWhenBuildIsDone, } = require('../testModule');
+	executeWhenBuildIsDone, } = require('../testModules/testModule');
+
+const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
 suite("Stack Build Extension Tests", function() {
     setup("Clean", function() {
@@ -68,5 +69,5 @@ suite("Stack Build Extension Tests", function() {
 				
 				resolve();
 		  }));
-	}).timeout(timeoutForSmall);
+	}).timeout(defaultTestTimeout);
 });

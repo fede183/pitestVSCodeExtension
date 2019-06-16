@@ -7,9 +7,11 @@ const vscode = require('vscode');
 const fs = require("fs");
 
 //Directory management
-const { DirectoryManagement } = require('../components/DirectoryManagement');
+const { DirectoryManagement } = require('../../components/DirectoryManagement');
 
-const dirName = new DirectoryManagement(__dirname);
+const dirOfTest = __dirname.replace("\\testModules", "").replace("/testModules", "");
+
+const dirName = new DirectoryManagement(dirOfTest);
 
 const stackDirectory = new DirectoryManagement(dirName.addDir("Stack"));
 
@@ -82,25 +84,6 @@ const setOutputFileConfiguration = () => {
 	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
-
-const defaultSmallTimeout = 50000;
-
-const defaultMediumTimeout = defaultSmallTimeout*2;
-
-const defaultLargeTimeout = defaultSmallTimeout*3;
-
-/**
- * @param {number} timeout
- */
-const timeoutToStringTime = (timeout) => (timeout/1000) + 's';
-
-const extraTimeForVerifications = 100;
-
-const timeoutForSmall = timeoutToStringTime(defaultSmallTimeout + extraTimeForVerifications);
-
-const timeoutForMedium = timeoutToStringTime(defaultMediumTimeout + extraTimeForVerifications);
-
-const timeoutForLarge = timeoutToStringTime(defaultLargeTimeout + extraTimeForVerifications);
 
 /**
  * @param {string} filePath
@@ -182,13 +165,6 @@ module.exports = {
     cleanProgram,
     cleanOutputFileConfiguration,
     setOutputFileConfiguration,
-    defaultLargeTimeout,
-	defaultSmallTimeout,
-	defaultMediumTimeout,
-	timeoutToStringTime,
-	timeoutForSmall,
-	timeoutForMedium,
-	timeoutForLarge,
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
 	conditionForSaveResultSet,
