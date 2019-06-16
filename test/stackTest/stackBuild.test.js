@@ -17,7 +17,7 @@ const { stackDirectory,
     buildProgram,
     cleanProgram,
 	timeoutForSmall,
-	executeWhenConditionIsReachAndTestFileIsComplete, } = require('../testModule');
+	executeWhenBuildIsDone, } = require('../testModule');
 
 suite("Stack Build Extension Tests", function() {
     setup("Clean", function() {
@@ -46,15 +46,7 @@ suite("Stack Build Extension Tests", function() {
 	test("Stack Project build no errors in build", function() {		
 		buildProgram(stackDirectory);
 
-		const conditionOfBuild = () => {
-			const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
-			"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
-			return fs.existsSync(targetDirectory.getDir()) && 
-			directories.every((directory) => fs.existsSync(targetDirectory.addDir(directory)));
-		}
-
-		return new Promise((resolve, reject) => executeWhenConditionIsReachAndTestFileIsComplete(
-			conditionOfBuild, 
+		return new Promise((resolve, reject) => executeWhenBuildIsDone( 
 			function(){
 				const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
 				"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];

@@ -145,7 +145,31 @@ const executeWhenConditionIsReach = (condition, program) => {
 const executeWhenConditionIsReachAndTestFileIsComplete = (condition, program) => {
 	executeWhenConditionIsReach(condition, 
 		() => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program));
-}; 
+};
+
+const targetDirectoryStructIsCorrect = (directories) => {
+	return fs.existsSync(targetDirectory.getDir()) && 
+	directories.every((directory) => fs.existsSync(targetDirectory.addDir(directory)));
+} 
+
+const executeWhenBuildIsDone = (program) => {
+	const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
+	"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
+	executeWhenConditionIsReachAndTestFileIsComplete(() => targetDirectoryStructIsCorrect(directories), 
+	program);
+}
+
+const executeWhenPitestIsDoneForEmpty = (program) => {
+	const directories = ["pit-reports"];
+	executeWhenConditionIsReach(() => targetDirectoryStructIsCorrect(directories), program);
+}
+
+const executeWhenPitestIsDone = (program) => {
+	const directories = ["pit-reports"];
+
+	executeWhenConditionIsReachAndTestFileIsComplete(() => targetDirectoryStructIsCorrect(directories), 
+	program);
+}
 
 module.exports = {
     dirName,
@@ -168,5 +192,7 @@ module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
 	conditionForSaveResultSet,
-	executeWhenConditionIsReachAndTestFileIsComplete,
+	executeWhenBuildIsDone,
+	executeWhenPitestIsDone,
+	executeWhenPitestIsDoneForEmpty,
 }
