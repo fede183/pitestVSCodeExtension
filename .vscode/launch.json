@@ -17,6 +17,17 @@
 			]
 		},
 		{
+			"name": "All Tests",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"${workspaceFolder}/test/Stack",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/test"
+			]
+		},
+		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",

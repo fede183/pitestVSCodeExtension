@@ -22,8 +22,7 @@ const { stackDirectory,
 	executeWhenConditionIsReach,
 	conditionForSaveResultSet,
 	executeWhenBuildIsDone,
-	executeWhenPitestIsDone,
-	executeWhenPitestIsDoneForEmpty, } = require('../testModule');
+	executeWhenPitestIsDone, } = require('../testModule');
 
 suite("Stack Pitest Execution Extension Tests", function() {
 	setup("Clean", function() {
@@ -44,15 +43,6 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 			resolve();
 		  }));
-	}).timeout(timeoutForMedium);
-
-	test("Stack Project pitest in file without pom file", function() {
-		buildProgram(emptyDirectory);
-		vscode.commands.executeCommand('extension.pitest');
-		return new Promise((resolve) => executeWhenPitestIsDoneForEmpty(
-			function(){
-				resolve();
-			}));
 	}).timeout(timeoutForMedium);
 
 	test("Stack Project pitest directories exists(with output file configuration)", function() {
