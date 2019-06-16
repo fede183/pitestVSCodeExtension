@@ -16,10 +16,9 @@ const { stackDirectory,
     testCommandLineResults,
     buildProgram,
     cleanProgram,
-    defaultSmallTimeout,
-		timeoutForSmall,
-		timeoutForMedium,
-		executeWhenFileIsAvailable } = require('../testModule');
+	timeoutForSmall,
+	executeWhenFileIsAvailable,
+	executeWhenConditionIsReach } = require('../testModule');
 
 suite("Stack Build Extension Tests", function() {
     setup("Clean", function() {
@@ -45,51 +44,40 @@ suite("Stack Build Extension Tests", function() {
 		assert(fs.existsSync(stackSrcDirectory.addDir("test")));
 	});
 
-	test("Stack Project build target structure is correct", function() {		
+	test("Stack Project build no errors in build", function() {		
 		buildProgram(stackDirectory);
-		return new Promise((resolve, reject) => setTimeout(function(){
-			//debugger
-			if(!fs.existsSync(targetDirectory.getDir())){
-				reject("target");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("classes"))){
-				reject("classes");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("coverage-reports"))){
-				reject("coverage-reports");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("maven-archiver"))){
-				reject("maven-archiver");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("maven-status"))){
-				reject("maven-status");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("site"))){
-				reject("site");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("surefire-reports"))){
-				reject("surefire-reports");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("test-classes"))){
-				reject("test-classes");	
-			}
-			if(!fs.existsSync(targetDirectory.addDir("stackar-1.0-SNAPSHOT.jar"))){
-				reject("stackar-1.0-SNAPSHOT.jar");	
-			}
-			resolve();
-		  }, defaultSmallTimeout));
-	}).timeout(timeoutForSmall);
 
-	test("Stack Project build no errors in build", function() {
-		buildProgram(stackDirectory);
-		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
-			testCommandLineResults.getDir(), 
+		const conditionOfBuild = () => {
+			const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
+			"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
+			return fs.existsSync(targetDirectory.getDir()) && 
+			directories.every((directory) => fs.existsSync(targetDirectory.addDir(directory)));
+		}
+
+		return new Promise((resolve, reject) => executeWhenConditionIsReach(
+			conditionOfBuild, 
+			() => executeWhenFileIsAvailable(
+				testCommandLineResults.getDir(),
 			function(){
+				const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
+				"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
+
+				if(!fs.existsSync(targetDirectory.getDir())){
+					reject("target");	
+				}
+
+				directories.forEach(directory => {
+					if(!fs.existsSync(targetDirectory.addDir(directory))){
+						reject(directory);	
+					}
+				});
+				
 				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 				if(fileContent.includes("[ERROR]")){
 					reject();	
 				}
+				
 				resolve();
-			}));
-	}).timeout(timeoutForMedium);
+		  })));
+	}).timeout(timeoutForSmall);
 });
