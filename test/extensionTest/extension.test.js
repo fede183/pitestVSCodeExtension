@@ -20,7 +20,10 @@ const { stackDirectory,
 	defaultSmallTimeout,
 	defaultMediumTimeout,
 	timeoutForMedium,
-	timeoutForLarge, } = require('../testModule');
+	timeoutForLarge,
+	executeWhenFileIsAvailable,
+	executeWhenConditionIsReach,
+	conditionForSaveResultSet, } = require('../testModule');
 
 suite("Stack Pitest Execution Extension Tests", function() {
 	setup("Clean", function() {
@@ -61,45 +64,51 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest directories exists(with output file configuration)", function() {
 		buildProgram(stackDirectory);
 		setTimeout(() => setOutputFileConfiguration(), defaultSmallTimeout);
-		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultMediumTimeout);
-		return new Promise((resolve, reject) => setTimeout(function(){
-			if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
-				reject();	
-			}
+		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		return new Promise((resolve, reject) => executeWhenConditionIsReach(
+			() => fs.existsSync(targetDirectory.addDir("pit-reports")), 
+			() => executeWhenFileIsAvailable(
+			testCommandLineResults.getDir(), 
+			function(){
+				if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
+					reject();	
+				}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
-			if(fileContent.includes("[ERROR]")){
-				reject();	
-			}
+				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+				if(fileContent.includes("[ERROR]")){
+					reject();	
+				}
 
-			resolve();
-		  }, defaultLargeTimeout));
+				resolve();
+		  })));
 	}).timeout(timeoutForLarge);
 
 	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
 		buildProgram(emptyDirectory);
-		setTimeout(() => setOutputFileConfiguration(), defaultSmallTimeout);
-		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultMediumTimeout);
-		return new Promise((resolve, reject) => setTimeout(function(){
+		setOutputFileConfiguration();
+		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
+			testCommandLineResults.getDir(), function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject();	
 			}
 
 			resolve();
-		  }, defaultLargeTimeout));
+		  }));
 	}).timeout(timeoutForLarge);
 
 	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
 		setOutputFileConfiguration();
-		setTimeout(() => vscode.commands.executeCommand('extension.pitest'), defaultSmallTimeout);
-		return new Promise((resolve, reject) => setTimeout(function(){
+		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
+			testCommandLineResults.getDir(), function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject();	
 			}
 
 			resolve();
-		  }, defaultMediumTimeout));
+		  }));
 	}).timeout(timeoutForMedium);
 });

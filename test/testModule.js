@@ -83,7 +83,7 @@ const setOutputFileConfiguration = () => {
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
 
-const defaultSmallTimeout = 30000;
+const defaultSmallTimeout = 50000;
 
 const defaultMediumTimeout = defaultSmallTimeout*2;
 
@@ -126,6 +126,22 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 	}	
 }
 
+const conditionForSaveResultSet = () => {
+	const saveResult = vscode.workspace.getConfiguration('saveResult');
+	const saveOutpuInFile = saveResult.get('saveInOutPutFile');
+	return saveOutpuInFile;
+}
+
+const executeWhenConditionIsReach = (condition, program) => {
+	var delInterval = setInterval(checkConditionIsReach, 1000);
+	function checkConditionIsReach() {
+		if(condition()){
+			clearInterval(delInterval);
+			program();
+		}
+	}
+}
+
 module.exports = {
     dirName,
     stackDirectory,
@@ -145,4 +161,6 @@ module.exports = {
 	timeoutForMedium,
 	timeoutForLarge,
 	executeWhenFileIsAvailable,
+	executeWhenConditionIsReach,
+	conditionForSaveResultSet,
 }
