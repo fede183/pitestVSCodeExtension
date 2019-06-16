@@ -142,6 +142,11 @@ const executeWhenConditionIsReach = (condition, program) => {
 	}
 }
 
+const executeWhenConditionIsReachAndTestFileIsComplete = (condition, program) => {
+	executeWhenConditionIsReach(condition, 
+		() => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program));
+}; 
+
 module.exports = {
     dirName,
     stackDirectory,
@@ -163,4 +168,5 @@ module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
 	conditionForSaveResultSet,
+	executeWhenConditionIsReachAndTestFileIsComplete,
 }
