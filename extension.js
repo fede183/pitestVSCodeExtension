@@ -8,11 +8,9 @@ function activate(context) {
 	console.log('Congratulations, your extension "pitest" is now active!');
 
 	const pitest = vscode.commands.registerCommand('extension.pitest', function () {
-		let terminal = vscode.window.activeTerminal;
-		if (!terminal) {
-			terminal = vscode.window.createTerminal();	
-		}
+		const terminal = vscode.window.activeTerminal ? vscode.window.activeTerminal : vscode.window.createTerminal();
 		terminal.show();
+		
 		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path.startsWith("/c:") ? 
 		vscode.workspace.workspaceFolders[0].uri.path.substring(1) : 
 		vscode.workspace.workspaceFolders[0].uri.path;

@@ -18,5 +18,5 @@ class DirectoryManagement {
 }
 
 module.exports = {
-    DirectoryManagement: DirectoryManagement,
+    DirectoryManagement,
 }

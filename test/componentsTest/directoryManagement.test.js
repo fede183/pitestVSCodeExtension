@@ -1,6 +1,6 @@
 /* global suite, test */
 
-const { DirectoryManagement } = require('../DirectoryManagement');
+const { DirectoryManagement } = require('../../components/DirectoryManagement');
 
 // The module 'assert' provides assertion methods from node
 const assert = require('assert');
