@@ -1,6 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+
+const { SaveResultsProperty } = require('./components/SaveResultsProperty');
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -16,13 +19,8 @@ function activate(context) {
 		vscode.workspace.workspaceFolders[0].uri.path;
 
 		terminal.sendText('cd ' + workspaceFolder);
-		const saveResult = vscode.workspace.getConfiguration('saveResult');
-		const saveOutpuInFile = saveResult.get('saveInOutPutFile');
-		const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
-		const mutationCommand = 'mvn org.pitest:pitest-maven:mutationCoverage' + 
-		(saveOutpuInFile && outPutFile ? 
-		` > ${outPutFile}` : '');
-
+		const saveResultsProperty = new SaveResultsProperty();
+		const mutationCommand = 'mvn org.pitest:pitest-maven:mutationCoverage' + saveResultsProperty.getTerminalProperty()
 		terminal.sendText(mutationCommand);
 	});
 
