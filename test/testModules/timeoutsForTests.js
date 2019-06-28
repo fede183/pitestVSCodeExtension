@@ -1,4 +1,4 @@
-const defaultTimeout = 100000;
+const defaultTimeout = 1000000;
 
 /**
  * @param {number} timeout
