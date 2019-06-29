@@ -9,7 +9,9 @@ const assert = require('assert');
 const vscode = require('vscode');
 
 //Test Module
-const { setOutputFileConfiguration, executeWhenConditionIsReach, conditionForSaveResultSet} = require('../testModules/testModule');
+const { setOutputFileConfiguration } = require('../testModules/testModule');
+
+const { executeWhenConditionIsReach, conditionForSaveResultSet} = require('../testModules/executeWhenModule');
 
 suite("SaveResultsProperty tests", function() {
 	test("SaveResults by default", function() {

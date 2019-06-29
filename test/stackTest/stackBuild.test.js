@@ -12,11 +12,13 @@ const { DirectoryManagement } = require('../../components/DirectoryManagement');
 
 //Test Module
 const { stackDirectory,
-    targetDirectory,
-    testCommandLineResults,
-    buildProgram,
-    cleanProgram,
-	executeWhenBuildIsDone, } = require('../testModules/testModule');
+  	targetDirectory,
+  	testCommandLineResults, } = require('../testModules/testDirModule');
+
+const { buildProgram,
+		cleanProgram, } = require('../testModules/testModule');
+
+const { executeWhenBuildIsDone } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 

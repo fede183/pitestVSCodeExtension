@@ -12,15 +12,16 @@ const fs = require("fs");
 const { stackDirectory,
 	emptyDirectory,
   	targetDirectory,
-  	testCommandLineResults,
-  	buildProgram,
-	cleanProgram,
-	setOutputFileConfiguration,
-	executeWhenFileIsAvailable,
-	executeWhenConditionIsReach,
-	conditionForSaveResultSet,
-	executeWhenBuildIsDone,
-	executeWhenPitestIsDone, } = require('../testModules/testModule');
+  	testCommandLineResults, } = require('../testModules/testDirModule');
+
+const { buildProgram,
+		cleanProgram,
+		setOutputFileConfiguration, } = require('../testModules/testModule');
+
+		const {executeWhenFileIsAvailable,
+			executeWhenBuildIsDone,
+			executeWhenPitestIsDone,
+			executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
@@ -48,7 +49,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest directories exists(with output file configuration)", function() {
 		buildProgram(stackDirectory);
 		executeWhenBuildIsDone(() => setOutputFileConfiguration());
-		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function(){
 				if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
@@ -67,7 +68,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
 		buildProgram(emptyDirectory);
 		setOutputFileConfiguration();
-		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
 			testCommandLineResults.getDir(), function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
@@ -81,7 +82,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
 		setOutputFileConfiguration();
-		executeWhenConditionIsReach(conditionForSaveResultSet, () => vscode.commands.executeCommand('extension.pitest'));
+		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenFileIsAvailable(
 			testCommandLineResults.getDir(), function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
