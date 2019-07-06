@@ -64,7 +64,7 @@ suite("Stack Build Extension Tests", function() {
 					}
 				});
 				
-				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 				if(fileContent.includes("[ERROR]")){
 					reject();	
 				}

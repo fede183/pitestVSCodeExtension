@@ -49,6 +49,8 @@ const executeWhenConditionIsReach = (condition, program) => {
 	}
 }
 
+const executeWhenTestCommandLineResultFileIsAvailable = (program) => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program);
+
 const executeWhenConditionIsReachAndTestFileIsComplete = (condition, program) => {
 	executeWhenConditionIsReach(condition, 
 		() => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program));
@@ -90,4 +92,5 @@ module.exports = {
 	executeWhenPitestIsDone,
 	executeWhenPitestIsDoneForEmpty,
 	executeWhenForSaveResultSet,
+	executeWhenTestCommandLineResultFileIsAvailable,
 }
