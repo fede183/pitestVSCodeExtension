@@ -70,7 +70,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 			if(!fileContent.includes("[ERROR]")){
-				reject();	
+				reject("testCommandLineResults");	
 			}
 
 			resolve();

@@ -18,7 +18,7 @@ const { stackDirectory,
 const { buildProgram,
 		cleanProgram, } = require('../testModules/testModule');
 
-const { executeWhenTestCommandLineResultFileIsAvailable } = require('../testModules/executeWhenModule');
+const { executeWhenTestCommandLineResultFileIsAvailable, executeWhenBuildIsDone } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
@@ -49,7 +49,7 @@ suite("Stack Build Extension Tests", function() {
 	test("Stack Project build no errors in build", function() {		
 		buildProgram(stackDirectory);
 
-		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable( 
+		return new Promise((resolve, reject) => executeWhenBuildIsDone(() => executeWhenTestCommandLineResultFileIsAvailable( 
 			function(){
 				const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
 				"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
@@ -66,10 +66,10 @@ suite("Stack Build Extension Tests", function() {
 				
 				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 				if(fileContent.includes("[ERROR]")){
-					reject();	
+					reject("testCommandLineResults");	
 				}
 				
 				resolve();
-		  }));
+		  })));
 	}).timeout(defaultTestTimeout);
 });
