@@ -1,4 +1,4 @@
-/* global suite, test */
+/* global suite, test, setup, teardown */
 
 const { SaveResultsProperty } = require('../../components/SaveResultsProperty');
 
@@ -9,28 +9,51 @@ const assert = require('assert');
 const vscode = require('vscode');
 
 //Test Module
-const { setOutputFileConfiguration } = require('../testModules/testModule');
+const { setOutputFileConfiguration, cleanOutputFileConfiguration } = require('../testModules/testModule');
 
 const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 
-const testSaveResultsProperty = () => {
+const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
+
+const testSaveResultsProperty = (resolve, reject, haveAOutPut) => {
 	const saveResultsProperty = new SaveResultsProperty();
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
 	const saveOutpuInFile = saveResult.get('saveInOutPutFile');
 	const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
 	const terminalProperty = saveOutpuInFile && outPutFile ? `> ${outPutFile}` : '';
-	assert.equal(saveOutpuInFile, saveResultsProperty.isSaveOutpuInFile());
-	assert.equal(outPutFile, saveResultsProperty.getSaveOutpuInFile());
-	assert.equal(terminalProperty, saveResultsProperty.getTerminalProperty());
+	if(saveOutpuInFile !== saveResultsProperty.isSaveOutpuInFile()){
+		reject("saveOutpuInFile");
+	}
+	if(outPutFile !== saveResultsProperty.getSaveOutpuInFile()){	
+		reject("outPutFile");
+	}
+	if(terminalProperty !== saveResultsProperty.getTerminalProperty()){
+		reject("terminalProperty");
+	}
+	if(haveAOutPut){ 
+		if(!outPutFile){
+			reject("outPutFile not empty");
+		}
+	}
+	resolve();
 };
 
 suite("SaveResultsProperty tests", function() {
-	test("SaveResults by default", function() {
-		testSaveResultsProperty();
+	setup("Clean", function() {
+		cleanOutputFileConfiguration();
 	});
+
+	teardown("Clean", function() {
+		cleanOutputFileConfiguration();
+	});
+
+	test("SaveResults by default", function() {
+		return new Promise((resolve, reject) => testSaveResultsProperty(resolve, reject));
+	}).timeout(defaultTestTimeout);
 
 	test("SaveResults set", function() {
 		setOutputFileConfiguration();
-		executeWhenForSaveResultSet(testSaveResultsProperty);
-	});
+		return new Promise((resolve, reject) => 
+		executeWhenForSaveResultSet(() => testSaveResultsProperty(resolve, reject, true)));
+	}).timeout(defaultTestTimeout);
 });

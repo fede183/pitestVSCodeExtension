@@ -1,30 +1,40 @@
-/* global suite, test */
-
+/* global suite, test, setup, teardown */
 
 const { SaveResultsProperty } = require('../../components/SaveResultsProperty');
 const { getAllProperties } = require('../../components/ResultsProperties');
 
-// The module 'assert' provides assertion methods from node
-const assert = require('assert');
-
 //Test Module
-const { setOutputFileConfiguration } = require('../testModules/testModule');
+const { setOutputFileConfiguration, cleanOutputFileConfiguration } = require('../testModules/testModule');
 
 const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 
-suite("ResultsProperty tests", function() {
-	test("SaveResults by default", function() {
-		const saveResultsProperty = new SaveResultsProperty();
+const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
-		assert.equal(getAllProperties(), " " + saveResultsProperty.getTerminalProperty());
+const testSaveResultsProperty = (resolve, reject) => {
+	const saveResultsProperty = new SaveResultsProperty();
+
+	if(getAllProperties() !== " " + saveResultsProperty.getTerminalProperty()){
+		reject();
+	}
+
+	resolve();
+}
+
+suite("ResultsProperty tests", function() {
+	setup("Clean", function() {
+		cleanOutputFileConfiguration();
 	});
+
+	teardown("Clean", function() {
+		cleanOutputFileConfiguration();
+	});
+
+	test("SaveResults by default", () => {
+		return new Promise((resolve, reject) => testSaveResultsProperty(resolve, reject));
+	}).timeout(defaultTestTimeout);
 
 	test("SaveResults set", function() {
 		setOutputFileConfiguration();
-		executeWhenForSaveResultSet(() => {
-			const saveResultsProperty = new SaveResultsProperty();
-	
-			assert.equal(getAllProperties(), " " + saveResultsProperty.getTerminalProperty());
-		});
-	});
+		return new Promise((resolve, reject) => executeWhenForSaveResultSet(() => testSaveResultsProperty(resolve, reject)));
+	}).timeout(defaultTestTimeout);
 });

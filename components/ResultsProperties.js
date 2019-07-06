@@ -1,9 +1,11 @@
 const { SaveResultsProperty } = require('./SaveResultsProperty');
 
-const listOfProperties = [new SaveResultsProperty()];
-
-const getAllProperties = () => listOfProperties.map((property) => property.getTerminalProperty())
-    .reduce((acumulator, actualProperty) => `${acumulator} ${actualProperty}`, "");
+const getAllProperties = () => { 
+    const listOfProperties = [new SaveResultsProperty()];
+    
+    return listOfProperties.map((property) => property.getTerminalProperty())
+    .reduce((acumulator, actualProperty) => `${acumulator} ${actualProperty}`, "")
+};
      
 module.exports = {
     getAllProperties,
