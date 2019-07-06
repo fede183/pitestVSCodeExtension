@@ -1,4 +1,4 @@
-/* global suite, test, teardown, setup */
+/* global suite, test, setup, suiteTeardown */
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -31,7 +31,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		cleanProgram();
 	});
 
-	teardown("Clean", function() {
+	suiteTeardown("Clean", function() {
 		cleanProgram();
 	});
 

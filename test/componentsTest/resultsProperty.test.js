@@ -1,4 +1,4 @@
-/* global suite, test, setup, teardown */
+/* global suite, test, setup, suiteTeardown */
 
 const { SaveResultsProperty } = require('../../components/SaveResultsProperty');
 const { getAllProperties } = require('../../components/ResultsProperties');
@@ -10,6 +10,10 @@ const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModul
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
+/**
+ * @param {{ (value?: any): void; (value?: any): void; (): void; }} resolve
+ * @param {{ (reason?: any): void; (reason?: any): void; (): void; }} reject
+ */
 const testSaveResultsProperty = (resolve, reject) => {
 	const saveResultsProperty = new SaveResultsProperty();
 
@@ -25,7 +29,7 @@ suite("ResultsProperty tests", function() {
 		cleanOutputFileConfiguration();
 	});
 
-	teardown("Clean", function() {
+	suiteTeardown("Clean", function() {
 		cleanOutputFileConfiguration();
 	});
 

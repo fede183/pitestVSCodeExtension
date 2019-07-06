@@ -1,9 +1,6 @@
-/* global suite, test, setup, teardown */
+/* global suite, test, setup, suiteTeardown */
 
 const { SaveResultsProperty } = require('../../components/SaveResultsProperty');
-
-// The module 'assert' provides assertion methods from node
-const assert = require('assert');
 
 //vscode module
 const vscode = require('vscode');
@@ -15,6 +12,11 @@ const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModul
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
+/**
+ * @param {{ (value?: any): void; (value?: any): void; (): void; }} resolve
+ * @param {{ (reason?: any): void; (reason?: any): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; }} reject
+ * @param {boolean} [haveAOutPut]
+ */
 const testSaveResultsProperty = (resolve, reject, haveAOutPut) => {
 	const saveResultsProperty = new SaveResultsProperty();
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
@@ -43,7 +45,7 @@ suite("SaveResultsProperty tests", function() {
 		cleanOutputFileConfiguration();
 	});
 
-	teardown("Clean", function() {
+	suiteTeardown("Clean", function() {
 		cleanOutputFileConfiguration();
 	});
 
