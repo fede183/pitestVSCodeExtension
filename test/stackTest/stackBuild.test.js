@@ -18,7 +18,7 @@ const { stackDirectory,
 const { buildProgram,
 		cleanProgram, } = require('../testModules/testModule');
 
-const { executeWhenBuildIsDone } = require('../testModules/executeWhenModule');
+const { executeWhenTestCommandLineResultFileIsAvailable } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
@@ -49,7 +49,7 @@ suite("Stack Build Extension Tests", function() {
 	test("Stack Project build no errors in build", function() {		
 		buildProgram(stackDirectory);
 
-		return new Promise((resolve, reject) => executeWhenBuildIsDone( 
+		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable( 
 			function(){
 				const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
 				"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
