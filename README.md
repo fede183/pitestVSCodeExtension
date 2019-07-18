@@ -26,6 +26,6 @@ TODO
 
 This first iteration of the project will conclude when the extension allow to any project how has his pom file configuration to support pitest to execute the program and see the results in Visual Studio Code.
 
-### 1.0.0
+### 0.0.2
 
 Initial release of pitest extension for Visual Studio Code
