@@ -1,9 +1,7 @@
 /* global suite, test, setup, suiteTeardown */
 
 const { MavenExecutionProperty } = require('../../Properties/ExecutionProperties/MavenExecutionProperty');
-
-//vscode module
-const vscode = require('vscode');
+const { getAllProperties } = require('../../Properties/ExecutionProperties/ExecutionProperties');
 
 //Test Module
 const { setMavenExecutionConfiguration, cleanMavenExecutionConfiguration } = require('../testModules/setProperties');
@@ -14,16 +12,11 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
 const testMavenExecutionProperty = (resolve, reject) => {
 	const mavenExecutionProperty = new MavenExecutionProperty();
-	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
-	const customDirectory = mavenExecution.get('customDirectory');
-	const terminalProperty = customDirectory ? customDirectory : "mvn";
-	
-	if(customDirectory !== mavenExecutionProperty.getCustomDirectory()){
-		reject("customDirectory");
+
+	if(getAllProperties() !== " " + mavenExecutionProperty.getTerminalProperty()){
+		reject();
 	}
-	if(terminalProperty !== mavenExecutionProperty.getTerminalProperty()){
-		reject("terminalProperty");
-	}
+
 	resolve();
 };
 
@@ -41,7 +34,7 @@ suite("ExecutionProperty tests", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("MavenExecution set", function() {
-		setMavenExecutionConfiguration();
+		setMavenExecutionConfiguration("C:\Users\Federico\opt\mvn\bin");
 		return new Promise((resolve, reject) => 
 		executeWhenForMavenExecutionSet(() => testMavenExecutionProperty(resolve, reject)));
 	}).timeout(defaultTestTimeout);

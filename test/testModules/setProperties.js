@@ -41,12 +41,12 @@ const cleanMavenExecutionConfiguration = () => {
 }
 
 //Set maven execution configuration
-const setMavenExecutionConfiguration = () => {
+const setMavenExecutionConfiguration = (customDirectory) => {
     let config = vscode.workspace.getConfiguration("mavenExecution");
 
-	let customDirectory = "customDirectory";
-	let setAsGlobal = config.inspect(customDirectory).workspaceValue == undefined;
-	config.update(customDirectory, "C:\Users\Federico\opt\mvn\bin", setAsGlobal);
+	let customDirectoryProperty = "customDirectory";
+	let setAsGlobal = config.inspect(customDirectoryProperty).workspaceValue == undefined;
+	config.update(customDirectoryProperty, customDirectory, setAsGlobal);
 }
 
 module.exports = {
