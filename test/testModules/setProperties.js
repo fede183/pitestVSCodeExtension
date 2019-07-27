@@ -46,7 +46,7 @@ const setMavenExecutionConfiguration = () => {
 
 	let customDirectoryProperty = "customDirectory";
 	let setAsGlobal = config.inspect(customDirectoryProperty).workspaceValue == undefined;
-	config.update(customDirectoryProperty, "C:\Users\Federico\opt\mvn\bin", setAsGlobal);
+	config.update(customDirectoryProperty, "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn", setAsGlobal);
 }
 
 module.exports = {

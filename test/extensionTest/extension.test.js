@@ -53,7 +53,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		buildProgram(stackDirectory);
 		executeWhenBuildIsDone(() => setOutputFileConfiguration());
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
-		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function(){
 
 				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
@@ -94,19 +94,19 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 	test("Stack Project maven execution custom directory", function() {
 		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setMavenExecutionConfiguration();
 		executeWhenBuildIsDone(() => {
-				setOutputFileConfiguration();
-				executeWhenForSaveResultSet(() => {
-					setMavenExecutionConfiguration();
-					executeWhenForMavenExecutionSet(() => {
-						vscode.commands.executeCommand('extension.pitest');
-					});
+			executeWhenForSaveResultSet(() => {
+				executeWhenForMavenExecutionSet(() => {
+					vscode.commands.executeCommand('extension.pitest');
 				});
-			}
-		);
-		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
-			if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
-				reject();	
+			});
+		});
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			if(fileContent.includes("[ERROR]")){
+				reject("testCommandLineResults");	
 			}
 
 			resolve();
