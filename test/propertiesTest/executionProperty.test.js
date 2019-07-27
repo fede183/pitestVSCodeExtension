@@ -34,7 +34,7 @@ suite("ExecutionProperty tests", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("MavenExecution set", function() {
-		setMavenExecutionConfiguration("C:\Users\Federico\opt\mvn\bin");
+		setMavenExecutionConfiguration();
 		return new Promise((resolve, reject) => 
 		executeWhenForMavenExecutionSet(() => testMavenExecutionProperty(resolve, reject)));
 	}).timeout(defaultTestTimeout);

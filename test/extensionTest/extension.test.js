@@ -17,13 +17,14 @@ const { stackDirectory,
 const { buildProgram, cleanProgram, } = require('../testModules/testModule');
 
 		
-const {	setOutputFileConfiguration } = require('../testModules/setProperties');
+const {	setOutputFileConfiguration, setMavenExecutionConfiguration, } = require('../testModules/setProperties');
 
 const {
 	executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenForSaveResultSet,
-	executeWhenTestCommandLineResultFileIsAvailable, } = require('../testModules/executeWhenModule');
+	executeWhenTestCommandLineResultFileIsAvailable,
+	executeWhenForMavenExecutionSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
@@ -84,6 +85,27 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
 			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
 			if(!fileContent.includes("[ERROR]")){
+				reject();	
+			}
+
+			resolve();
+		  }));
+	}).timeout(defaultTestTimeout);
+
+	test("Stack Project maven execution custom directory", function() {
+		buildProgram(stackDirectory);
+		executeWhenBuildIsDone(() => {
+				setOutputFileConfiguration();
+				executeWhenForSaveResultSet(() => {
+					setMavenExecutionConfiguration();
+					executeWhenForMavenExecutionSet(() => {
+						vscode.commands.executeCommand('extension.pitest');
+					});
+				});
+			}
+		);
+		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
+			if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
 				reject();	
 			}
 

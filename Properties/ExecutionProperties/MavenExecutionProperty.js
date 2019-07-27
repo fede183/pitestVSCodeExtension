@@ -5,7 +5,7 @@ class MavenExecutionProperty {
     constructor() {
         const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
         const customDirectory = mavenExecution.get('customDirectory');
-        const terminalProperty = customDirectory ? customDirectory : "mvn";			
+        const terminalProperty = customDirectory ? customDirectory + ".cmd" : "mvn";			
         
         this.customDirectory = customDirectory;
         this.terminalProperty = terminalProperty;

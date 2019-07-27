@@ -10,7 +10,7 @@ const fs = require("fs");
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
 
 //Directories
-const { cleanOutputFileConfiguration } = require('./setProperties');
+const { cleanOutputFileConfiguration, cleanMavenExecutionConfiguration } = require('./setProperties');
 
 //Build Project
 const buildProgram = /**
@@ -44,7 +44,10 @@ const cleanProgram = () => {
 	if(fs.existsSync(testCommandLineResults.getDir())){
 		fs.unlinkSync(testCommandLineResults.getDir());
 	}
+	
 	cleanOutputFileConfiguration();
+	cleanMavenExecutionConfiguration();
+
 	vscode.window.terminals.forEach(terminal => {
 		terminal.dispose();
 	});

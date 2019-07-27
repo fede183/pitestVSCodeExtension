@@ -3,6 +3,7 @@
 const vscode = require('vscode');
 
 const { SaveResultsProperty } = require('./Properties/ResultProperties/SaveResultsProperty');
+const { MavenExecutionProperty } = require('./Properties/ExecutionProperties/MavenExecutionProperty');
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -20,7 +21,11 @@ function activate(context) {
 
 		terminal.sendText('cd ' + workspaceFolder);
 		const saveResultsProperty = new SaveResultsProperty();
-		const mutationCommand = 'mvn org.pitest:pitest-maven:mutationCoverage' + saveResultsProperty.getTerminalProperty()
+		const executionProperties = new MavenExecutionProperty();
+		const mutationCommand = 
+		executionProperties.getTerminalProperty() + 
+		' org.pitest:pitest-maven:mutationCoverage' + 
+		saveResultsProperty.getTerminalProperty()
 		terminal.sendText(mutationCommand);
 	});
 
