@@ -39,6 +39,12 @@ const conditionForSaveResultSet = () => {
 	return saveOutpuInFile;
 }
 
+const conditionForMavenExecutionSet = () => {
+	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
+	const customDirectory = mavenExecution.get('customDirectory');
+	return customDirectory !== null;
+}
+
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);
 	function checkConditionIsReach() {
@@ -84,6 +90,10 @@ const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
 }
 
+const executeWhenForMavenExecutionSet = (program) => {
+	executeWhenConditionIsReach(conditionForMavenExecutionSet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -93,4 +103,5 @@ module.exports = {
 	executeWhenPitestIsDoneForEmpty,
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
+	executeWhenForMavenExecutionSet,
 }

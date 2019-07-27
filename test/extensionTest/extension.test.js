@@ -14,15 +14,16 @@ const { stackDirectory,
   	targetDirectory,
   	testCommandLineResults, } = require('../testModules/testDirModule');
 
-const { buildProgram,
-		cleanProgram,
-		setOutputFileConfiguration, } = require('../testModules/testModule');
+const { buildProgram, cleanProgram, } = require('../testModules/testModule');
 
-		const {
-			executeWhenBuildIsDone,
-			executeWhenPitestIsDone,
-			executeWhenForSaveResultSet,
-			executeWhenTestCommandLineResultFileIsAvailable, } = require('../testModules/executeWhenModule');
+		
+const {	setOutputFileConfiguration } = require('../testModules/setProperties');
+
+const {
+	executeWhenBuildIsDone,
+	executeWhenPitestIsDone,
+	executeWhenForSaveResultSet,
+	executeWhenTestCommandLineResultFileIsAvailable, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 

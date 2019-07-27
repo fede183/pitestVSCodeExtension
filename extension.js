@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 
-const { SaveResultsProperty } = require('./components/SaveResultsProperty');
+const { SaveResultsProperty } = require('./Properties/ResultProperties/SaveResultsProperty');
 
 /**
  * @param {vscode.ExtensionContext} context

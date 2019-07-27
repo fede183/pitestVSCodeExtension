@@ -9,6 +9,9 @@ const fs = require("fs");
 //Directories
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
 
+//Directories
+const { cleanOutputFileConfiguration } = require('./setProperties');
+
 //Build Project
 const buildProgram = /**
  * @param {{ addDir: (arg0: string) => import("fs").PathLike; getDir: () => string; }} projectDirectory
@@ -47,36 +50,8 @@ const cleanProgram = () => {
 	});
 }
 
-//Clean output file configuration
-const cleanOutputFileConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("saveResult");
-
-	let saveInOutPutFile = "saveInOutPutFile";
-	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
-	config.update(saveInOutPutFile, false, setAsGlobal);
-
-	let outPutFile = "outPutFile";
-	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
-	config.update(outPutFile, null, setAsGlobal);
-}
-
-//Set output file configuration
-const setOutputFileConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("saveResult");
-
-	let saveInOutPutFile = "saveInOutPutFile";
-	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
-	config.update(saveInOutPutFile, true, setAsGlobal);
-
-	let outPutFile = "outPutFile";
-	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
-	config.update(outPutFile, testCommandLineResults, setAsGlobal);
-}
-
 module.exports = {
     buildProgram,
     printCommandResults,
     cleanProgram,
-    cleanOutputFileConfiguration,
-    setOutputFileConfiguration,
 }

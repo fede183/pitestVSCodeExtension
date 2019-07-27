@@ -33,6 +33,11 @@
 					"type": ["string", "null"],
 					"default": null,
 					"description": "Specifies the file path where the output will be saved."
+				},
+				"mavenExecution.customDirectory": {
+					"type": ["string", "null"],
+					"default": null,
+					"description": "Specifies the maven directory, if is empty try to use MAVEN_HOME."
 				}
 			}
 		}

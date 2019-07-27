@@ -1,12 +1,12 @@
 /* global suite, test, setup, suiteTeardown */
 
-const { SaveResultsProperty } = require('../../components/SaveResultsProperty');
+const { SaveResultsProperty } = require('../../Properties/ResultProperties/SaveResultsProperty');
 
 //vscode module
 const vscode = require('vscode');
 
 //Test Module
-const { setOutputFileConfiguration, cleanOutputFileConfiguration } = require('../testModules/testModule');
+const { setOutputFileConfiguration, cleanOutputFileConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 

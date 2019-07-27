@@ -60,20 +60,16 @@
 				"--extensionTestsPath=${workspaceFolder}/test/componentsTest"
 			]
 		},
-		// {
-		// 	"type": "node",
-		// 	"request": "launch",
-		// 	"name": "Components Tests",
-		// 	"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-		// 	"args": [
-		// 		"-u",
-		// 		"tdd",
-		// 		"--timeout",
-		// 		"999999",
-		// 		"--colors",
-		// 		"${workspaceFolder}/components/test"
-		// 	],
-		// 	"internalConsoleOptions": "openOnSessionStart"
-		// }		
+		{
+			"name": "Properties Tests",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"${workspaceFolder}/test/Stack",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/test/propertiesTest"
+			]
+		},	
 	]
 }
