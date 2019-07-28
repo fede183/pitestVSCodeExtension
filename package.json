@@ -24,11 +24,6 @@
 			"type": "object",
 			"title": "Pitest Configuration",
 			"properties": {
-				"saveResult.saveInOutPutFile": {
-					"type": "boolean",
-					"default": false,
-					"description": "If true then save the output in the outPutFile."
-				},
 				"saveResult.outPutFile": {
 					"type": ["string", "null"],
 					"default": null,

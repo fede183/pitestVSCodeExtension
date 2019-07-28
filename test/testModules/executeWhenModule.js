@@ -35,8 +35,8 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 
 const conditionForSaveResultSet = () => {
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
-	const saveOutpuInFile = saveResult.get('saveInOutPutFile');
-	return saveOutpuInFile;
+	const outPutFile = saveResult.get('outPutFile');
+	return outPutFile !== null;
 }
 
 const conditionForMavenExecutionSet = () => {

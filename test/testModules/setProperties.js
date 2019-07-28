@@ -9,12 +9,8 @@ const { testCommandLineResults } = require('./testDirModule');
 const cleanOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
-	let saveInOutPutFile = "saveInOutPutFile";
-	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
-	config.update(saveInOutPutFile, false, setAsGlobal);
-
 	let outPutFile = "outPutFile";
-	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
+	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
 	config.update(outPutFile, null, setAsGlobal);
 }
 
@@ -22,12 +18,8 @@ const cleanOutputFileConfiguration = () => {
 const setOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
-	let saveInOutPutFile = "saveInOutPutFile";
-	let setAsGlobal = config.inspect(saveInOutPutFile).workspaceValue == undefined;
-	config.update(saveInOutPutFile, true, setAsGlobal);
-
 	let outPutFile = "outPutFile";
-	setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
+	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
 
