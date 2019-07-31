@@ -25,11 +25,11 @@ const testSaveResultsProperty = (resolve, reject) => {
 }
 
 suite("ResultsProperty tests", function() {
-	setup("Clean", function() {
+	setup(function() {
 		cleanOutputFileConfiguration();
 	});
 
-	suiteTeardown("Clean", function() {
+	suiteTeardown(function() {
 		cleanOutputFileConfiguration();
 	});
 

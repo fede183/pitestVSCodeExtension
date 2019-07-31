@@ -28,11 +28,11 @@ const testMavenExecutionProperty = (resolve, reject) => {
 };
 
 suite("MavenExecutionProperty tests", function() {
-	setup("Clean", function() {
+	setup(function() {
 		cleanMavenExecutionConfiguration();
 	});
 
-	suiteTeardown("Clean", function() {
+	suiteTeardown(function() {
 		cleanMavenExecutionConfiguration();
 	});
 

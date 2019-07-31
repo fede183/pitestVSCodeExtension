@@ -29,11 +29,11 @@ const {
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
 suite("Stack Pitest Execution Extension Tests", function() {
-	setup("Clean", function() {
+	setup(function() {
 		cleanProgram();
 	});
 
-	suiteTeardown("Clean", function() {
+	suiteTeardown(function() {
 		cleanProgram();
 	});
 

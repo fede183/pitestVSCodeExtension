@@ -38,11 +38,11 @@ const testSaveResultsProperty = (resolve, reject, haveAOutPut) => {
 };
 
 suite("SaveResultsProperty tests", function() {
-	setup("Clean", function() {
+	setup(function() {
 		cleanOutputFileConfiguration();
 	});
 
-	suiteTeardown("Clean", function() {
+	suiteTeardown(function() {
 		cleanOutputFileConfiguration();
 	});
 
