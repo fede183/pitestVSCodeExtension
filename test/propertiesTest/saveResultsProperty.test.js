@@ -1,6 +1,6 @@
 /* global suite, test, setup, suiteTeardown */
 
-const { SaveResultsProperty } = require('../../Properties/ResultProperties/SaveResultsProperty');
+const { getSaveResultsPropertyValue, getTerminalSaveResultsProperty } = require('../../Properties/ResultProperties/SaveResultsProperty');
 
 //vscode module
 const vscode = require('vscode');
@@ -12,21 +12,17 @@ const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModul
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
-/**
- * @param {{ (value?: any): void; (value?: any): void; (): void; }} resolve
- * @param {{ (reason?: any): void; (reason?: any): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; }} reject
- * @param {boolean} [haveAOutPut]
- */
 const testProperty = (resolve, reject, haveAOutPut) => {
-	const saveResultsProperty = new SaveResultsProperty();
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
-	const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
+	const value = saveResult.get('value');
+	const outPutFile = value ? value.dir : value;
 	const terminalProperty = outPutFile ? `> ${outPutFile}` : '';
-	
-	if(outPutFile !== saveResultsProperty.getSaveOutpuInFile()){	
-		reject("outPutFile");
+
+	if(outPutFile !== getSaveResultsPropertyValue()){	
+		debugger
+		reject("saveResult");
 	}
-	if(terminalProperty !== saveResultsProperty.getTerminalProperty()){
+	if(terminalProperty !== getTerminalSaveResultsProperty()){
 		reject("terminalProperty");
 	}
 	if(haveAOutPut){ 

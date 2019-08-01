@@ -1,6 +1,6 @@
 /* global suite, test, setup, suiteTeardown */
 
-const { WithHistoryProperty } = require('../../Properties/PostProperties/WithHistoryProperty');
+const { getWithHistoryPropertyValue, getTerminalWithHistoryProperty } = require('../../Properties/PostProperties/WithHistoryProperty');
 
 //vscode module
 const vscode = require('vscode');
@@ -12,20 +12,15 @@ const { executeWhenForWithHistorySet } = require('../testModules/executeWhenModu
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
-/**
- * @param {{ (value?: any): void; (value?: any): void; (): void; }} resolve
- * @param {{ (reason?: any): void; (reason?: any): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; }} reject
- */
 const testProperty = (resolve, reject) => {
-	const withHistoryProperty = new WithHistoryProperty();
 	const withHistory = vscode.workspace.getConfiguration('withHistory');
 	const value = withHistory.get('value');
 	const terminalProperty = value ? '-DwithHistory' : '';
 	
-	if(value !== withHistoryProperty.getWithHistory()){	
-		reject("outPutFile");
+	if(value !== getWithHistoryPropertyValue()){	
+		reject("withHistory");
 	}
-	if(terminalProperty !== withHistoryProperty.getTerminalProperty()){
+	if(terminalProperty !== getTerminalWithHistoryProperty()){
 		reject("terminalProperty");
 	}
 	resolve();

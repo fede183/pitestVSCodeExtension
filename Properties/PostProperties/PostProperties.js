@@ -1,9 +1,9 @@
-const { WithHistoryProperty } = require('./WithHistoryProperty');
+const { getTerminalWithHistoryProperty } = require('./WithHistoryProperty');
 
 const { getAllProperties } = require('../PropertiesCollectionExecution');
 
 const getAllPostProperties = () => { 
-    const listOfProperties = [new WithHistoryProperty()];
+    const listOfProperties = [getTerminalWithHistoryProperty];
         
     return getAllProperties(listOfProperties);
 };      

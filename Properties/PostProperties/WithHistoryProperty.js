@@ -1,25 +1,14 @@
-//vscode module
-const vscode = require('vscode');
+const { getValue, getTerminalProperty } = require('../Property');
 
-class WithHistoryProperty {
-    constructor() {
-        const withHistory = vscode.workspace.getConfiguration('withHistory');
-		const value = withHistory.get('value');
-        const terminalProperty = value ? '-DwithHistory' : '';			
-        
-        this.withHistory = value;
-        this.terminalProperty = terminalProperty;
-    }
+const getWithHistoryPropertyValue = () => {
+    return getValue('withHistory', 'value');
+}
 
-    getWithHistory(){
-        return this.withHistory;
-    }
-
-    getTerminalProperty(){
-        return this.terminalProperty;
-    }
+const getTerminalWithHistoryProperty = () => {
+    return getTerminalProperty('withHistory', 'value', value => value ? '-DwithHistory' : '');
 }
 
 module.exports = {
-    WithHistoryProperty,
+    getWithHistoryPropertyValue,
+    getTerminalWithHistoryProperty,
 }

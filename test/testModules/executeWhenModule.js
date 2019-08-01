@@ -35,13 +35,13 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 
 const conditionForSaveResultSet = () => {
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
-	const outPutFile = saveResult.get('outPutFile');
+	const outPutFile = saveResult.get('value');
 	return outPutFile !== null;
 }
 
 const conditionForMavenExecutionSet = () => {
 	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
-	const customDirectory = mavenExecution.get('customDirectory');
+	const customDirectory = mavenExecution.get('value');
 	return customDirectory !== null;
 }
 

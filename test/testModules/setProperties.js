@@ -5,7 +5,7 @@ const { testCommandLineResults } = require('./testDirModule');
 const cleanOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
-	let outPutFile = "outPutFile";
+	let outPutFile = "value";
 	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
 	config.update(outPutFile, null, setAsGlobal);
 }
@@ -13,7 +13,7 @@ const cleanOutputFileConfiguration = () => {
 const setOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
-	let outPutFile = "outPutFile";
+	let outPutFile = "value";
 	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
@@ -21,7 +21,7 @@ const setOutputFileConfiguration = () => {
 const cleanMavenExecutionConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("mavenExecution");
 
-	let customDirectory = "customDirectory";
+	let customDirectory = "value";
 	let setAsGlobal = config.inspect(customDirectory).workspaceValue == undefined;
 	config.update(customDirectory, null, setAsGlobal);
 }
@@ -29,7 +29,7 @@ const cleanMavenExecutionConfiguration = () => {
 const setMavenExecutionConfiguration = () => {
     let config = vscode.workspace.getConfiguration("mavenExecution");
 
-	let customDirectoryProperty = "customDirectory";
+	let customDirectoryProperty = "value";
 	let setAsGlobal = config.inspect(customDirectoryProperty).workspaceValue == undefined;
 	config.update(customDirectoryProperty, "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn", setAsGlobal);
 }

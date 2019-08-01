@@ -1,25 +1,14 @@
-//vscode module
-const vscode = require('vscode');
+const { getValue, getTerminalProperty } = require('../Property');
 
-class MavenExecutionProperty {
-    constructor() {
-        const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
-        const customDirectory = mavenExecution.get('customDirectory');
-        const terminalProperty = customDirectory ? customDirectory + ".cmd" : "mvn";			
-        
-        this.customDirectory = customDirectory;
-        this.terminalProperty = terminalProperty;
-    }
+const getMavenExecutionPropertyValue = () => {
+    return getValue('mavenExecution', 'value');
+}
 
-    getCustomDirectory(){
-        return this.customDirectory;
-    }
-
-    getTerminalProperty(){
-        return this.terminalProperty;
-    }
+const getTerminalMavenExecutionProperty = () => {
+    return getTerminalProperty('mavenExecution', 'value', value => value ? value + ".cmd" : "mvn");
 }
 
 module.exports = {
-    MavenExecutionProperty,
+    getMavenExecutionPropertyValue,
+    getTerminalMavenExecutionProperty,
 }

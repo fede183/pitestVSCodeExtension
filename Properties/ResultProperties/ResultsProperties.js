@@ -1,9 +1,9 @@
-const { SaveResultsProperty } = require('./SaveResultsProperty');
+const { getTerminalSaveResultsProperty } = require('./SaveResultsProperty');
 
 const { getAllProperties } = require('../PropertiesCollectionExecution');
 
 const getAllResultsProperties = () => { 
-    const listOfProperties = [new SaveResultsProperty()];
+    const listOfProperties = [getTerminalSaveResultsProperty];
         
     return getAllProperties(listOfProperties);
 };      

@@ -1,25 +1,20 @@
-//vscode module
-const vscode = require('vscode');
+const { getValue, getTerminalProperty } = require('../Property');
 
-class SaveResultsProperty {
-    constructor() {
-        const saveResult = vscode.workspace.getConfiguration('saveResult');
-		const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
-        const terminalProperty = outPutFile ? `> ${outPutFile}` : '';			
-        
-        this.outPutFile = outPutFile;
-        this.terminalProperty = terminalProperty;
-    }
+const getSaveResultsPropertyValue = () => {
+    return getValue('saveResult', 'value');
+}
 
-    getSaveOutpuInFile(){
-        return this.outPutFile;
-    }
-
-    getTerminalProperty(){
-        return this.terminalProperty;
-    }
+const getTerminalSaveResultsProperty = () => {
+    return getTerminalProperty('saveResult', 'value', 
+        value => {
+            const outPutFile = value ? value.dir : value;
+            const terminalProperty = outPutFile ? `> ${outPutFile}` : '';
+            return terminalProperty;
+        }
+    );
 }
 
 module.exports = {
-    SaveResultsProperty,
+    getSaveResultsPropertyValue,
+    getTerminalSaveResultsProperty,
 }

@@ -1,7 +1,5 @@
 /* global suite, test, setup, suiteTeardown */
 
-const { MavenExecutionProperty } = require('../../Properties/ExecutionProperties/MavenExecutionProperty');
-
 //vscode module
 const vscode = require('vscode');
 
@@ -12,16 +10,17 @@ const { executeWhenForMavenExecutionSet } = require('../testModules/executeWhenM
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
+const { getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty } = require('../../Properties/ExecutionProperties/MavenExecutionProperty');
+
 const testProperty = (resolve, reject) => {
-	const mavenExecutionProperty = new MavenExecutionProperty();
 	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
-	const customDirectory = mavenExecution.get('customDirectory');
+	const customDirectory = mavenExecution.get('value');
 	const terminalProperty = customDirectory ? customDirectory + ".cmd" : "mvn";
 	
-	if(customDirectory !== mavenExecutionProperty.getCustomDirectory()){
-		reject("customDirectory");
+	if(customDirectory !== getMavenExecutionPropertyValue()){
+		reject("value");
 	}
-	if(terminalProperty !== mavenExecutionProperty.getTerminalProperty()){
+	if(terminalProperty !== getTerminalMavenExecutionProperty()){
 		reject("terminalProperty");
 	}
 	resolve();
