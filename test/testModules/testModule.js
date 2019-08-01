@@ -1,16 +1,10 @@
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 const vscode = require('vscode');
-// const myExtension = require('../extension');
 
-//FileSystem
 const fs = require("fs");
 
-//Directories
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
 
-//Directories
-const { cleanOutputFileConfiguration, cleanMavenExecutionConfiguration } = require('./setProperties');
+const { cleanAllProperties } = require('./cleanAllProperties');
 
 //Build Project
 const buildProgram = /**
@@ -45,8 +39,7 @@ const cleanProgram = () => {
 		fs.unlinkSync(testCommandLineResults.getDir());
 	}
 	
-	cleanOutputFileConfiguration();
-	cleanMavenExecutionConfiguration();
+	cleanAllProperties();
 
 	vscode.window.terminals.forEach(terminal => {
 		terminal.dispose();

@@ -17,7 +17,7 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
  * @param {{ (reason?: any): void; (reason?: any): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; (arg0: string): void; }} reject
  * @param {boolean} [haveAOutPut]
  */
-const testSaveResultsProperty = (resolve, reject, haveAOutPut) => {
+const testProperty = (resolve, reject, haveAOutPut) => {
 	const saveResultsProperty = new SaveResultsProperty();
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
 	const outPutFile = saveResult.get('outPutFile') ? saveResult.get('outPutFile').dir : saveResult.get('outPutFile'); 
@@ -47,12 +47,12 @@ suite("SaveResultsProperty tests", function() {
 	});
 
 	test("SaveResults by default", function() {
-		return new Promise((resolve, reject) => testSaveResultsProperty(resolve, reject));
+		return new Promise((resolve, reject) => testProperty(resolve, reject));
 	}).timeout(defaultTestTimeout);
 
 	test("SaveResults set", function() {
 		setOutputFileConfiguration();
 		return new Promise((resolve, reject) => 
-		executeWhenForSaveResultSet(() => testSaveResultsProperty(resolve, reject, true)));
+		executeWhenForSaveResultSet(() => testProperty(resolve, reject, true)));
 	}).timeout(defaultTestTimeout);
 });

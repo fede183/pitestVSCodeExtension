@@ -45,6 +45,12 @@ const conditionForMavenExecutionSet = () => {
 	return customDirectory !== null;
 }
 
+const conditionForWithHistorySet = () => {
+	const withHistory = vscode.workspace.getConfiguration('withHistory');
+	const value = withHistory.get('value');
+	return value;
+}
+
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);
 	function checkConditionIsReach() {
@@ -94,6 +100,10 @@ const executeWhenForMavenExecutionSet = (program) => {
 	executeWhenConditionIsReach(conditionForMavenExecutionSet, program);
 }
 
+const executeWhenForWithHistorySet = (program) => {
+	executeWhenConditionIsReach(conditionForWithHistorySet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -104,4 +114,5 @@ module.exports = {
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
 	executeWhenForMavenExecutionSet,
+	executeWhenForWithHistorySet,
 }

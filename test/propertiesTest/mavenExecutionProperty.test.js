@@ -12,7 +12,7 @@ const { executeWhenForMavenExecutionSet } = require('../testModules/executeWhenM
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
-const testMavenExecutionProperty = (resolve, reject) => {
+const testProperty = (resolve, reject) => {
 	const mavenExecutionProperty = new MavenExecutionProperty();
 	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
 	const customDirectory = mavenExecution.get('customDirectory');
@@ -37,12 +37,12 @@ suite("MavenExecutionProperty tests", function() {
 	});
 
 	test("MavenExecution by default", function() {
-		return new Promise((resolve, reject) => testMavenExecutionProperty(resolve, reject));
+		return new Promise((resolve, reject) => testProperty(resolve, reject));
 	}).timeout(defaultTestTimeout);
 
 	test("MavenExecution set", function() {
 		setMavenExecutionConfiguration();
 		return new Promise((resolve, reject) => 
-		executeWhenForMavenExecutionSet(() => testMavenExecutionProperty(resolve, reject)));
+		executeWhenForMavenExecutionSet(() => testProperty(resolve, reject)));
 	}).timeout(defaultTestTimeout);
 });

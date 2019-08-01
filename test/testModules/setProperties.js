@@ -1,11 +1,7 @@
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 const vscode = require('vscode');
 
-//Directories
 const { testCommandLineResults } = require('./testDirModule');
 
-//Clean output file configuration
 const cleanOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
@@ -14,7 +10,6 @@ const cleanOutputFileConfiguration = () => {
 	config.update(outPutFile, null, setAsGlobal);
 }
 
-//Set output file configuration
 const setOutputFileConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("saveResult");
 
@@ -23,7 +18,6 @@ const setOutputFileConfiguration = () => {
 	config.update(outPutFile, testCommandLineResults, setAsGlobal);
 }
 
-//Clean maven execution file configuration
 const cleanMavenExecutionConfiguration = () => {
 	let config = vscode.workspace.getConfiguration("mavenExecution");
 
@@ -32,7 +26,6 @@ const cleanMavenExecutionConfiguration = () => {
 	config.update(customDirectory, null, setAsGlobal);
 }
 
-//Set maven execution configuration
 const setMavenExecutionConfiguration = () => {
     let config = vscode.workspace.getConfiguration("mavenExecution");
 
@@ -41,9 +34,27 @@ const setMavenExecutionConfiguration = () => {
 	config.update(customDirectoryProperty, "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn", setAsGlobal);
 }
 
+const cleanWithHistoryConfiguration = () => {
+	let config = vscode.workspace.getConfiguration("withHistory");
+
+	let value = "value";
+	let setAsGlobal = config.inspect(value).workspaceValue == undefined;
+	config.update(value, false, setAsGlobal);
+}
+
+const setWithHistoryConfiguration = () => {
+    let config = vscode.workspace.getConfiguration("withHistory");
+
+	let value = "value";
+	let setAsGlobal = config.inspect(value).workspaceValue == undefined;
+	config.update(value, true, setAsGlobal);
+}
+
 module.exports = {
     cleanOutputFileConfiguration,
     setOutputFileConfiguration,
     cleanMavenExecutionConfiguration,
-    setMavenExecutionConfiguration,
+	setMavenExecutionConfiguration,
+	cleanWithHistoryConfiguration,
+	setWithHistoryConfiguration,
 }

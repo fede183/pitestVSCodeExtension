@@ -33,6 +33,11 @@
 					"type": ["string", "null"],
 					"default": null,
 					"description": "Specifies the maven directory, if is empty try to use MAVEN_HOME."
+				},
+				"withHistory.value": {
+					"type": ["boolean"],
+					"default": false,
+					"description": "To speed-up repeated analysis of the same codebase set the withHistory parameter to true."
 				}
 			}
 		}

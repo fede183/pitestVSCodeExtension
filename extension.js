@@ -2,8 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 
-const { SaveResultsProperty } = require('./Properties/ResultProperties/SaveResultsProperty');
-const { MavenExecutionProperty } = require('./Properties/ExecutionProperties/MavenExecutionProperty');
+const { getAllPostProperties } = require('./Properties/PostProperties/PostProperties');
+const { getAllResultsProperties } = require('./Properties/ResultProperties/ResultsProperties');
+const { getAllExecutionProperties } = require('./Properties/ExecutionProperties/ExecutionProperties');
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -20,12 +21,13 @@ function activate(context) {
 		vscode.workspace.workspaceFolders[0].uri.path;
 
 		terminal.sendText('cd ' + workspaceFolder);
-		const saveResultsProperty = new SaveResultsProperty();
-		const executionProperties = new MavenExecutionProperty();
+
+
 		const mutationCommand = 
-		executionProperties.getTerminalProperty() + 
+		getAllExecutionProperties() + 
 		' org.pitest:pitest-maven:mutationCoverage' + 
-		saveResultsProperty.getTerminalProperty()
+		getAllPostProperties() +
+		getAllResultsProperties()
 		terminal.sendText(mutationCommand);
 	});
 

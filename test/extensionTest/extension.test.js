@@ -17,14 +17,16 @@ const { stackDirectory,
 const { buildProgram, cleanProgram, } = require('../testModules/testModule');
 
 		
-const {	setOutputFileConfiguration, setMavenExecutionConfiguration, } = require('../testModules/setProperties');
+const {	setOutputFileConfiguration, 
+	setMavenExecutionConfiguration, 
+	setWithHistoryConfiguration, } = require('../testModules/setProperties');
 
-const {
-	executeWhenBuildIsDone,
+const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
-	executeWhenForMavenExecutionSet, } = require('../testModules/executeWhenModule');
+	executeWhenForMavenExecutionSet,
+	executeWhenForWithHistorySet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
@@ -55,8 +57,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function(){
-
-				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 				if(fileContent.includes("[ERROR]")){
 					reject("testCommandLineResults");	
 				}
@@ -70,7 +71,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject("testCommandLineResults");	
 			}
@@ -83,7 +84,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(!fileContent.includes("[ERROR]")){
 				reject();	
 			}
@@ -104,7 +105,28 @@ suite("Stack Pitest Execution Extension Tests", function() {
 			});
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+			if(fileContent.includes("[ERROR]")){
+				reject("testCommandLineResults");	
+			}
+
+			resolve();
+		  }));
+	}).timeout(defaultTestTimeout);
+
+	test("Stack Project with history", function() {
+		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setWithHistoryConfiguration();
+		executeWhenBuildIsDone(() => {
+			executeWhenForSaveResultSet(() => {
+				executeWhenForWithHistorySet(() => {
+					vscode.commands.executeCommand('extension.pitest');
+				});
+			});
+		});
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
 			if(fileContent.includes("[ERROR]")){
 				reject("testCommandLineResults");	
 			}

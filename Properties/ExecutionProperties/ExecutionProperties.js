@@ -1,12 +1,13 @@
 const { MavenExecutionProperty } = require('./MavenExecutionProperty');
 
-const getAllProperties = () => { 
+const { getAllProperties } = require('../PropertiesCollectionExecution');
+
+const getAllExecutionProperties = () => { 
     const listOfProperties = [new MavenExecutionProperty()];
-    
-    return listOfProperties.map((property) => property.getTerminalProperty())
-    .reduce((acumulator, actualProperty) => `${acumulator} ${actualProperty}`, "")
-};
-     
+        
+    return getAllProperties(listOfProperties);
+};      
+
 module.exports = {
-    getAllProperties,
+    getAllExecutionProperties,
 }
