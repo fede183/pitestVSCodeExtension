@@ -2,52 +2,35 @@ const vscode = require('vscode');
 
 const { testCommandLineResults } = require('./testDirModule');
 
-const cleanOutputFileConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("saveResult");
+const cleanConfiguration = (configName, valueName, value) => {
+	let config = vscode.workspace.getConfiguration(configName);
+	
+	let setAsGlobal = config.inspect(valueName).workspaceValue == undefined;
+	config.update(valueName, value, setAsGlobal);
+}
 
-	let outPutFile = "value";
-	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
-	config.update(outPutFile, null, setAsGlobal);
+const cleanOutputFileConfiguration = () => {
+	cleanConfiguration("saveResult", "value", null);
 }
 
 const setOutputFileConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("saveResult");
-
-	let outPutFile = "value";
-	let setAsGlobal = config.inspect(outPutFile).workspaceValue == undefined;
-	config.update(outPutFile, testCommandLineResults, setAsGlobal);
+	cleanConfiguration("saveResult", "value", testCommandLineResults);
 }
 
 const cleanMavenExecutionConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("mavenExecution");
-
-	let customDirectory = "value";
-	let setAsGlobal = config.inspect(customDirectory).workspaceValue == undefined;
-	config.update(customDirectory, null, setAsGlobal);
+	cleanConfiguration("mavenExecution", "value", null);
 }
 
 const setMavenExecutionConfiguration = () => {
-    let config = vscode.workspace.getConfiguration("mavenExecution");
-
-	let customDirectoryProperty = "value";
-	let setAsGlobal = config.inspect(customDirectoryProperty).workspaceValue == undefined;
-	config.update(customDirectoryProperty, "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn", setAsGlobal);
+	cleanConfiguration("mavenExecution", "value", "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn");
 }
 
 const cleanWithHistoryConfiguration = () => {
-	let config = vscode.workspace.getConfiguration("withHistory");
-
-	let value = "value";
-	let setAsGlobal = config.inspect(value).workspaceValue == undefined;
-	config.update(value, false, setAsGlobal);
+	cleanConfiguration("withHistory", "value", false);
 }
 
 const setWithHistoryConfiguration = () => {
-    let config = vscode.workspace.getConfiguration("withHistory");
-
-	let value = "value";
-	let setAsGlobal = config.inspect(value).workspaceValue == undefined;
-	config.update(value, true, setAsGlobal);
+	cleanConfiguration("withHistory", "value", true);
 }
 
 module.exports = {

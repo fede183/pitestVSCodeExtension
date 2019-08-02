@@ -19,7 +19,6 @@ const testProperty = (resolve, reject, haveAOutPut) => {
 	const terminalProperty = outPutFile ? `> ${outPutFile}` : '';
 
 	if(outPutFile !== getSaveResultsPropertyValue()){	
-		debugger
 		reject("saveResult");
 	}
 	if(terminalProperty !== getTerminalSaveResultsProperty()){
