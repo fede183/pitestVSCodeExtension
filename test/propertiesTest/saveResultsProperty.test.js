@@ -15,17 +15,16 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 const testProperty = (resolve, reject, haveAOutPut) => {
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
 	const value = saveResult.get('value');
-	const outPutFile = value ? value.dir : value;
-	const terminalProperty = outPutFile ? `> ${outPutFile}` : '';
+	const terminalProperty = value ? `> ${value}` : '';
 
-	if(outPutFile !== getSaveResultsPropertyValue()){	
+	if(value !== getSaveResultsPropertyValue()){	
 		reject("saveResult");
 	}
 	if(terminalProperty !== getTerminalSaveResultsProperty()){
 		reject("terminalProperty");
 	}
 	if(haveAOutPut){ 
-		if(!outPutFile){
+		if(!value){
 			reject("outPutFile not empty");
 		}
 	}

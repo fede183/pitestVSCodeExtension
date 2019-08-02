@@ -7,7 +7,7 @@ const getSaveResultsPropertyValue = () => {
 const getTerminalSaveResultsProperty = () => {
     return getTerminalProperty('saveResult', 'value', 
         value => {
-            const outPutFile = value ? value.dir : value;
+            const outPutFile = value;
             const terminalProperty = outPutFile ? `> ${outPutFile}` : '';
             return terminalProperty;
         }

@@ -2,7 +2,7 @@ const vscode = require('vscode');
 
 const { testCommandLineResults } = require('./testDirModule');
 
-const cleanConfiguration = (configName, valueName, value) => {
+const setConfiguration = (configName, valueName, value) => {
 	let config = vscode.workspace.getConfiguration(configName);
 	
 	let setAsGlobal = config.inspect(valueName).workspaceValue == undefined;
@@ -10,27 +10,27 @@ const cleanConfiguration = (configName, valueName, value) => {
 }
 
 const cleanOutputFileConfiguration = () => {
-	cleanConfiguration("saveResult", "value", null);
+	setConfiguration("saveResult", "value", null);
 }
 
 const setOutputFileConfiguration = () => {
-	cleanConfiguration("saveResult", "value", testCommandLineResults);
+	setConfiguration("saveResult", "value", testCommandLineResults.dir);
 }
 
 const cleanMavenExecutionConfiguration = () => {
-	cleanConfiguration("mavenExecution", "value", null);
+	setConfiguration("mavenExecution", "value", null);
 }
 
 const setMavenExecutionConfiguration = () => {
-	cleanConfiguration("mavenExecution", "value", "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn");
+	setConfiguration("mavenExecution", "value", "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn");
 }
 
 const cleanWithHistoryConfiguration = () => {
-	cleanConfiguration("withHistory", "value", false);
+	setConfiguration("withHistory", "value", false);
 }
 
 const setWithHistoryConfiguration = () => {
-	cleanConfiguration("withHistory", "value", true);
+	setConfiguration("withHistory", "value", true);
 }
 
 module.exports = {
