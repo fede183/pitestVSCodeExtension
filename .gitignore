@@ -5,3 +5,5 @@ test/Stack/.classpath
 test/Stack/.project
 test/Stack/.settings/
 
+test/Stack/target
+test/testCommandLineResults
