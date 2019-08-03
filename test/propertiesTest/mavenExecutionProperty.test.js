@@ -15,7 +15,7 @@ const { getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty } = re
 const testProperty = (resolve, reject) => {
 	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
 	const customDirectory = mavenExecution.get('value');
-	const terminalProperty = customDirectory ? customDirectory + ".cmd" : "mvn";
+	const terminalProperty = (customDirectory ? customDirectory + ".cmd" : "mvn") + " ";
 	
 	if(customDirectory !== getMavenExecutionPropertyValue()){
 		reject("value");

@@ -15,7 +15,7 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 const testProperty = (resolve, reject, haveAOutPut) => {
 	const saveResult = vscode.workspace.getConfiguration('saveResult');
 	const value = saveResult.get('value');
-	const terminalProperty = value ? `> ${value}` : '';
+	const terminalProperty = value ? ` > ${value}` : '';
 
 	if(value !== getSaveResultsPropertyValue()){	
 		reject("saveResult");

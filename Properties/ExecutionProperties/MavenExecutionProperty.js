@@ -5,7 +5,7 @@ const getMavenExecutionPropertyValue = () => {
 }
 
 const getTerminalMavenExecutionProperty = () => {
-    return getTerminalProperty('mavenExecution', 'value', value => value ? value + ".cmd" : "mvn");
+    return getTerminalProperty('mavenExecution', 'value', value => value ? value + ".cmd" : "mvn") + " ";
 }
 
 module.exports = {

@@ -15,7 +15,7 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 const testProperty = (resolve, reject) => {
 	const withHistory = vscode.workspace.getConfiguration('withHistory');
 	const value = withHistory.get('value');
-	const terminalProperty = value ? '-DwithHistory' : '';
+	const terminalProperty = value ? ' -DwithHistory' : '';
 	
 	if(value !== getWithHistoryPropertyValue()){	
 		reject("withHistory");

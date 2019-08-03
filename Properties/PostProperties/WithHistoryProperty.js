@@ -5,7 +5,7 @@ const getWithHistoryPropertyValue = () => {
 }
 
 const getTerminalWithHistoryProperty = () => {
-    return getTerminalProperty('withHistory', 'value', value => value ? '-DwithHistory' : '');
+    return getTerminalProperty('withHistory', 'value', value => value ? ' -DwithHistory' : '');
 }
 
 module.exports = {
