@@ -33,16 +33,6 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 	}	
 }
 
-const conditionForProperties = (configName) => getValue(configName, 'value')
-
-const conditionForSaveResultSet = () => conditionForProperties('saveResult');
-
-const conditionForMavenExecutionSet = () => conditionForProperties('mavenExecution');
-
-const conditionForWithHistorySet = () => conditionForProperties('withHistory');
-
-const conditionForMutationThresholdSet = () => conditionForProperties('mutationThreshold');
-
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);
 	function checkConditionIsReach() {
@@ -83,6 +73,16 @@ const executeWhenPitestIsDone = (program) => {
 	executeWhenConditionIsReachAndTestFileIsComplete(() => targetDirectoryStructIsCorrect(directories), 
 	program);
 }
+
+const conditionForProperties = (configName) => getValue(configName, 'value')
+
+const conditionForSaveResultSet = () => conditionForProperties('saveResult');
+
+const conditionForMavenExecutionSet = () => conditionForProperties('mavenExecution');
+
+const conditionForWithHistorySet = () => conditionForProperties('withHistory');
+
+const conditionForMutationThresholdSet = () => conditionForProperties('mutationThreshold');
 
 const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
