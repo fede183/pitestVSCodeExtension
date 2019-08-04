@@ -86,6 +86,8 @@ const conditionForMutationThresholdSet = () => conditionForProperties('mutationT
 
 const conditionForIncludeSet = () => getValue('include', 'value') !== [];
 
+const conditionForGoalSet = () => getValue('goal', 'value') !== 'mutationCoverage';
+
 const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
 }
@@ -106,6 +108,11 @@ const executeWhenForIncludeSet = (program) => {
 	executeWhenConditionIsReach(conditionForIncludeSet, program);
 }
 
+const executeWhenForGoalSet = (program) => {
+	executeWhenConditionIsReach(conditionForGoalSet, program);
+}
+
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -118,4 +125,5 @@ module.exports = {
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,
+	executeWhenForGoalSet,
 }

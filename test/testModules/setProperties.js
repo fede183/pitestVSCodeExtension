@@ -49,6 +49,15 @@ const setIncludeConfiguration = () => {
 	setConfiguration("include", "value", ["ADDED", "UNKNOWN"]);
 }
 
+const cleanGoalConfiguration = () => {
+	setConfiguration("goal", "value", "mutationCoverage");
+}
+
+const setGoalConfiguration = () => {
+	setConfiguration("goal", "value", "scmMutationCoverage");
+}
+
+
 module.exports = {
     cleanOutputFileConfiguration,
     setOutputFileConfiguration,
@@ -60,4 +69,6 @@ module.exports = {
 	setMutationThresholdConfiguration,
 	cleanIncludeConfiguration,
 	setIncludeConfiguration,
+	cleanGoalConfiguration,
+	setGoalConfiguration,
 }

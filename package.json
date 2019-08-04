@@ -24,6 +24,12 @@
 			"type": "object",
 			"title": "Pitest Configuration",
 			"properties": {
+				"goal.value":{
+					"type": "string",
+					"oneOf": ["mutationCoverage", "scmMutationCoverage"],
+					"default": "mutationCoverage",
+					"description": "Goal to reach."
+				},
 				"saveResult.value": {
 					"type": "string",
 					"default": null,

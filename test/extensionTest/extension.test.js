@@ -21,7 +21,8 @@ const {	setOutputFileConfiguration,
 	setMavenExecutionConfiguration, 
 	setWithHistoryConfiguration,
 	setMutationThresholdConfiguration,
-	setIncludeConfiguration } = require('../testModules/setProperties');
+	setIncludeConfiguration,
+	setGoalConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
@@ -30,7 +31,8 @@ const { executeWhenBuildIsDone,
 	executeWhenForMavenExecutionSet,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
-	executeWhenForIncludeSet } = require('../testModules/executeWhenModule');
+	executeWhenForIncludeSet,
+	executeWhenForGoalSet } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -198,20 +200,49 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project mutation threshold", function() {
+	test("Stack Project goal", function() {
 		buildProgram(stackDirectory);
 		setOutputFileConfiguration();
-		setIncludeConfiguration();
+		setGoalConfiguration();
 		executeWhenBuildIsDone(() => {
 			executeWhenForSaveResultSet(() => {
-				executeWhenForIncludeSet(() => {
+				executeWhenForGoalSet(() => {
 					vscode.commands.executeCommand('extension.pitest');
 				});
 			});
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=ADDED,UNKNOWN > ${testCommandLineResults.getDir()}`){
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage > ${testCommandLineResults.getDir()}`){
+				reject();
+			}
+
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+			if(fileContent.includes("[ERROR]")){
+				reject("testCommandLineResults");	
+			}
+
+			resolve();
+		  }));
+	}).timeout(defaultTestTimeout);
+
+	test("Stack Project mutation threshold", function() {
+		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setIncludeConfiguration();
+		setGoalConfiguration();
+		executeWhenBuildIsDone(() => {
+			executeWhenForSaveResultSet(() => {
+				executeWhenForIncludeSet(() => {
+					executeWhenForGoalSet(() => {
+						vscode.commands.executeCommand('extension.pitest');
+					});
+				});
+			});
+		});
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage -DmutationThreshold=ADDED,UNKNOWN > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 
