@@ -8,4 +8,3 @@ const { executeWhenForMavenExecutionSet } = require('../testModules/executeWhenM
 
 getSimplePropertyTest("MavenExecutionProperty", "mavenExecution", cleanMavenExecutionConfiguration, setMavenExecutionConfiguration, 
 getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty, value => (value ? value + ".cmd" : "mvn") + " ", executeWhenForMavenExecutionSet);
-

@@ -8,4 +8,3 @@ const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModul
 
 getSimplePropertyTest("SaveResultProperty", "saveResult", cleanOutputFileConfiguration, setOutputFileConfiguration, 
 getSaveResultsPropertyValue, getTerminalSaveResultsProperty, value => value ? ` > ${value}` : '', executeWhenForSaveResultSet);
-

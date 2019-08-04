@@ -7,9 +7,7 @@ const getValue = (configName, valueName) => {
     return value;
 }
 
-const getTerminalProperty = (configName, valueName, terminalPropertyFunction) => 
-    terminalPropertyFunction(getValue(configName, valueName));
-
+const getTerminalProperty = (configName, valueName, terminalPropertyFunction) => terminalPropertyFunction(getValue(configName, valueName));
 
 module.exports = {
     getValue,

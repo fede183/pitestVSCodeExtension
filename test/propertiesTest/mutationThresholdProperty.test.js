@@ -8,4 +8,3 @@ const { executeWhenForMutationThresholdSet } = require('../testModules/executeWh
 
 getSimplePropertyTest("MutationThresholdProperty", "mutationThreshold", cleanMutationThresholdConfiguration, setMutationThresholdConfiguration, 
 getMutationThresholdPropertyValue, getTerminalMutationThresholdProperty, value => value ? ` -DmutationThreshold=${value}` : '', executeWhenForMutationThresholdSet);
-

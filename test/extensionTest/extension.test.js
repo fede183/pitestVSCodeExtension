@@ -68,7 +68,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function(){
 
-				if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.dir}`){
+				if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
 					reject();
 				}
 
@@ -87,7 +87,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.dir}`){
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 
@@ -105,7 +105,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.dir}`){
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 
@@ -131,7 +131,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
-			if(mutationCommand() !== `C:\\Users\\Federico\\opt\\mvn\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.dir}`){
+			if(mutationCommand() !== `C:\\Users\\Federico\\opt\\mvn\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 
@@ -157,7 +157,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.dir}`){
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 
@@ -183,7 +183,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.dir}`){
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 

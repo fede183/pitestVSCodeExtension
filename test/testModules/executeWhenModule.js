@@ -33,25 +33,15 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 	}	
 }
 
-const conditionForSaveResultSet = () => {
-	const value = getValue('saveResult', 'value');
-	return value !== null;
-}
+const conditionForProperties = (configName) => getValue(configName, 'value')
 
-const conditionForMavenExecutionSet = () => {
-	const value = getValue('mavenExecution', 'value');
-	return value !== null;
-}
+const conditionForSaveResultSet = () => conditionForProperties('saveResult');
 
-const conditionForWithHistorySet = () => {
-	const value = getValue('withHistory', 'value');
-	return value;
-}
+const conditionForMavenExecutionSet = () => conditionForProperties('mavenExecution');
 
-const conditionForMutationThresholdSet = () => {
-	const value = getValue('mutationThreshold', 'value');
-	return value;
-}
+const conditionForWithHistorySet = () => conditionForProperties('withHistory');
+
+const conditionForMutationThresholdSet = () => conditionForProperties('mutationThreshold');
 
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);

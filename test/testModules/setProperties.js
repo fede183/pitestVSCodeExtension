@@ -14,7 +14,7 @@ const cleanOutputFileConfiguration = () => {
 }
 
 const setOutputFileConfiguration = () => {
-	setConfiguration("saveResult", "value", testCommandLineResults.dir);
+	setConfiguration("saveResult", "value", testCommandLineResults.getDir());
 }
 
 const cleanMavenExecutionConfiguration = () => {

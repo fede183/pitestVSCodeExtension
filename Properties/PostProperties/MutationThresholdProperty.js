@@ -1,12 +1,8 @@
 const { getValue, getTerminalProperty } = require('../Property');
 
-const getMutationThresholdPropertyValue = () => {
-    return getValue('mutationThreshold', 'value');
-}
+const getMutationThresholdPropertyValue = () => getValue('mutationThreshold', 'value');
 
-const getTerminalMutationThresholdProperty = () => {
-    return getTerminalProperty('mutationThreshold', 'value', value => value ? ` -DmutationThreshold=${value}` : '');
-}
+const getTerminalMutationThresholdProperty = () => getTerminalProperty('mutationThreshold', 'value', value => value ? ` -DmutationThreshold=${value}` : '');
 
 module.exports = {
     getMutationThresholdPropertyValue,
