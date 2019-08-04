@@ -48,6 +48,11 @@ const conditionForWithHistorySet = () => {
 	return value;
 }
 
+const conditionForMutationThresholdSet = () => {
+	const value = getValue('mutationThreshold');
+	return value;
+}
+
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);
 	function checkConditionIsReach() {
@@ -101,6 +106,10 @@ const executeWhenForWithHistorySet = (program) => {
 	executeWhenConditionIsReach(conditionForWithHistorySet, program);
 }
 
+const executeWhenForMutationThresholdSet = (program) => {
+	executeWhenConditionIsReach(conditionForMutationThresholdSet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -111,4 +120,5 @@ module.exports = {
 	executeWhenTestCommandLineResultFileIsAvailable,
 	executeWhenForMavenExecutionSet,
 	executeWhenForWithHistorySet,
+	executeWhenForMutationThresholdSet,
 }

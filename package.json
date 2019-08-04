@@ -37,7 +37,12 @@
 				"withHistory.value": {
 					"type": "boolean",
 					"default": false,
-					"description": "To speed-up repeated analysis of the same codebase set the withHistory parameter to true."
+					"description": "To speed-up repeated analysis of the same codebase."
+				},
+				"mutationThreshold.value": {
+					"type": "boolean",
+					"default": false,
+					"description": "Mutation score threshold at which to fail build."
 				}
 			}
 		}
@@ -54,6 +59,7 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
+		"babel-plugin-transform-async-to-generator": "^6.24.1",
 		"mocha": "^6.1.4"
 	}
 }

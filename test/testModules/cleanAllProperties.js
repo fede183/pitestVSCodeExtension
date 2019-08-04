@@ -1,9 +1,10 @@
-const { cleanOutputFileConfiguration, cleanMavenExecutionConfiguration, cleanWithHistoryConfiguration } = require('./setProperties');
+const { cleanOutputFileConfiguration, cleanMavenExecutionConfiguration, cleanWithHistoryConfiguration, cleanMutationThresholdConfiguration } = require('./setProperties');
 
 const cleanAllProperties = () => {
     cleanOutputFileConfiguration();
 	cleanMavenExecutionConfiguration();
-	cleanWithHistoryConfiguration();
+    cleanWithHistoryConfiguration();
+    cleanMutationThresholdConfiguration();
 }
 
 module.exports = {

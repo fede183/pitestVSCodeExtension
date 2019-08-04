@@ -19,14 +19,16 @@ const { buildProgram, cleanProgram, } = require('../testModules/testModule');
 		
 const {	setOutputFileConfiguration, 
 	setMavenExecutionConfiguration, 
-	setWithHistoryConfiguration, } = require('../testModules/setProperties');
+	setWithHistoryConfiguration,
+	setMutationThresholdConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
 	executeWhenForMavenExecutionSet,
-	executeWhenForWithHistorySet, } = require('../testModules/executeWhenModule');
+	executeWhenForWithHistorySet,
+	executeWhenForMutationThresholdSet } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -156,6 +158,32 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
 			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.dir}`){
+				reject();
+			}
+
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+			if(fileContent.includes("[ERROR]")){
+				reject("testCommandLineResults");	
+			}
+
+			resolve();
+		  }));
+	}).timeout(defaultTestTimeout);
+
+	test("Stack Project mutation threshold", function() {
+		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setMutationThresholdConfiguration();
+		executeWhenBuildIsDone(() => {
+			executeWhenForSaveResultSet(() => {
+				executeWhenForMutationThresholdSet(() => {
+					vscode.commands.executeCommand('extension.pitest');
+				});
+			});
+		});
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.dir}`){
 				reject();
 			}
 

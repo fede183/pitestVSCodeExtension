@@ -2,7 +2,7 @@ const vscode = require('vscode');
 
 const { testCommandLineResults } = require('./testDirModule');
 
-const setConfiguration = (configName, valueName, value) => {
+const setConfiguration = function (configName, valueName, value) {
 	let config = vscode.workspace.getConfiguration(configName);
 	
 	let setAsGlobal = config.inspect(valueName).workspaceValue == undefined;
@@ -33,6 +33,14 @@ const setWithHistoryConfiguration = () => {
 	setConfiguration("withHistory", "value", true);
 }
 
+const cleanMutationThresholdConfiguration = () => {
+	setConfiguration("mutationThreshold", "value", false);
+}
+
+const setMutationThresholdConfiguration = () => {
+	setConfiguration("mutationThreshold", "value", true);
+}
+
 module.exports = {
     cleanOutputFileConfiguration,
     setOutputFileConfiguration,
@@ -40,4 +48,6 @@ module.exports = {
 	setMavenExecutionConfiguration,
 	cleanWithHistoryConfiguration,
 	setWithHistoryConfiguration,
+	cleanMutationThresholdConfiguration,
+	setMutationThresholdConfiguration,
 }
