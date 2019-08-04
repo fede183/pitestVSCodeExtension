@@ -1,12 +1,10 @@
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
-const vscode = require('vscode');
-// const myExtension = require('../extension');
 
 //FileSystem
 const fs = require("fs");
 
-const { getValue } = require('../Property');
+const { getValue } = require('../../Properties/Property');
 
 //Directories
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
