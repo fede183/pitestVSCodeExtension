@@ -43,6 +43,12 @@
 					"type": "integer",
 					"default": null,
 					"description": "Mutation score threshold at which to fail build."
+				},
+				"include.value": {
+					"type": "array",
+					"multipleOf": ["ADDED", "UNKNOWN", "MODIFIED"],
+					"default": ["ADDED"],
+					"description": "The scm mutation coverage goal analyses only classes that match the filters and the source file has a given status within the project source control system."
 				}
 			}
 		}
