@@ -40,8 +40,8 @@
 					"description": "To speed-up repeated analysis of the same codebase."
 				},
 				"mutationThreshold.value": {
-					"type": "boolean",
-					"default": false,
+					"type": "integer",
+					"default": null,
 					"description": "Mutation score threshold at which to fail build."
 				}
 			}

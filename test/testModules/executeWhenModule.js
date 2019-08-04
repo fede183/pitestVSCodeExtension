@@ -34,22 +34,22 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 }
 
 const conditionForSaveResultSet = () => {
-	const value = getValue('saveResult');
+	const value = getValue('saveResult', 'value');
 	return value !== null;
 }
 
 const conditionForMavenExecutionSet = () => {
-	const value = getValue('mavenExecution');
+	const value = getValue('mavenExecution', 'value');
 	return value !== null;
 }
 
 const conditionForWithHistorySet = () => {
-	const value = getValue('withHistory');
+	const value = getValue('withHistory', 'value');
 	return value;
 }
 
 const conditionForMutationThresholdSet = () => {
-	const value = getValue('mutationThreshold');
+	const value = getValue('mutationThreshold', 'value');
 	return value;
 }
 
