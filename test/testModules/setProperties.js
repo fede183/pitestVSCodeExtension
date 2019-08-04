@@ -34,11 +34,11 @@ const setWithHistoryConfiguration = () => {
 }
 
 const cleanMutationThresholdConfiguration = () => {
-	setConfiguration("mutationThreshold", "value", false);
+	setConfiguration("mutationThreshold", "value", null);
 }
 
 const setMutationThresholdConfiguration = () => {
-	setConfiguration("mutationThreshold", "value", true);
+	setConfiguration("mutationThreshold", "value", 85);
 }
 
 module.exports = {
