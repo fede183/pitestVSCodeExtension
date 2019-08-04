@@ -28,19 +28,16 @@
 					"type": "string",
 					"default": null,
 					"description": "Specifies the file path where the output will be saved as a content in a text file.",
-					"scope": "resource"
 				},
 				"mavenExecution.value": {
 					"type": "string",
 					"default": null,
 					"description": "Specifies the maven directory, if is empty will use MAVEN_HOME.",
-					"scope": "resource"
 				},
 				"withHistory.value": {
 					"type": "boolean",
 					"default": false,
 					"description": "To speed-up repeated analysis of the same codebase set the withHistory parameter to true.",
-					"scope": "resource"
 				}
 			}
 		}
