@@ -6,6 +6,8 @@ const vscode = require('vscode');
 //FileSystem
 const fs = require("fs");
 
+const { getValue } = require('../Property');
+
 //Directories
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
 
@@ -34,20 +36,17 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 }
 
 const conditionForSaveResultSet = () => {
-	const saveResult = vscode.workspace.getConfiguration('saveResult');
-	const outPutFile = saveResult.get('value');
-	return outPutFile !== null;
+	const value = getValue('saveResult');
+	return value !== null;
 }
 
 const conditionForMavenExecutionSet = () => {
-	const mavenExecution = vscode.workspace.getConfiguration('mavenExecution');
-	const customDirectory = mavenExecution.get('value');
-	return customDirectory !== null;
+	const value = getValue('mavenExecution');
+	return value !== null;
 }
 
 const conditionForWithHistorySet = () => {
-	const withHistory = vscode.workspace.getConfiguration('withHistory');
-	const value = withHistory.get('value');
+	const value = getValue('withHistory');
 	return value;
 }
 
@@ -107,7 +106,6 @@ const executeWhenForWithHistorySet = (program) => {
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
-	conditionForSaveResultSet,
 	executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenPitestIsDoneForEmpty,
