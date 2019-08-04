@@ -41,6 +41,14 @@ const setMutationThresholdConfiguration = () => {
 	setConfiguration("mutationThreshold", "value", 85);
 }
 
+const cleanIncludeConfiguration = () => {
+	setConfiguration("include", "value", []);
+}
+
+const setIncludeConfiguration = () => {
+	setConfiguration("include", "value", ["ADDED", "UNKNOWN"]);
+}
+
 module.exports = {
     cleanOutputFileConfiguration,
     setOutputFileConfiguration,
@@ -50,4 +58,6 @@ module.exports = {
 	setWithHistoryConfiguration,
 	cleanMutationThresholdConfiguration,
 	setMutationThresholdConfiguration,
+	cleanIncludeConfiguration,
+	setIncludeConfiguration,
 }

@@ -47,7 +47,7 @@
 				"include.value": {
 					"type": "array",
 					"multipleOf": ["ADDED", "UNKNOWN", "MODIFIED"],
-					"default": ["ADDED"],
+					"default": [],
 					"description": "The scm mutation coverage goal analyses only classes that match the filters and the source file has a given status within the project source control system."
 				}
 			}

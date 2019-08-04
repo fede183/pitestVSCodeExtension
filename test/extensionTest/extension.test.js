@@ -20,7 +20,8 @@ const { buildProgram, cleanProgram, } = require('../testModules/testModule');
 const {	setOutputFileConfiguration, 
 	setMavenExecutionConfiguration, 
 	setWithHistoryConfiguration,
-	setMutationThresholdConfiguration } = require('../testModules/setProperties');
+	setMutationThresholdConfiguration,
+	setIncludeConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
@@ -28,7 +29,8 @@ const { executeWhenBuildIsDone,
 	executeWhenTestCommandLineResultFileIsAvailable,
 	executeWhenForMavenExecutionSet,
 	executeWhenForWithHistorySet,
-	executeWhenForMutationThresholdSet } = require('../testModules/executeWhenModule');
+	executeWhenForMutationThresholdSet,
+	executeWhenForIncludeSet } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -184,6 +186,32 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
 			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`){
+				reject();
+			}
+
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
+			if(fileContent.includes("[ERROR]")){
+				reject("testCommandLineResults");	
+			}
+
+			resolve();
+		  }));
+	}).timeout(defaultTestTimeout);
+
+	test("Stack Project mutation threshold", function() {
+		buildProgram(stackDirectory);
+		setOutputFileConfiguration();
+		setIncludeConfiguration();
+		executeWhenBuildIsDone(() => {
+			executeWhenForSaveResultSet(() => {
+				executeWhenForIncludeSet(() => {
+					vscode.commands.executeCommand('extension.pitest');
+				});
+			});
+		});
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+
+			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=ADDED,UNKNOWN > ${testCommandLineResults.getDir()}`){
 				reject();
 			}
 

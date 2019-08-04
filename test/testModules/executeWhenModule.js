@@ -84,6 +84,8 @@ const conditionForWithHistorySet = () => conditionForProperties('withHistory');
 
 const conditionForMutationThresholdSet = () => conditionForProperties('mutationThreshold');
 
+const conditionForIncludeSet = () => getValue('include', 'value') !== [];
+
 const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
 }
@@ -100,6 +102,10 @@ const executeWhenForMutationThresholdSet = (program) => {
 	executeWhenConditionIsReach(conditionForMutationThresholdSet, program);
 }
 
+const executeWhenForIncludeSet = (program) => {
+	executeWhenConditionIsReach(conditionForIncludeSet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -111,4 +117,5 @@ module.exports = {
 	executeWhenForMavenExecutionSet,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
+	executeWhenForIncludeSet,
 }
