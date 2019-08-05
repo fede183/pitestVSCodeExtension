@@ -122,20 +122,20 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project maven execution custom directory", function() {
+	const propertyTest = (set, execute, command) => {
 		buildProgram(stackDirectory);
 		setOutputFileConfiguration();
-		setMavenExecutionConfiguration();
+		set();
 		executeWhenBuildIsDone(() => {
 			executeWhenForSaveResultSet(() => {
-				executeWhenForMavenExecutionSet(() => {
+				execute(() => {
 					vscode.commands.executeCommand('extension.pitest');
 				});
 			});
 		});
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
 
-			if(mutationCommand() !== `C:\\Users\\Federico\\opt\\mvn\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
+			if(mutationCommand() !== command){
 				reject();
 			}
 
@@ -146,59 +146,19 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 			resolve();
 		  }));
-	}).timeout(defaultTestTimeout);
+	}
 
-	test("Stack Project with history", function() {
-		buildProgram(stackDirectory);
-		setOutputFileConfiguration();
-		setWithHistoryConfiguration();
-		executeWhenBuildIsDone(() => {
-			executeWhenForSaveResultSet(() => {
-				executeWhenForWithHistorySet(() => {
-					vscode.commands.executeCommand('extension.pitest');
-				});
-			});
-		});
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+	test("Stack Project maven execution custom directory", () => propertyTest(setMavenExecutionConfiguration, executeWhenForMavenExecutionSet,
+		`C:\\Users\\Federico\\opt\\mvn\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`){
-				reject();
-			}
-
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(fileContent.includes("[ERROR]")){
-				reject("testCommandLineResults");	
-			}
-
-			resolve();
-		  }));
-	}).timeout(defaultTestTimeout);
-
-	test("Stack Project mutation threshold", function() {
-		buildProgram(stackDirectory);
-		setOutputFileConfiguration();
-		setMutationThresholdConfiguration();
-		executeWhenBuildIsDone(() => {
-			executeWhenForSaveResultSet(() => {
-				executeWhenForMutationThresholdSet(() => {
-					vscode.commands.executeCommand('extension.pitest');
-				});
-			});
-		});
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
-
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`){
-				reject();
-			}
-
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(fileContent.includes("[ERROR]")){
-				reject("testCommandLineResults");	
-			}
-
-			resolve();
-		  }));
-	}).timeout(defaultTestTimeout);
+	test("Stack Project with history", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,
+		`mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
+	
+	test("Stack Project mutation threshold", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
+		`mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
 
 	test.skip("Stack Project goal", function() {
 		buildProgram(stackDirectory);
