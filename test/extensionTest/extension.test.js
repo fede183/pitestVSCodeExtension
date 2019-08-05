@@ -200,7 +200,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project goal", function() {
+	test.skip("Stack Project goal", function() {
 		buildProgram(stackDirectory);
 		setOutputFileConfiguration();
 		setGoalConfiguration();
@@ -224,9 +224,9 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 			resolve();
 		  }));
-	}).timeout(defaultTestTimeout);
+	});
 
-	test("Stack Project mutation threshold", function() {
+	test.skip("Stack Project mutation threshold", function() {
 		buildProgram(stackDirectory);
 		setOutputFileConfiguration();
 		setIncludeConfiguration();
@@ -253,5 +253,5 @@ suite("Stack Pitest Execution Extension Tests", function() {
 
 			resolve();
 		  }));
-	}).timeout(defaultTestTimeout);
+	});
 });
