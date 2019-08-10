@@ -6,6 +6,8 @@ const fs = require("fs");
 
 const { getValue } = require('../../Properties/Property');
 
+const { executeWhenConditionIsReach } = require('../../executeWhenConditionIsReach');
+
 //Directories
 const { testCommandLineResults, targetDirectory } = require('./testDirModule');
 
@@ -31,16 +33,6 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 			});
 		}
 	}	
-}
-
-const executeWhenConditionIsReach = (condition, program) => {
-	var delInterval = setInterval(checkConditionIsReach, 1000);
-	function checkConditionIsReach() {
-		if(condition()){
-			clearInterval(delInterval);
-			program();
-		}
-	}
 }
 
 const executeWhenTestCommandLineResultFileIsAvailable = (program) => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program);

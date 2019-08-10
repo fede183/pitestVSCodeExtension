@@ -6,7 +6,7 @@ const { mutationCommand } = require('./terminalCommand');
 
 const { showLinkResults } = require('./resultsManager');
 
-const { executeWhenConditionIsReach } = require('./executeWhenModule');
+const { executeWhenConditionIsReach } = require('./executeWhenConditionIsReach');
 
 /**
  * @param {vscode.ExtensionContext} context
