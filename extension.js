@@ -4,6 +4,10 @@ const vscode = require('vscode');
 
 const { mutationCommand } = require('./terminalCommand');
 
+const { showLinkResults } = require('./resultsManager');
+
+const { executeWhenConditionIsReach } = require('./executeWhenModule');
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -20,7 +24,12 @@ function activate(context) {
 
 		terminal.sendText('cd ' + workspaceFolder);
 
-		terminal.sendText(mutationCommand());
+		const terminalFinish = " ; exit"; 
+
+		terminal.sendText(mutationCommand() + terminalFinish);
+
+		executeWhenConditionIsReach(() => !vscode.window.terminals.includes(terminal), 
+		() => showLinkResults(workspaceFolder));
 	});
 
 	context.subscriptions.push(pitest);

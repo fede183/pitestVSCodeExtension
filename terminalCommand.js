@@ -3,7 +3,8 @@ const { getTerminalGoalProperty } = require('./Properties/GoalProperties/GoalPro
 const { getAllResultsProperties } = require('./Properties/ResultProperties/ResultsProperties');
 const { getAllExecutionProperties } = require('./Properties/ExecutionProperties/ExecutionProperties');
 
-const mutationCommand = () => getAllExecutionProperties() + getTerminalGoalProperty() + getAllPostProperties() + getAllResultsProperties();
+const mutationCommand = () => getAllExecutionProperties() + getTerminalGoalProperty() + 
+getAllPostProperties() + getAllResultsProperties();
 
 module.exports = {
 	mutationCommand,
