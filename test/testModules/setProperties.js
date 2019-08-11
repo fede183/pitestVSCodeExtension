@@ -57,6 +57,10 @@ const setGoalConfiguration = () => {
 	setConfiguration("goal", "value", "scmMutationCoverage");
 }
 
+const cleanShowWebResultsConfiguration = () => {
+	setConfiguration("showWebResults", "value", false);
+}
+
 
 module.exports = {
     cleanOutputFileConfiguration,
@@ -71,4 +75,5 @@ module.exports = {
 	setIncludeConfiguration,
 	cleanGoalConfiguration,
 	setGoalConfiguration,
+	cleanShowWebResultsConfiguration,
 }

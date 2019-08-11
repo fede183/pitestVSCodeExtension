@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getMutationThresholdPropertyValue, getTerminalMutationThresholdProperty } = require('../../Properties/PostProperties/MutationThresholdProperty');
+const { getMutationThresholdPropertyValue, getTerminalMutationThresholdProperty } = require('../../Properties/TerminalProperties/PostProperties/MutationThresholdProperty');
 
 const { cleanMutationThresholdConfiguration, setMutationThresholdConfiguration } = require('../testModules/setProperties');
 

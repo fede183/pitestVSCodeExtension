@@ -8,6 +8,8 @@ const { showLinkResults } = require('./resultsManager');
 
 const { executeWhenConditionIsReach } = require('./executeWhenConditionIsReach');
 
+const { getShowWebResultsPropertyValue } = require('./Properties/PostExecutionProperties/ShowWebResultsProperty');
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -27,9 +29,10 @@ function activate(context) {
 		const terminalFinish = " ; exit"; 
 
 		terminal.sendText(mutationCommand() + terminalFinish);
-
-		executeWhenConditionIsReach(() => !vscode.window.terminals.includes(terminal), 
-		() => showLinkResults(workspaceFolder));
+		if(getShowWebResultsPropertyValue()) {
+			executeWhenConditionIsReach(() => !vscode.window.terminals.includes(terminal), 
+			() => showLinkResults(workspaceFolder));
+		}
 	});
 
 	context.subscriptions.push(pitest);

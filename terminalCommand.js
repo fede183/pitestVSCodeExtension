@@ -1,7 +1,7 @@
-const { getAllPostProperties } = require('./Properties/PostProperties/PostProperties');
-const { getTerminalGoalProperty } = require('./Properties/GoalProperties/GoalProperty');
-const { getAllResultsProperties } = require('./Properties/ResultProperties/ResultsProperties');
-const { getAllExecutionProperties } = require('./Properties/ExecutionProperties/ExecutionProperties');
+const { getAllPostProperties } = require('./Properties/TerminalProperties/PostProperties/PostProperties');
+const { getTerminalGoalProperty } = require('./Properties/TerminalProperties/GoalProperties/GoalProperty');
+const { getAllResultsProperties } = require('./Properties/TerminalProperties/ResultProperties/ResultsProperties');
+const { getAllExecutionProperties } = require('./Properties/TerminalProperties/ExecutionProperties/ExecutionProperties');
 
 const mutationCommand = () => getAllExecutionProperties() + getTerminalGoalProperty() + 
 getAllPostProperties() + getAllResultsProperties();

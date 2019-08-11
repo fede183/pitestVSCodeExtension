@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getIncludePropertyValue, getTerminalIncludeProperty } = require('../../Properties/PostProperties/IncludeProperty');
+const { getIncludePropertyValue, getTerminalIncludeProperty } = require('../../Properties/TerminalProperties/PostProperties/IncludeProperty');
 
 const { cleanIncludeConfiguration, setIncludeConfiguration } = require('../testModules/setProperties');
 

@@ -1,6 +1,6 @@
 const { getTerminalSaveResultsProperty } = require('./SaveResultsProperty');
 
-const { getAllProperties } = require('../PropertiesCollectionExecution');
+const { getAllProperties } = require('../TerminalPropertiesCollectionExecution');
 
 const getAllResultsProperties = () => { 
     const listOfProperties = [getTerminalSaveResultsProperty];

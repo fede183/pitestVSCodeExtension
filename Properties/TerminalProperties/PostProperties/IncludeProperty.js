@@ -1,4 +1,4 @@
-const { getValue, getTerminalProperty } = require('../Property');
+const { getValue, getTerminalProperty } = require('../../Property');
 
 const getIncludePropertyValue = () => getValue('include', 'value');
 

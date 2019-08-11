@@ -1,6 +1,6 @@
 const { getTerminalMavenExecutionProperty } = require('./MavenExecutionProperty');
 
-const { getAllProperties } = require('../PropertiesCollectionExecution');
+const { getAllProperties } = require('../TerminalPropertiesCollectionExecution');
 
 const getAllExecutionProperties = () => { 
     const listOfProperties = [getTerminalMavenExecutionProperty];

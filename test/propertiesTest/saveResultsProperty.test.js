@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getSaveResultsPropertyValue, getTerminalSaveResultsProperty } = require('../../Properties/ResultProperties/SaveResultsProperty');
+const { getSaveResultsPropertyValue, getTerminalSaveResultsProperty } = require('../../Properties/TerminalProperties/ResultProperties/SaveResultsProperty');
 
 const { cleanOutputFileConfiguration, setOutputFileConfiguration } = require('../testModules/setProperties');
 

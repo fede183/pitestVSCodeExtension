@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getWithHistoryPropertyValue, getTerminalWithHistoryProperty } = require('../../Properties/PostProperties/WithHistoryProperty');
+const { getWithHistoryPropertyValue, getTerminalWithHistoryProperty } = require('../../Properties/TerminalProperties/PostProperties/WithHistoryProperty');
 
 const { cleanWithHistoryConfiguration, setWithHistoryConfiguration } = require('../testModules/setProperties');
 

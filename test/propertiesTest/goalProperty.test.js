@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getGoalPropertyValue, getTerminalGoalProperty } = require('../../Properties/GoalProperties/GoalProperty');
+const { getGoalPropertyValue, getTerminalGoalProperty } = require('../../Properties/TerminalProperties/GoalProperties/GoalProperty');
 
 const { cleanGoalConfiguration, setGoalConfiguration } = require('../testModules/setProperties');
 

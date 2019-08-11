@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty } = require('../../Properties/ExecutionProperties/MavenExecutionProperty');
+const { getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty } = require('../../Properties/TerminalProperties/ExecutionProperties/MavenExecutionProperty');
 
 const { cleanMavenExecutionConfiguration, setMavenExecutionConfiguration } = require('../testModules/setProperties');
 
