@@ -6,4 +6,5 @@ test/Stack/.project
 test/Stack/.settings/
 
 test/Stack/target
+test/StackNotMavenPIT/target
 test/testCommandLineResults
