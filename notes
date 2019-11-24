@@ -1,0 +1,1 @@
+java -cp ".\PiTEST\pitest-1.4.10.jar;.\PiTEST\pitest-command-line-1.4.10.jar;.\PiTEST\pitest-entry-1.4.10.jar;.\PiTEST\junit-4.11.jar;.\PiTEST\testng-7.0.0.jar" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir .\test\Stack\target\ --targetClasses org.* --targetTests org.* --sourceDirs .\test\StackNotMavenPIT\src
