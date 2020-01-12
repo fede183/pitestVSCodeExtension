@@ -30,8 +30,9 @@ function activate(context) {
 
 		terminal.sendText(mutationCommand() + terminalFinish);
 		if(getShowWebResultsPropertyValue()) {
-			executeWhenConditionIsReach(() => !vscode.window.terminals.includes(terminal), 
-			() => showLinkResults(workspaceFolder));
+			const conditionToReach = () => !vscode.window.terminals.includes(terminal);
+			const functionToExecute = () => showLinkResults(workspaceFolder);
+			executeWhenConditionIsReach(conditionToReach, functionToExecute);
 		}
 	});
 

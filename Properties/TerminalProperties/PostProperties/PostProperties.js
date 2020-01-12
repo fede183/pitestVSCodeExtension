@@ -7,7 +7,8 @@ const { getTerminalIncludeProperty } = require('./IncludeProperty');
 const { getAllProperties } = require('../TerminalPropertiesCollectionExecution');
 
 const getAllPostProperties = () => { 
-    const listOfProperties = [getTerminalWithHistoryProperty, getTerminalMutationThresholdProperty, getTerminalIncludeProperty];
+    const listOfProperties = [getTerminalWithHistoryProperty, getTerminalMutationThresholdProperty, 
+        getTerminalIncludeProperty];
         
     return getAllProperties(listOfProperties);
 };      
