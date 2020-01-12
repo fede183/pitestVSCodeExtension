@@ -24,9 +24,12 @@
 			"type": "object",
 			"title": "Pitest Configuration",
 			"properties": {
-				"goal.value":{
+				"goal.value": {
 					"type": "string",
-					"oneOf": ["mutationCoverage", "scmMutationCoverage"],
+					"oneOf": [
+						"mutationCoverage",
+						"scmMutationCoverage"
+					],
 					"default": "mutationCoverage",
 					"description": "Goal to reach."
 				},
@@ -52,7 +55,11 @@
 				},
 				"include.value": {
 					"type": "array",
-					"multipleOf": ["ADDED", "UNKNOWN", "MODIFIED"],
+					"multipleOf": [
+						"ADDED",
+						"UNKNOWN",
+						"MODIFIED"
+					],
 					"default": [],
 					"description": "The scm mutation coverage goal analyses only classes that match the filters and the source file has a given status within the project source control system."
 				},
@@ -69,14 +76,14 @@
 		"test": "node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28",
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.17.13",
 		"eslint": "^5.13.0",
-		"@types/node": "^10.12.21",
-		"@types/mocha": "^2.2.42"
+		"typescript": "^3.7.4",
+		"vscode": "^1.1.36"
 	},
 	"dependencies": {
 		"babel-plugin-transform-async-to-generator": "^6.24.1",
-		"mocha": "^6.1.4"
+		"mocha": "^6.2.2"
 	}
 }
