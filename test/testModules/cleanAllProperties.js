@@ -1,9 +1,12 @@
-const { cleanOutputFileConfiguration, cleanMavenExecutionConfiguration, cleanWithHistoryConfiguration, 
-    cleanMutationThresholdConfiguration, cleanIncludeConfiguration, cleanGoalConfiguration, cleanShowWebResultsConfiguration } = require('./setProperties');
+const { cleanOutputFileConfiguration, cleanExecutionModeConfiguration, cleanMavenExecutionConfiguration,
+    cleanCommandLineExecutionConfiguration, cleanWithHistoryConfiguration, cleanMutationThresholdConfiguration, 
+    cleanIncludeConfiguration, cleanGoalConfiguration, cleanShowWebResultsConfiguration } = require('./setProperties');
 
 const cleanAllProperties = () => {
     cleanOutputFileConfiguration();
-	cleanMavenExecutionConfiguration();
+    cleanExecutionModeConfiguration();
+    cleanMavenExecutionConfiguration();
+    cleanCommandLineExecutionConfiguration()
     cleanWithHistoryConfiguration();
     cleanMutationThresholdConfiguration();
     cleanIncludeConfiguration();

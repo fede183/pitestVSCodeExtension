@@ -18,7 +18,7 @@ const setOutputFileConfiguration = () => {
 }
 
 const cleanExecutionModeConfiguration = () => {
-	setConfiguration("executionMode", "value", null);
+	setConfiguration("executionMode", "value", "Maven");
 }
 
 const setExecutionModeConfiguration = (value) => {
