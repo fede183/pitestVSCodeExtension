@@ -149,7 +149,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	}
 
 	test("Stack Project maven execution custom directory", () => propertyTest(setMavenExecutionConfiguration, executeWhenForMavenExecutionSet,
-		`C:\\Users\\Federico\\opt\\mvn\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
+		`E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
 	test("Stack Project with history", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,

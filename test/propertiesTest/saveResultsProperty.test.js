@@ -6,5 +6,11 @@ const { cleanOutputFileConfiguration, setOutputFileConfiguration } = require('..
 
 const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 
-getSimplePropertyTest("SaveResultProperty", "saveResult", cleanOutputFileConfiguration, setOutputFileConfiguration, 
-getSaveResultsPropertyValue, getTerminalSaveResultsProperty, value => value ? ` > ${value}` : '', executeWhenForSaveResultSet);
+getSimplePropertyTest("SaveResultProperty", 
+"saveResult", 
+cleanOutputFileConfiguration, 
+setOutputFileConfiguration, 
+getSaveResultsPropertyValue, 
+getTerminalSaveResultsProperty, 
+value => value ? ` > ${value}` : '', 
+executeWhenForSaveResultSet);

@@ -38,10 +38,24 @@
 					"default": null,
 					"description": "Specifies the file path where the output will be saved."
 				},
+				"executionMode.value": {
+					"type": "string",
+					"enum": [
+						"Maven",
+						"Command-Line"
+					],
+					"default": "Maven",
+					"description": "The execution mode can be using a pure command line, in witch case the requirement is to have java installed. The maven mode allows to execute PITest using maven, but has the requierement of having maven and a pom file with PITest in it."
+				},
 				"mavenExecution.value": {
 					"type": "string",
 					"default": null,
 					"description": "Specifies the maven directory, if is empty try to use MAVEN_HOME."
+				},
+				"commandLineExecution.value": {
+					"type": "string",
+					"default": null,
+					"description": "Specifies the java directory, if is empty try to use JAVA_HOME."
 				},
 				"withHistory.value": {
 					"type": "boolean",

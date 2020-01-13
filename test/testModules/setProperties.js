@@ -17,12 +17,28 @@ const setOutputFileConfiguration = () => {
 	setConfiguration("saveResult", "value", testCommandLineResults.getDir());
 }
 
+const cleanExecutionModeConfiguration = () => {
+	setConfiguration("executionMode", "value", null);
+}
+
+const setExecutionModeConfiguration = (value) => {
+	setConfiguration("executionMode", "value", value);
+}
+
 const cleanMavenExecutionConfiguration = () => {
 	setConfiguration("mavenExecution", "value", null);
 }
 
 const setMavenExecutionConfiguration = () => {
-	setConfiguration("mavenExecution", "value", "C:\\Users\\Federico\\opt\\mvn\\bin\\mvn");
+	setConfiguration("mavenExecution", "value", "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn");
+}
+
+const cleanCommandLineExecutionConfiguration = () => {
+	setConfiguration("commandLineExecution", "value", null);
+}
+
+const setCommandLineExecutionConfiguration = () => {
+	setConfiguration("commandLineExecution", "value", "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\jdk-10\\bin\\java");
 }
 
 const cleanWithHistoryConfiguration = () => {
@@ -64,9 +80,13 @@ const cleanShowWebResultsConfiguration = () => {
 
 module.exports = {
     cleanOutputFileConfiguration,
-    setOutputFileConfiguration,
+	setOutputFileConfiguration,
+	cleanExecutionModeConfiguration,
+	setExecutionModeConfiguration,
     cleanMavenExecutionConfiguration,
 	setMavenExecutionConfiguration,
+	cleanCommandLineExecutionConfiguration,
+	setCommandLineExecutionConfiguration,
 	cleanWithHistoryConfiguration,
 	setWithHistoryConfiguration,
 	cleanMutationThresholdConfiguration,

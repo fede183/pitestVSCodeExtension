@@ -6,5 +6,11 @@ const { cleanWithHistoryConfiguration, setWithHistoryConfiguration } = require('
 
 const { executeWhenForWithHistorySet } = require('../testModules/executeWhenModule');
 
-getSimplePropertyTest("WithHistoryProperty", "withHistory", cleanWithHistoryConfiguration, setWithHistoryConfiguration, 
-getWithHistoryPropertyValue, getTerminalWithHistoryProperty, value => value ? ' -DwithHistory' : '', executeWhenForWithHistorySet);
+getSimplePropertyTest("WithHistoryProperty", 
+"withHistory", 
+cleanWithHistoryConfiguration, 
+setWithHistoryConfiguration, 
+getWithHistoryPropertyValue, 
+getTerminalWithHistoryProperty, 
+value => value ? ' -DwithHistory' : '', 
+executeWhenForWithHistorySet);

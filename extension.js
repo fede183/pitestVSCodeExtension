@@ -20,9 +20,7 @@ function activate(context) {
 		const terminal = vscode.window.activeTerminal ? vscode.window.activeTerminal : vscode.window.createTerminal();
 		terminal.show();
 		
-		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.path.startsWith("/c:") ? 
-		vscode.workspace.workspaceFolders[0].uri.path.substring(1) : 
-		vscode.workspace.workspaceFolders[0].uri.path;
+		const workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
 		terminal.sendText('cd ' + workspaceFolder);
 

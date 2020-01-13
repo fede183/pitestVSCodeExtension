@@ -70,7 +70,15 @@ const conditionForProperties = (configName) => getValue(configName, 'value')
 
 const conditionForSaveResultSet = () => conditionForProperties('saveResult');
 
-const conditionForMavenExecutionSet = () => conditionForProperties('mavenExecution');
+const conditionForExecutionModeMavenSet = () => getValue('executionMode', 'value') === "Maven";
+
+const conditionForExecutionModeCommandLineSet = () => getValue('executionMode', 'value') === "Command-Line";
+
+const conditionForMavenExecutionSet = () => conditionForExecutionModeMavenSet() && 
+	conditionForProperties('mavenExecution');
+
+const conditionForCommandLineExecutionSet = () => conditionForExecutionModeCommandLineSet() && 
+	conditionForProperties('commandLineExecution');
 
 const conditionForWithHistorySet = () => conditionForProperties('withHistory');
 
@@ -84,8 +92,20 @@ const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
 }
 
+const executeWhenForExecutionModeMavenSet = (program) => {
+	executeWhenConditionIsReach(conditionForExecutionModeMavenSet, program);
+}
+
+const executeWhenForExecutionModeCommandLineSet = (program) => {
+	executeWhenConditionIsReach(conditionForExecutionModeCommandLineSet, program);
+}
+
 const executeWhenForMavenExecutionSet = (program) => {
 	executeWhenConditionIsReach(conditionForMavenExecutionSet, program);
+}
+
+const executeWhenForCommandLineExecutionSet = (program) => {
+	executeWhenConditionIsReach(conditionForCommandLineExecutionSet, program);
 }
 
 const executeWhenForWithHistorySet = (program) => {
@@ -113,7 +133,10 @@ module.exports = {
 	executeWhenPitestIsDoneForEmpty,
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
+	executeWhenForExecutionModeMavenSet,
+	executeWhenForExecutionModeCommandLineSet,
 	executeWhenForMavenExecutionSet,
+	executeWhenForCommandLineExecutionSet,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,

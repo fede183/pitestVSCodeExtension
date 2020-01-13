@@ -6,5 +6,11 @@ const { cleanGoalConfiguration, setGoalConfiguration } = require('../testModules
 
 const { executeWhenForGoalSet } = require('../testModules/executeWhenModule');
 
-getSimplePropertyTest("GoalProperty", "goal", cleanGoalConfiguration, setGoalConfiguration, 
-getGoalPropertyValue, getTerminalGoalProperty, value => `org.pitest:pitest-maven:${value}`, executeWhenForGoalSet);
+getSimplePropertyTest("GoalProperty", 
+"goal", 
+cleanGoalConfiguration, 
+setGoalConfiguration, 
+getGoalPropertyValue, 
+getTerminalGoalProperty, 
+value => `org.pitest:pitest-maven:${value}`, 
+executeWhenForGoalSet);

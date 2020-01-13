@@ -1,10 +1,20 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty } = require('../../Properties/TerminalProperties/ExecutionProperties/MavenExecutionProperty');
+const { getMavenExecutionPropertyValue, getTerminalExecutionProperty } = require('../../Properties/TerminalProperties/ExecutionProperties/ExecutionProperty');
 
-const { cleanMavenExecutionConfiguration, setMavenExecutionConfiguration } = require('../testModules/setProperties');
+const { cleanMavenExecutionConfiguration, setMavenExecutionConfiguration, setExecutionModeConfiguration } = require('../testModules/setProperties');
 
-const { executeWhenForMavenExecutionSet } = require('../testModules/executeWhenModule');
+const { executeWhenForMavenExecutionSet, executeWhenForExecutionModeMavenSet } = require('../testModules/executeWhenModule');
 
-getSimplePropertyTest("MavenExecutionProperty", "mavenExecution", cleanMavenExecutionConfiguration, setMavenExecutionConfiguration, 
-getMavenExecutionPropertyValue, getTerminalMavenExecutionProperty, value => (value ? value + ".cmd" : "mvn") + " ", executeWhenForMavenExecutionSet);
+getSimplePropertyTest("MavenExecutionProperty", 
+"mavenExecution", 
+() => {
+    setExecutionModeConfiguration("Maven");
+    cleanMavenExecutionConfiguration();
+},  
+setMavenExecutionConfiguration, 
+getMavenExecutionPropertyValue, 
+getTerminalExecutionProperty, 
+value => (value ? value + ".cmd" : "mvn") + " ", 
+executeWhenForMavenExecutionSet,
+executeWhenForExecutionModeMavenSet);
