@@ -20,6 +20,20 @@ const buildProgram = /**
 	printCommandResults(terminal, 'mvn clean install');
 }
 
+//Build Project
+const buildProgramAndExitTerminal = /**
+ * @param {{ addDir: (arg0: string) => import("fs").PathLike; getDir: () => string; }} projectDirectory
+ */
+ function(projectDirectory) {
+	if (!fs.existsSync(projectDirectory.addDir("pom.xml"))) {
+		return;
+	}
+	const terminal = vscode.window.createTerminal();
+	terminal.show();
+	terminal.sendText('cd ' + projectDirectory.getDir());
+	printCommandResults(terminal, 'mvn clean install ; exit');
+}
+
 //Print command results
 /**
  * @param {import("vscode").Terminal} terminal
@@ -49,5 +63,6 @@ const cleanProgram = () => {
 module.exports = {
     buildProgram,
     printCommandResults,
-    cleanProgram,
+	cleanProgram,
+	buildProgramAndExitTerminal,
 }

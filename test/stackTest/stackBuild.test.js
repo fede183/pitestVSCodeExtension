@@ -15,8 +15,8 @@ const { stackDirectory,
   	targetDirectory,
   	testCommandLineResults, } = require('../testModules/testDirModule');
 
-const { buildProgram,
-		cleanProgram, } = require('../testModules/testModule');
+const { cleanProgram,
+		buildProgramAndExitTerminal, } = require('../testModules/testModule');
 
 const { executeWhenTestCommandLineResultFileIsAvailable, executeWhenBuildIsDone } = require('../testModules/executeWhenModule');
 
@@ -47,7 +47,7 @@ suite("Stack Build Extension Tests", function() {
 	});
 
 	test("Stack Project build no errors in build", function() {		
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 
 		return new Promise((resolve, reject) => executeWhenBuildIsDone(() => executeWhenTestCommandLineResultFileIsAvailable( 
 			function(){
