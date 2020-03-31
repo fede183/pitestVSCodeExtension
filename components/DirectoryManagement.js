@@ -1,9 +1,8 @@
 class DirectoryManagement {
     constructor(dir) {
-        if(dir instanceof DirectoryManagement){
+        if (dir instanceof DirectoryManagement) {
             this.dir = dir.getDir();
-        }
-        else {
+        } else {
             this.dir = dir;
         }
     }

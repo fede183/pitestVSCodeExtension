@@ -13,10 +13,13 @@ const targetDirectory = new DirectoryManagement(stackDirectory.addDir("target"))
 
 const testCommandLineResults = new DirectoryManagement(dirName.addDir("testCommandLineResults"));
 
+const readMode = 'utf8';
+
 module.exports = {
     dirName,
     stackDirectory,
     emptyDirectory,
     targetDirectory,
     testCommandLineResults,
+    readMode,
 }

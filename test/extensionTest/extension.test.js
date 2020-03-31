@@ -12,17 +12,17 @@ const fs = require("fs");
 const { stackDirectory,
 	emptyDirectory,
   	targetDirectory,
-  	testCommandLineResults, } = require('../testModules/testDirModule');
+	testCommandLineResults,
+	readMode, } = require('../testModules/testDirModule');
 
 const { buildProgram, cleanProgram, } = require('../testModules/testModule');
-
 		
 const {	setOutputFileConfiguration, 
 	setMavenExecutionConfiguration, 
 	setWithHistoryConfiguration,
 	setMutationThresholdConfiguration,
 	setIncludeConfiguration,
-	setGoalConfiguration } = require('../testModules/setProperties');
+	setGoalConfiguration, } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
@@ -32,7 +32,8 @@ const { executeWhenBuildIsDone,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,
-	executeWhenForGoalSet } = require('../testModules/executeWhenModule');
+	executeWhenForGoalSet,
+	executeWhenTerminalIsOutOfUse, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -51,13 +52,13 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest directories exists", function() {
 		buildProgram(stackDirectory);
 		executeWhenBuildIsDone(() => vscode.commands.executeCommand('extension.pitest'));
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
 
-			if(mutationCommand() !== "mvn org.pitest:pitest-maven:mutationCoverage"){
+			if (mutationCommand() !== "mvn org.pitest:pitest-maven:mutationCoverage") {
 				reject();
 			}
 
-			if(!fs.existsSync(targetDirectory.addDir("pit-reports"))){
+			if (!fs.existsSync(targetDirectory.addDir("pit-reports"))) {
 				reject();	
 			}
 
@@ -70,14 +71,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		executeWhenBuildIsDone(() => setOutputFileConfiguration());
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
-			function(){
+			function() {
 
-				if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
+				if (mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`) {
 					reject();
 				}
 
-				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-				if(fileContent.includes("[ERROR]")){
+				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+				if (fileContent.includes("[ERROR]")) {
 					reject("testCommandLineResults");	
 				}
 
@@ -89,14 +90,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		buildProgram(emptyDirectory);
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
-		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
+		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
+			if (mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`) {
 				reject();
 			}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(!fileContent.includes("[ERROR]")){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+			if (!fileContent.includes("[ERROR]")) {
 				reject("testCommandLineResults");	
 			}
 
@@ -107,14 +108,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
-		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function(){
+		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`){
+			if (mutationCommand() !== `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`) {
 				reject();
 			}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(!fileContent.includes("[ERROR]")){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+			if (!fileContent.includes("[ERROR]")) {
 				reject();	
 			}
 
@@ -133,14 +134,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 				});
 			});
 		});
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
 
-			if(mutationCommand() !== command){
+			if (mutationCommand() !== command) {
 				reject();
 			}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(fileContent.includes("[ERROR]")){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+			if (fileContent.includes("[ERROR]")) {
 				reject("testCommandLineResults");	
 			}
 
@@ -148,9 +149,9 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}
 
-	test("Stack Project maven execution custom directory", () => propertyTest(setMavenExecutionConfiguration, executeWhenForMavenExecutionSet,
-		`E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn.cmd org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
-	).timeout(defaultTestTimeout);
+	// test("Stack Project maven execution custom directory", () => propertyTest(setMavenExecutionConfiguration, executeWhenForMavenExecutionSet,
+	// 	`../maven/bin/mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
+	// ).timeout(defaultTestTimeout);
 
 	test("Stack Project with history", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`)
@@ -171,14 +172,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 				});
 			});
 		});
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage > ${testCommandLineResults.getDir()}`){
+			if (mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage > ${testCommandLineResults.getDir()}`) {
 				reject();
 			}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(fileContent.includes("[ERROR]")){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+			if (fileContent.includes("[ERROR]")) {
 				reject("testCommandLineResults");	
 			}
 
@@ -200,14 +201,14 @@ suite("Stack Pitest Execution Extension Tests", function() {
 				});
 			});
 		});
-		return new Promise((resolve, reject) => executeWhenPitestIsDone(function(){
+		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
 
-			if(mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage -DmutationThreshold=ADDED,UNKNOWN > ${testCommandLineResults.getDir()}`){
+			if (mutationCommand() !== `mvn org.pitest:pitest-maven:scmMutationCoverage -DmutationThreshold=ADDED,UNKNOWN > ${testCommandLineResults.getDir()}`) {
 				reject();
 			}
 
-			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf16le");
-			if(fileContent.includes("[ERROR]")){
+			const fileContent = fs.readFileSync(testCommandLineResults.getDir(), readMode);
+			if (fileContent.includes("[ERROR]")) {
 				reject("testCommandLineResults");	
 			}
 

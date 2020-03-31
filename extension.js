@@ -25,9 +25,10 @@ function activate(context) {
 		terminal.sendText('cd ' + workspaceFolder);
 
 		const terminalFinish = " ; exit"; 
-
+		
 		terminal.sendText(mutationCommand() + terminalFinish);
-		if(getShowWebResultsPropertyValue()) {
+		
+		if (getShowWebResultsPropertyValue()) {
 			const conditionToReach = () => !vscode.window.terminals.includes(terminal);
 			const functionToExecute = () => showLinkResults(workspaceFolder);
 			executeWhenConditionIsReach(conditionToReach, functionToExecute);

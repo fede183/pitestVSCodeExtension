@@ -31,11 +31,11 @@ const printCommandResults = (terminal, command) => {
 
 //Clean Project
 const cleanProgram = () => {
-	if(fs.existsSync(targetDirectory.getDir())){
+	if (fs.existsSync(targetDirectory.getDir())) {
 		const rimraf = require('rimraf');
 		rimraf(targetDirectory.getDir(), () => {});
 	}
-	if(fs.existsSync(testCommandLineResults.getDir())){
+	if (fs.existsSync(testCommandLineResults.getDir())) {
 		fs.unlinkSync(testCommandLineResults.getDir());
 	}
 	

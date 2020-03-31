@@ -3,6 +3,7 @@
 
 //FileSystem
 const fs = require("fs");
+const vscode = require('vscode');
 
 const { getValue } = require('../../Properties/Property');
 
@@ -16,16 +17,16 @@ const { testCommandLineResults, targetDirectory } = require('./testDirModule');
  * @param {() => void} program
  */
 const executeWhenFileIsAvailable = (filePath, program) => {
-	var delInterval = setInterval(checkIfFileIsAvailable, 1000);
+	let delInterval = setInterval(checkIfFileIsAvailable, 1000);
 	function checkIfFileIsAvailable() {
-		if(fs.existsSync(filePath)){
-			fs.open(filePath, 'r+', function(err, fd){
-				if (err && err.code === 'EBUSY'){
+		if (fs.existsSync(filePath)) {
+			fs.open(filePath, 'r+', function(err, fd) {
+				if (err && err.code === 'EBUSY') {
 					//do nothing till next loop
-				} else if (err && err.code === 'ENOENT'){
+				} else if (err && err.code === 'ENOENT') {
 					clearInterval(delInterval);
 				} else {
-					fs.close(fd, function(){
+					fs.close(fd, function() {
 						clearInterval(delInterval);
 						program();
 					});
@@ -35,7 +36,9 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 	}	
 }
 
-const executeWhenTestCommandLineResultFileIsAvailable = (program) => executeWhenFileIsAvailable(testCommandLineResults.getDir(), program);
+const executeWhenTestCommandLineResultFileIsAvailable = (program) =>
+	executeWhenFileIsAvailable(testCommandLineResults.getDir(), 
+		() => executeWhenTerminalIsOutOfUse(program));
 
 const executeWhenConditionIsReachAndTestFileIsComplete = (condition, program) => {
 	executeWhenConditionIsReach(condition, 
@@ -63,7 +66,7 @@ const executeWhenPitestIsDone = (program) => {
 	const directories = ["pit-reports"];
 
 	executeWhenConditionIsReachAndTestFileIsComplete(() => targetDirectoryStructIsCorrect(directories), 
-	program);
+	() => executeWhenTerminalIsOutOfUse(program));
 }
 
 const conditionForProperties = (configName) => getValue(configName, 'value')
@@ -87,6 +90,8 @@ const conditionForMutationThresholdSet = () => conditionForProperties('mutationT
 const conditionForIncludeSet = () => getValue('include', 'value') !== [];
 
 const conditionForGoalSet = () => getValue('goal', 'value') !== 'mutationCoverage';
+
+const conditionTerminalIsOutOfUse = () => vscode.window.terminals.length === 0;
 
 const executeWhenForSaveResultSet = (program) => {
 	executeWhenConditionIsReach(conditionForSaveResultSet, program);
@@ -124,6 +129,8 @@ const executeWhenForGoalSet = (program) => {
 	executeWhenConditionIsReach(conditionForGoalSet, program);
 }
 
+const executeWhenTerminalIsOutOfUse = (program) =>
+	executeWhenConditionIsReach(conditionTerminalIsOutOfUse, program);
 
 module.exports = {
 	executeWhenFileIsAvailable,
