@@ -1,2 +1,4 @@
-Executing example line for Windows(doesn't work)
+Executing example line for Windows(It works)
 java -classpath ".\test\StackNotMavenPIT\target\classes;.\test\StackNotMavenPIT\target\test-classes;.\PiTEST\pitest-1.4.10.jar;.\PiTEST\pitest-command-line-1.4.10.jar;.\PiTEST\pitest-entry-1.4.10.jar;.\PiTEST\junit-4.11.jar" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir .\test\Stack\target --targetClasses org.autotest.* --targetTests org.autotest.* --sourceDirs .\test\StackNotMavenPIT\src\main\,.\test\StackNotMavenPIT\src\test\
+Executing example line for Linux(It works)
+java -classpath "target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/
