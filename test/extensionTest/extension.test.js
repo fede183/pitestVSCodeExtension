@@ -15,7 +15,7 @@ const { stackDirectory,
 	testCommandLineResults,
 	readMode, } = require('../testModules/testDirModule');
 
-const { buildProgram, cleanProgram, } = require('../testModules/testModule');
+const { buildProgramAndExitTerminal, cleanProgram, } = require('../testModules/testModule');
 		
 const {	setOutputFileConfiguration, 
 	setMavenExecutionConfiguration, 
@@ -50,7 +50,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	});
 
 	test("Stack Project pitest directories exists", function() {
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 		executeWhenBuildIsDone(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
 
@@ -67,7 +67,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("Stack Project pitest with pom file(with output file configuration)", function() {
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 		executeWhenBuildIsDone(() => setOutputFileConfiguration());
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
@@ -87,7 +87,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
-		buildProgram(emptyDirectory);
+		buildProgramAndExitTerminal(emptyDirectory);
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
@@ -124,7 +124,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	}).timeout(defaultTestTimeout);
 
 	const propertyTest = (set, execute, command) => {
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 		setOutputFileConfiguration();
 		set();
 		executeWhenBuildIsDone(() => {
@@ -162,7 +162,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	).timeout(defaultTestTimeout);
 
 	test.skip("Stack Project goal", function() {
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 		setOutputFileConfiguration();
 		setGoalConfiguration();
 		executeWhenBuildIsDone(() => {
@@ -188,7 +188,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	});
 
 	test.skip("Stack Project mutation threshold", function() {
-		buildProgram(stackDirectory);
+		buildProgramAndExitTerminal(stackDirectory);
 		setOutputFileConfiguration();
 		setIncludeConfiguration();
 		setGoalConfiguration();
