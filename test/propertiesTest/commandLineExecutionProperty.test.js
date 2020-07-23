@@ -15,6 +15,7 @@ getSimplePropertyTest("CommandLineExecutionProperty",
 setCommandLineExecutionConfiguration, 
 getCommandLineExecutionPropertyValue, 
 getTerminalExecutionProperty, 
-value => (value ? value + ".exe" : "java") + " ", 
+value => (value ? value + ".exe" : "java") + 
+" -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" ", 
 executeWhenForCommandLineExecutionSet, 
 executeWhenForExecutionModeCommandLineSet);

@@ -10,7 +10,7 @@ const setConfiguration = function (configName, valueName, value) {
 }
 
 const cleanOutputFileConfiguration = () => {
-	setConfiguration("saveResult", "value", null);
+	setConfiguration("saveResult", "value", "");
 }
 
 const setOutputFileConfiguration = () => {
@@ -26,7 +26,7 @@ const setExecutionModeConfiguration = (value) => {
 }
 
 const cleanMavenExecutionConfiguration = () => {
-	setConfiguration("mavenExecution", "value", null);
+	setConfiguration("mavenExecution", "value", "");
 }
 
 const setMavenExecutionConfiguration = () => {
@@ -34,7 +34,7 @@ const setMavenExecutionConfiguration = () => {
 }
 
 const cleanCommandLineExecutionConfiguration = () => {
-	setConfiguration("commandLineExecution", "value", null);
+	setConfiguration("commandLineExecution", "value", "");
 }
 
 const setCommandLineExecutionConfiguration = () => {
@@ -50,7 +50,7 @@ const setWithHistoryConfiguration = () => {
 }
 
 const cleanMutationThresholdConfiguration = () => {
-	setConfiguration("mutationThreshold", "value", null);
+	setConfiguration("mutationThreshold", "value", 0);
 }
 
 const setMutationThresholdConfiguration = () => {

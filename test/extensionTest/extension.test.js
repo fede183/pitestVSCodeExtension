@@ -17,8 +17,7 @@ const { stackDirectory,
 
 const { buildProgramAndExitTerminal, cleanProgram, } = require('../testModules/testModule');
 		
-const {	setOutputFileConfiguration, 
-	setMavenExecutionConfiguration, 
+const {	setOutputFileConfiguration,  
 	setWithHistoryConfiguration,
 	setMutationThresholdConfiguration,
 	setIncludeConfiguration,
@@ -28,12 +27,10 @@ const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenForSaveResultSet,
 	executeWhenTestCommandLineResultFileIsAvailable,
-	executeWhenForMavenExecutionSet,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,
-	executeWhenForGoalSet,
-	executeWhenTerminalIsOutOfUse, } = require('../testModules/executeWhenModule');
+	executeWhenForGoalSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 

@@ -35,7 +35,7 @@
 				},
 				"saveResult.value": {
 					"type": "string",
-					"default": null,
+					"default": "",
 					"description": "Specifies the file path where the output will be saved."
 				},
 				"executionMode.value": {
@@ -49,12 +49,12 @@
 				},
 				"mavenExecution.value": {
 					"type": "string",
-					"default": null,
+					"default": "",
 					"description": "Specifies the maven directory, if is empty try to use MAVEN_HOME."
 				},
 				"commandLineExecution.value": {
 					"type": "string",
-					"default": null,
+					"default": "",
 					"description": "Specifies the java directory, if is empty try to use JAVA_HOME."
 				},
 				"withHistory.value": {
@@ -64,7 +64,7 @@
 				},
 				"mutationThreshold.value": {
 					"type": "integer",
-					"default": null,
+					"default": 0,
 					"description": "Mutation score threshold at which to fail build."
 				},
 				"include.value": {

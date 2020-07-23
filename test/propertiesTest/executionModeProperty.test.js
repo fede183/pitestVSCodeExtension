@@ -12,6 +12,6 @@ cleanExecutionModeConfiguration,
 () => setExecutionModeConfiguration("Command-Line"), 
 getExecutionModePropertyValue, 
 getTerminalExecutionProperty, 
-value => (value === "Maven" ? "mvn" : "java") + " ", 
+value => (value === "Maven" ? "mvn" : "java -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\"") + " ", 
 executeWhenForExecutionModeCommandLineSet,
 executeWhenForExecutionModeMavenSet);
