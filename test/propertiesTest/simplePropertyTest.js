@@ -11,10 +11,10 @@ const getSimplePropertyTest = (name, configName, clean, set, getValue, getTermin
 		const value = config.get('value');
 		const terminalProperty = getTerminal(value);
 		
-		if(value !== getValue()){
+		if (value !== getValue()) {
 			reject("value");
 		}
-		if(terminalProperty !== getTerminalToTest()){
+		if (terminalProperty !== getTerminalToTest()) {
 			reject("terminalProperty");
 		}
 		resolve();

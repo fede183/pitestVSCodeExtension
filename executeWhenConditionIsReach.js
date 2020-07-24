@@ -4,7 +4,7 @@
 const executeWhenConditionIsReach = (condition, program) => {
 	var delInterval = setInterval(checkConditionIsReach, 1000);
 	function checkConditionIsReach() {
-		if(condition()){
+		if (condition()) {
 			clearInterval(delInterval);
 			program();
 		}

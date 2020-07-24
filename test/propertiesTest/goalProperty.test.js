@@ -1,5 +1,7 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
+const { getExecutionModePropertyValue } = require('../../Properties/TerminalProperties/ExecutionProperties/ExecutionProperty');
+
 const { getGoalPropertyValue, getTerminalGoalProperty } = require('../../Properties/TerminalProperties/GoalProperties/GoalProperty');
 
 const { cleanGoalConfiguration, setGoalConfiguration } = require('../testModules/setProperties');
@@ -12,5 +14,5 @@ cleanGoalConfiguration,
 setGoalConfiguration, 
 getGoalPropertyValue, 
 getTerminalGoalProperty, 
-value => `org.pitest:pitest-maven:${value}`, 
+value => getExecutionModePropertyValue() === "Maven" ? `org.pitest:pitest-maven:${value}` : "", 
 executeWhenForGoalSet);

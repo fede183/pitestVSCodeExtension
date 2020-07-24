@@ -50,22 +50,22 @@ suite("Stack Build Extension Tests", function() {
 		buildProgramAndExitTerminal(stackDirectory);
 
 		return new Promise((resolve, reject) => executeWhenBuildIsDone(() => executeWhenTestCommandLineResultFileIsAvailable( 
-			function(){
+			function() {
 				const directories = ["classes", "coverage-reports", "maven-archiver", "maven-status", "site", 
 				"surefire-reports", "test-classes", "stackar-1.0-SNAPSHOT.jar"];
 
-				if(!fs.existsSync(targetDirectory.getDir())){
+				if (!fs.existsSync(targetDirectory.getDir())) {
 					reject("target");	
 				}
 
 				directories.forEach(directory => {
-					if(!fs.existsSync(targetDirectory.addDir(directory))){
+					if (!fs.existsSync(targetDirectory.addDir(directory))) {
 						reject(directory);	
 					}
 				});
 				
 				const fileContent = fs.readFileSync(testCommandLineResults.getDir(), "utf8");
-				if(fileContent.includes("[ERROR]")){
+				if (fileContent.includes("[ERROR]")) {
 					reject("testCommandLineResults");	
 				}
 				

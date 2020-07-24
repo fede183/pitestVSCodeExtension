@@ -15,7 +15,7 @@ const getLastReport = (reportDirectory) => {
 const showLinkResults = (workspaceFolder) => {
     const reportDirectory = `${workspaceFolder}/target/pit-reports`;
     const lastReport = getLastReport(reportDirectory);
-    if(lastReport){
+    if (lastReport) {
         vscode.window.showErrorMessage("Cannot read any report");
     }
     const directoryForLink = `${reportDirectory}/${lastReport}/index.html`;
