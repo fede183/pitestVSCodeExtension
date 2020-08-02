@@ -6,7 +6,7 @@ const cleanAllProperties = () => {
     cleanOutputFileConfiguration();
     cleanExecutionModeConfiguration();
     cleanMavenExecutionConfiguration();
-    cleanCommandLineExecutionConfiguration()
+    cleanCommandLineExecutionConfiguration();
     cleanWithHistoryConfiguration();
     cleanMutationThresholdConfiguration();
     cleanIncludeConfiguration();

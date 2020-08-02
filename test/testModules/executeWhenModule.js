@@ -69,27 +69,31 @@ const executeWhenPitestIsDone = (program) => {
 	() => executeWhenTerminalIsOutOfUse(program));
 }
 
-const conditionForProperties = (configName) => getValue(configName, 'value')
+const conditionForBooleanProperty = (configName) => getValue(configName, 'value')
 
-const conditionForSaveResultSet = () => conditionForProperties('saveResult');
+const conditionForEqualProperties = (configName, defaultEqualValue) => getValue(configName, 'value') === defaultEqualValue; 
 
-const conditionForExecutionModeMavenSet = () => getValue('executionMode', 'value') === "Maven";
+const conditionForDiffProperties = (configName, defaultDiffValue) => getValue(configName, 'value') !== defaultDiffValue; 
 
-const conditionForExecutionModeCommandLineSet = () => getValue('executionMode', 'value') === "Command-Line";
+const conditionForSaveResultSet = () => conditionForBooleanProperty('saveResult');
+
+const conditionForExecutionModeMavenSet = () => conditionForEqualProperties('executionMode', 'Maven');
+
+const conditionForExecutionModeCommandLineSet = () => conditionForEqualProperties('executionMode', 'Command-Line');
 
 const conditionForMavenExecutionSet = () => conditionForExecutionModeMavenSet() && 
-	conditionForProperties('mavenExecution');
+	conditionForBooleanProperty('mavenExecution');
 
 const conditionForCommandLineExecutionSet = () => conditionForExecutionModeCommandLineSet() && 
-	conditionForProperties('commandLineExecution');
+	conditionForBooleanProperty('commandLineExecution');
 
-const conditionForWithHistorySet = () => conditionForProperties('withHistory');
+const conditionForWithHistorySet = () => conditionForBooleanProperty('withHistory');
 
-const conditionForMutationThresholdSet = () => conditionForProperties('mutationThreshold');
+const conditionForMutationThresholdSet = () => conditionForBooleanProperty('mutationThreshold');
 
-const conditionForIncludeSet = () => getValue('include', 'value') !== [];
+const conditionForIncludeSet = () => conditionForDiffProperties('include', []);
 
-const conditionForGoalSet = () => getValue('goal', 'value') !== 'mutationCoverage';
+const conditionForGoalSet = () => conditionForDiffProperties('goal', 'mutationCoverage');
 
 const conditionTerminalIsOutOfUse = () => vscode.window.terminals.length === 0;
 

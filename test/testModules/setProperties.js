@@ -9,16 +9,45 @@ const setConfiguration = function (configName, valueName, value) {
 	config.update(valueName, value, setAsGlobal);
 }
 
+const defaultCleanValues = { 
+	saveResult: "", 
+	executionMode: "Maven", 
+	mavenExecution: "",
+	commandLineExecution: "",
+	withHistory: false,
+	mutationThreshold: 0,
+	include: [],
+	goal: "mutationCoverage",
+	showWebResults: false,
+};
+
+const defaultSetValues = { 
+	saveResult: testCommandLineResults.getDir(), 
+	mavenExecution: "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn",
+	commandLineExecution: "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\jdk-10\\bin\\java",
+	withHistory: true,
+	mutationThreshold: 85,
+	include: ["ADDED", "UNKNOWN"],
+	goal: "scmMutationCoverage",
+};
+
+const setConfigurationWithDefaultValues = (configName, defaultValues) => 
+	setConfiguration(configName, "value", defaultValues[configName]);
+
+const setCleanConfiguration = (configName) => setConfigurationWithDefaultValues(configName, defaultCleanValues);
+
+const setSetConfiguration = (configName) => setConfigurationWithDefaultValues(configName, defaultSetValues);
+
 const cleanOutputFileConfiguration = () => {
-	setConfiguration("saveResult", "value", "");
+	setCleanConfiguration("saveResult");
 }
 
 const setOutputFileConfiguration = () => {
-	setConfiguration("saveResult", "value", testCommandLineResults.getDir());
+	setSetConfiguration("saveResult");
 }
 
 const cleanExecutionModeConfiguration = () => {
-	setConfiguration("executionMode", "value", "Maven");
+	setCleanConfiguration("executionMode");
 }
 
 const setExecutionModeConfiguration = (value) => {
@@ -26,55 +55,55 @@ const setExecutionModeConfiguration = (value) => {
 }
 
 const cleanMavenExecutionConfiguration = () => {
-	setConfiguration("mavenExecution", "value", "");
+	setCleanConfiguration("mavenExecution");
 }
 
 const setMavenExecutionConfiguration = () => {
-	setConfiguration("mavenExecution", "value", "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn");
+	setSetConfiguration("mavenExecution");
 }
 
 const cleanCommandLineExecutionConfiguration = () => {
-	setConfiguration("commandLineExecution", "value", "");
+	setCleanConfiguration("commandLineExecution");
 }
 
 const setCommandLineExecutionConfiguration = () => {
-	setConfiguration("commandLineExecution", "value", "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\jdk-10\\bin\\java");
+	setSetConfiguration("commandLineExecution");
 }
 
 const cleanWithHistoryConfiguration = () => {
-	setConfiguration("withHistory", "value", false);
+	setCleanConfiguration("withHistory");
 }
 
 const setWithHistoryConfiguration = () => {
-	setConfiguration("withHistory", "value", true);
+	setSetConfiguration("withHistory");
 }
 
 const cleanMutationThresholdConfiguration = () => {
-	setConfiguration("mutationThreshold", "value", 0);
+	setCleanConfiguration("mutationThreshold");
 }
 
 const setMutationThresholdConfiguration = () => {
-	setConfiguration("mutationThreshold", "value", 85);
+	setSetConfiguration("mutationThreshold");
 }
 
 const cleanIncludeConfiguration = () => {
-	setConfiguration("include", "value", []);
+	setCleanConfiguration("include");
 }
 
 const setIncludeConfiguration = () => {
-	setConfiguration("include", "value", ["ADDED", "UNKNOWN"]);
+	setSetConfiguration("include");
 }
 
 const cleanGoalConfiguration = () => {
-	setConfiguration("goal", "value", "mutationCoverage");
+	setCleanConfiguration("goal");
 }
 
 const setGoalConfiguration = () => {
-	setConfiguration("goal", "value", "scmMutationCoverage");
+	setSetConfiguration("goal");
 }
 
 const cleanShowWebResultsConfiguration = () => {
-	setConfiguration("showWebResults", "value", false);
+	setCleanConfiguration("showWebResults");
 }
 
 
