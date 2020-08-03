@@ -17,6 +17,7 @@
 				"--extensionDevelopmentPath=${workspaceFolder}"
 			]
 		},
+
 		{
 			"name": "All Tests",
 			"type": "extensionHost",
@@ -28,17 +29,30 @@
 				"--extensionTestsPath=${workspaceFolder}/test"
 			]
 		},
+		
 		{
-			"name": "Extension Tests",
+			"name": "Extension Tests for Maven",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/test/Stack",
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/test/extensionTest"
+				"--extensionTestsPath=${workspaceFolder}/test/extensionTestMaven"
 			]
 		},
+		{
+			"name": "Extension Tests for Java",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"${workspaceFolder}/test/Stack",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/test/extensionTestJava"
+			]
+		},
+
 		{
 			"name": "Stack Build Tests",
 			"type": "extensionHost",

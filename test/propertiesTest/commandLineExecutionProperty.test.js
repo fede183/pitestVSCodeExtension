@@ -9,7 +9,7 @@ const { executeWhenForCommandLineExecutionSet, executeWhenForExecutionModeComman
 getSimplePropertyTest("CommandLineExecutionProperty", 
 "commandLineExecution", 
 () => {
-    setExecutionModeConfiguration("Command-Line");
+    setExecutionModeConfiguration();
     cleanCommandLineExecutionConfiguration();
 }, 
 setCommandLineExecutionConfiguration, 

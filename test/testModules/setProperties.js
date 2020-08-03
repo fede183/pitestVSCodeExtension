@@ -23,6 +23,7 @@ const defaultCleanValues = {
 
 const defaultSetValues = { 
 	saveResult: testCommandLineResults.getDir(), 
+	executionMode: "Command-Line",
 	mavenExecution: "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\apache-maven-3.6.3\\bin\\mvn",
 	commandLineExecution: "E:\\Documents\\Utilities\\Windows\\Coding\\opt\\jdk-10\\bin\\java",
 	withHistory: true,
@@ -50,8 +51,8 @@ const cleanExecutionModeConfiguration = () => {
 	setCleanConfiguration("executionMode");
 }
 
-const setExecutionModeConfiguration = (value) => {
-	setConfiguration("executionMode", "value", value);
+const setExecutionModeConfiguration = () => {
+	setSetConfiguration("executionMode");
 }
 
 const cleanMavenExecutionConfiguration = () => {

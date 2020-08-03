@@ -55,7 +55,7 @@
    		<artifactId>maven-surefire-plugin</artifactId>
    		<version>3.0.0-M3</version>
    		<configuration>
-      			<argLine>${surefireArgLine}</argLine>      <!-- This is required for code coverage to work. -->
+      		<argLine>${surefireArgLine}</argLine>      <!-- This is required for code coverage to work. -->
    		</configuration>
 	</plugin>
 
@@ -72,11 +72,11 @@
       			<execution>
          			<id>pre-unit-test</id>
          			<goals>
-            				<goal>prepare-agent</goal>
+            			<goal>prepare-agent</goal>
          			</goals>
          			<configuration>
-            				<destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
-            				<propertyName>surefireArgLine</propertyName>
+            			<destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
+            			<propertyName>surefireArgLine</propertyName>
          			</configuration>
       			</execution>
       			<execution>
@@ -94,7 +94,7 @@
          			<id>default-report</id>
          			<phase>prepare-package</phase>
          			<goals>
-            				<goal>report</goal>
+            			<goal>report</goal>
          			</goals>
       			</execution>
    		</executions>
@@ -106,10 +106,10 @@
     		<version>1.4.8</version>
     		<configuration>
         		<targetClasses>
-            			<param>org.autotest.StackAr</param>
+            		<param>org.autotest.StackAr</param>
         		</targetClasses>
         		<targetTests>
-            			<param>org.autotest.TestStackAr</param>
+            		<param>org.autotest.TestStackAr</param>
         		</targetTests>
 		</configuration>
 	</plugin>

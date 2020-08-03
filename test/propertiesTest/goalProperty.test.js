@@ -14,5 +14,5 @@ cleanGoalConfiguration,
 setGoalConfiguration, 
 getGoalPropertyValue, 
 getTerminalGoalProperty, 
-value => getExecutionModePropertyValue() === "Maven" ? `org.pitest:pitest-maven:${value}` : "", 
+value => getExecutionModePropertyValue() === "Maven" ? `org.pitest:pitest-maven:${value}` : "org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/", 
 executeWhenForGoalSet);

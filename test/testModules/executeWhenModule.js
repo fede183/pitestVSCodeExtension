@@ -62,12 +62,8 @@ const executeWhenPitestIsDoneForEmpty = (program) => {
 	executeWhenConditionIsReach(() => targetDirectoryStructIsCorrect(directories), program);
 }
 
-const executeWhenPitestIsDone = (program) => {
-	const directories = ["pit-reports"];
-
-	executeWhenConditionIsReachAndTestFileIsComplete(() => targetDirectoryStructIsCorrect(directories), 
-	() => executeWhenTerminalIsOutOfUse(program));
-}
+const executeWhenPitestIsDone = (program) => 
+	executeWhenConditionIsReachAndTestFileIsComplete(() => executeWhenPitestIsDoneForEmpty(() => executeWhenTerminalIsOutOfUse(program)));
 
 const conditionForBooleanProperty = (configName) => getValue(configName, 'value')
 
@@ -135,6 +131,7 @@ const executeWhenForGoalSet = (program) => {
 
 const executeWhenTerminalIsOutOfUse = (program) =>
 	executeWhenConditionIsReach(conditionTerminalIsOutOfUse, program);
+
 
 module.exports = {
 	executeWhenFileIsAvailable,
