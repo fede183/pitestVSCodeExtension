@@ -37,8 +37,8 @@ const executeWhenFileIsAvailable = (filePath, program) => {
 }
 
 const executeWhenTestCommandLineResultFileIsAvailable = (program) =>
-	executeWhenFileIsAvailable(testCommandLineResults.getDir(), 
-		() => executeWhenTerminalIsOutOfUse(program));
+	executeWhenTerminalIsOutOfUse(() => 
+		executeWhenFileIsAvailable(testCommandLineResults.getDir(), program));
 
 const executeWhenConditionIsReachAndTestFileIsComplete = (condition, program) => {
 	executeWhenConditionIsReach(condition, 
@@ -63,7 +63,7 @@ const executeWhenPitestIsDoneForEmpty = (program) => {
 }
 
 const executeWhenPitestIsDone = (program) => 
-	executeWhenConditionIsReachAndTestFileIsComplete(() => executeWhenPitestIsDoneForEmpty(() => executeWhenTerminalIsOutOfUse(program)));
+	executeWhenTerminalIsOutOfUse(() => executeWhenPitestIsDoneForEmpty(program));
 
 const conditionForBooleanProperty = (configName) => getValue(configName, 'value')
 
