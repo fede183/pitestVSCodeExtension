@@ -3,7 +3,6 @@
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 const vscode = require('vscode');
-// const myExtension = require('../extension');
 
 //FileSystem
 const fs = require("fs");
@@ -37,9 +36,9 @@ const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 const { mutationCommand } = require('../../terminalCommand');
 
 const getErrorMessageForMutationCommand = (expected, actual) => "Expected mutation command: " + expected + 
-" vs actual mutation command" + actual 
+" vs actual mutation command: " + actual 
 
-suite("Stack Pitest Execution Extension Tests", function() {
+suite("Stack Pitest Execution Extension Tests for Maven", function() {
 	setup(function() {
 		cleanProgram();
 	});
@@ -48,7 +47,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		cleanProgram();
 	});
 
-	test("Stack Project pitest directories exists", function() {
+	test("Stack Project pitest directories exists for Maven", function() {
 		buildProgramAndExitTerminal(stackDirectory);
 		executeWhenBuildIsDone(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(function() {
@@ -67,7 +66,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project pitest with pom file(with output file configuration)", function() {
+	test("Stack Project pitest with pom file (with output file configuration) for Maven", function() {
 		buildProgramAndExitTerminal(stackDirectory);
 		executeWhenBuildIsDone(() => setOutputFileConfiguration());
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
@@ -89,7 +88,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project pitest in file without pom file(with output file configuration)", function() {
+	test("Stack Project pitest in file without pom file (with output file configuration) for Maven", function() {
 		buildProgramAndExitTerminal(emptyDirectory);
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
@@ -110,7 +109,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	}).timeout(defaultTestTimeout);
 
-	test("Stack Project pitest without an open terminal(with output file configuration)", function() {
+	test("Stack Project pitest without an open terminal (with output file configuration) for Maven", function() {
 		setOutputFileConfiguration();
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
@@ -162,11 +161,11 @@ suite("Stack Pitest Execution Extension Tests", function() {
 	// 	`../maven/bin/mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
 	// ).timeout(defaultTestTimeout);
 
-	test("Stack Project with history", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,
+	test("Stack Project with history for Maven", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 	
-	test("Stack Project mutation threshold", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
+	test("Stack Project mutation threshold for Maven", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
@@ -198,7 +197,7 @@ suite("Stack Pitest Execution Extension Tests", function() {
 		  }));
 	});
 
-	test.skip("Stack Project mutation threshold", function() {
+	test.skip("Stack Project mutation threshold for Maven", function() {
 		buildProgramAndExitTerminal(stackDirectory);
 		setOutputFileConfiguration();
 		setIncludeConfiguration();
