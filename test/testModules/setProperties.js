@@ -9,6 +9,19 @@ const setConfiguration = function (configName, valueName, value) {
 	config.update(valueName, value, setAsGlobal);
 }
 
+const cleanProperties = [ 
+	"saveResult", 
+	"executionMode", 
+	"mavenExecution",
+	"commandLineExecution",
+	"withHistory",
+	"mutationThreshold",
+	"include",
+	"goal",
+	"showWebResults",
+	"mutators",
+];
+
 const defaultCleanValues = { 
 	saveResult: "", 
 	executionMode: "Maven", 
@@ -39,103 +52,11 @@ const setConfigurationWithDefaultValues = (configName, defaultValues) =>
 
 const setCleanConfiguration = (configName) => setConfigurationWithDefaultValues(configName, defaultCleanValues);
 
-const setSetConfiguration = (configName) => setConfigurationWithDefaultValues(configName, defaultSetValues);
-
-const cleanOutputFileConfiguration = () => {
-	setCleanConfiguration("saveResult");
-}
-
-const setOutputFileConfiguration = () => {
-	setSetConfiguration("saveResult");
-}
-
-const cleanExecutionModeConfiguration = () => {
-	setCleanConfiguration("executionMode");
-}
-
-const setExecutionModeConfiguration = () => {
-	setSetConfiguration("executionMode");
-}
-
-const cleanMavenExecutionConfiguration = () => {
-	setCleanConfiguration("mavenExecution");
-}
-
-const setMavenExecutionConfiguration = () => {
-	setSetConfiguration("mavenExecution");
-}
-
-const cleanCommandLineExecutionConfiguration = () => {
-	setCleanConfiguration("commandLineExecution");
-}
-
-const setCommandLineExecutionConfiguration = () => {
-	setSetConfiguration("commandLineExecution");
-}
-
-const cleanWithHistoryConfiguration = () => {
-	setCleanConfiguration("withHistory");
-}
-
-const setWithHistoryConfiguration = () => {
-	setSetConfiguration("withHistory");
-}
-
-const cleanMutationThresholdConfiguration = () => {
-	setCleanConfiguration("mutationThreshold");
-}
-
-const setMutationThresholdConfiguration = () => {
-	setSetConfiguration("mutationThreshold");
-}
-
-const cleanIncludeConfiguration = () => {
-	setCleanConfiguration("include");
-}
-
-const setIncludeConfiguration = () => {
-	setSetConfiguration("include");
-}
-
-const cleanGoalConfiguration = () => {
-	setCleanConfiguration("goal");
-}
-
-const setGoalConfiguration = () => {
-	setSetConfiguration("goal");
-}
-
-const cleanShowWebResultsConfiguration = () => {
-	setCleanConfiguration("showWebResults");
-}
-
-const cleanMutatorsConfiguration = () => {
-	setCleanConfiguration("mutators");
-}
-
-const setMutatorsConfiguration = () => {
-	setSetConfiguration("mutators");
-}
+const setDefaultConfiguration = (configName) => setConfigurationWithDefaultValues(configName, defaultSetValues);
 
 
 module.exports = {
-    cleanOutputFileConfiguration,
-	setOutputFileConfiguration,
-	cleanExecutionModeConfiguration,
-	setExecutionModeConfiguration,
-    cleanMavenExecutionConfiguration,
-	setMavenExecutionConfiguration,
-	cleanCommandLineExecutionConfiguration,
-	setCommandLineExecutionConfiguration,
-	cleanWithHistoryConfiguration,
-	setWithHistoryConfiguration,
-	cleanMutationThresholdConfiguration,
-	setMutationThresholdConfiguration,
-	cleanIncludeConfiguration,
-	setIncludeConfiguration,
-	cleanGoalConfiguration,
-	setGoalConfiguration,
-	cleanShowWebResultsConfiguration,
-	cleanMutatorsConfiguration,
-	setMutatorsConfiguration,
+	cleanProperties,
+	setCleanConfiguration,
+	setDefaultConfiguration,
 }

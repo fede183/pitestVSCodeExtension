@@ -16,17 +16,13 @@ const { stackDirectory,
 
 const { buildProgramAndExitTerminal, cleanProgram, } = require('../testModules/testModule');
 		
-const {	setExecutionModeConfiguration, 
-	setOutputFileConfiguration,
-	setWithHistoryConfiguration,
-	setMutationThresholdConfiguration, } = require('../testModules/setProperties');
+const {	setDefaultConfiguration, } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
 	executeWhenForExecutionModeCommandLineSet,
 	executeWhenForSaveResultSet, 
-	executeWhenTestCommandLineResultFileIsAvailable, 
-	executeWhenForWithHistorySet, 
+	executeWhenTestCommandLineResultFileIsAvailable,
 	executeWhenForMutationThresholdSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
@@ -39,7 +35,7 @@ const getErrorMessageForMutationCommand = (expected, actual) => "Expected mutati
 suite("Stack Pitest Execution Extension Tests for Java", function() {
 	setup(function() {
 		cleanProgram();
-		setExecutionModeConfiguration();
+		setDefaultConfiguration("executionMode");
 	});
 
 	suiteTeardown(function() {
@@ -68,7 +64,7 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 
 	test("Stack Project pitest with pom file (with output file configuration) for Java", function() {
 		executeWhenForExecutionModeCommandLineSet(() => buildProgramAndExitTerminal(stackDirectory));
-		executeWhenBuildIsDone(() => setOutputFileConfiguration());
+		executeWhenBuildIsDone(() => setDefaultConfiguration("saveResult"));
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function() {
@@ -91,7 +87,7 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 	test("Stack Project pitest in file without pom file (with output file configuration) for Java", function() {
 		executeWhenForExecutionModeCommandLineSet(() => { 
 			buildProgramAndExitTerminal(emptyDirectory);
-			setOutputFileConfiguration();
+			setDefaultConfiguration("saveResult");
 		});
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
@@ -112,7 +108,7 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("Stack Project pitest without an open terminal (with output file configuration) for Java", function() {
-		executeWhenForExecutionModeCommandLineSet(() => setOutputFileConfiguration());
+		executeWhenForExecutionModeCommandLineSet(() => setDefaultConfiguration("saveResult"));
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
 			const expectedMutationCommand = `java -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/ > ${testCommandLineResults.getDir()}`; 
@@ -135,7 +131,7 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 		executeWhenForExecutionModeCommandLineSet(() => {
 	 		buildProgramAndExitTerminal(stackDirectory);
 	 		executeWhenBuildIsDone(() => {
-				setOutputFileConfiguration();
+				setDefaultConfiguration("saveResult");
 				executeWhenForSaveResultSet(() => {
 					set();
 					execute(() =>
@@ -161,7 +157,7 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 		  }));
 	}
 
-	test("Stack Project mutation threshold for Java", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
+	test("Stack Project mutation threshold for Java", () => propertyTest(() => setDefaultConfiguration("mutationThreshold"), executeWhenForMutationThresholdSet,
 		`java -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/ --mutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 

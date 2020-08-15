@@ -2,7 +2,7 @@ const { getSimplePropertyTest } = require('./simplePropertyTest');
 
 const { getIncludePropertyValue, getTerminalIncludeProperty } = require('../../Properties/TerminalProperties/PostProperties/IncludeProperty');
 
-const { cleanIncludeConfiguration, setIncludeConfiguration } = require('../testModules/setProperties');
+const { setCleanConfiguration, setDefaultConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForIncludeSet } = require('../testModules/executeWhenModule');
 
@@ -10,8 +10,8 @@ const getInclude = (acumulator, value) => `${acumulator}${acumulator === "" ? ""
 
 getSimplePropertyTest("IncludeProperty", 
 "include", 
-cleanIncludeConfiguration, 
-setIncludeConfiguration, 
+() => setCleanConfiguration("include"), 
+() => setDefaultConfiguration("include"), 
 getIncludePropertyValue, 
 getTerminalIncludeProperty, 
 value => value && value.length > 0 ? 

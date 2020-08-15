@@ -2,17 +2,20 @@ const { getSimplePropertyTest } = require('./simplePropertyTest');
 
 const { getMavenExecutionPropertyValue, getTerminalExecutionProperty } = require('../../Properties/TerminalProperties/ExecutionProperties/ExecutionProperty');
 
-const { cleanMavenExecutionConfiguration, setMavenExecutionConfiguration, cleanExecutionModeConfiguration } = require('../testModules/setProperties');
+const { setCleanConfiguration, setDefaultConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForMavenExecutionSet, executeWhenForExecutionModeMavenSet } = require('../testModules/executeWhenModule');
 
 getSimplePropertyTest("MavenExecutionProperty", 
 "mavenExecution", 
 () => {
-    cleanExecutionModeConfiguration();
-    cleanMavenExecutionConfiguration();
+    setCleanConfiguration("executionMode");
+    setCleanConfiguration("mavenExecution");
 },  
-setMavenExecutionConfiguration, 
+() => {
+    setCleanConfiguration("executionMode");
+    setDefaultConfiguration("mavenExecution")
+}, 
 getMavenExecutionPropertyValue, 
 getTerminalExecutionProperty, 
 value => (value ? value + ".cmd" : "mvn") + " ", 

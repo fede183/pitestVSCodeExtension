@@ -2,7 +2,7 @@ const { getSimplePropertyTest } = require('./simplePropertyTest');
 
 const { getMutatorsPropertyValue, getTerminalMutatorsProperty } = require('../../Properties/TerminalProperties/PostProperties/MutatorsProperty');
 
-const { cleanMutatorsConfiguration, setMutatorsConfiguration } = require('../testModules/setProperties');
+const { setCleanConfiguration, setDefaultConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForMutatorsSet } = require('../testModules/executeWhenModule');
 
@@ -10,8 +10,8 @@ const getMurators = (acumulator, value) => `${acumulator}${acumulator === "" ? "
 
 getSimplePropertyTest("MutatorsProperty", 
 "mutators", 
-cleanMutatorsConfiguration, 
-setMutatorsConfiguration, 
+() => setCleanConfiguration("mutators"), 
+() => setDefaultConfiguration("mutators"), 
 getMutatorsPropertyValue, 
 getTerminalMutatorsProperty, 
 value => value && value.length > 0 ? 

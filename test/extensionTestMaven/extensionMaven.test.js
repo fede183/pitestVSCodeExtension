@@ -16,12 +16,7 @@ const { stackDirectory,
 
 const { buildProgramAndExitTerminal, cleanProgram, } = require('../testModules/testModule');
 		
-const {	setOutputFileConfiguration,  
-	setWithHistoryConfiguration,
-	setMutationThresholdConfiguration,
-	setIncludeConfiguration,
-	setGoalConfiguration,
-	setMutatorsConfiguration } = require('../testModules/setProperties');
+const {	setDefaultConfiguration, } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
@@ -70,7 +65,7 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 
 	test("Stack Project pitest with pom file (with output file configuration) for Maven", function() {
 		buildProgramAndExitTerminal(stackDirectory);
-		executeWhenBuildIsDone(() => setOutputFileConfiguration());
+		executeWhenBuildIsDone(() => setDefaultConfiguration("saveResult"));
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenPitestIsDone(
 			function() {
@@ -92,7 +87,7 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 
 	test("Stack Project pitest in file without pom file (with output file configuration) for Maven", function() {
 		buildProgramAndExitTerminal(emptyDirectory);
-		setOutputFileConfiguration();
+		setDefaultConfiguration("saveResult");
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
 			const expectedMutationCommand = `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`; 
@@ -112,7 +107,7 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 	}).timeout(defaultTestTimeout);
 
 	test("Stack Project pitest without an open terminal (with output file configuration) for Maven", function() {
-		setOutputFileConfiguration();
+		setDefaultConfiguration("saveResult");
 		executeWhenForSaveResultSet(() => vscode.commands.executeCommand('extension.pitest'));
 		return new Promise((resolve, reject) => executeWhenTestCommandLineResultFileIsAvailable(function() {
 			const expectedMutationCommand = `mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`; 
@@ -133,7 +128,7 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 
 	const propertyTest = (set, execute, command) => {
 		buildProgramAndExitTerminal(stackDirectory);
-		setOutputFileConfiguration();
+		setDefaultConfiguration("saveResult");
 		set();
 		executeWhenBuildIsDone(() => {
 			executeWhenForSaveResultSet(() => {
@@ -163,22 +158,22 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 	// 	`../maven/bin/mvn org.pitest:pitest-maven:mutationCoverage > ${testCommandLineResults.getDir()}`)
 	// ).timeout(defaultTestTimeout);
 
-	test("Stack Project with history for Maven", () => propertyTest(setWithHistoryConfiguration, executeWhenForWithHistorySet,
+	test("Stack Project with history for Maven", () => propertyTest(() => setDefaultConfiguration("withHistory"), executeWhenForWithHistorySet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DwithHistory > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 	
-	test("Stack Project mutation threshold for Maven", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
+	test("Stack Project mutation threshold for Maven", () => propertyTest(() => setDefaultConfiguration("mutationThreshold"), executeWhenForMutationThresholdSet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
-	test("Stack Project mutators for Maven", () => propertyTest(setMutatorsConfiguration, executeWhenForMutatorsSet,
+	test("Stack Project mutators for Maven", () => propertyTest(() => setDefaultConfiguration("mutators"), executeWhenForMutatorsSet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -Dmutators=CONSTRUCTOR_CALLS,NON_VOID_METHOD_CALLS > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
 	test.skip("Stack Project goal", function() {
 		buildProgramAndExitTerminal(stackDirectory);
-		setOutputFileConfiguration();
-		setGoalConfiguration();
+		setDefaultConfiguration("saveResult");
+		setDefaultConfiguration("goal");
 		executeWhenBuildIsDone(() => {
 			executeWhenForSaveResultSet(() => {
 				executeWhenForGoalSet(() => {
@@ -205,9 +200,9 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 
 	test.skip("Stack Project mutation threshold for Maven", function() {
 		buildProgramAndExitTerminal(stackDirectory);
-		setOutputFileConfiguration();
-		setIncludeConfiguration();
-		setGoalConfiguration();
+		setDefaultConfiguration("saveResult");
+		setDefaultConfiguration("include");
+		setDefaultConfiguration("goal");
 		executeWhenBuildIsDone(() => {
 			executeWhenForSaveResultSet(() => {
 				executeWhenForIncludeSet(() => {

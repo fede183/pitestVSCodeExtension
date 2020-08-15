@@ -2,14 +2,14 @@ const { getSimplePropertyTest } = require('./simplePropertyTest');
 
 const { getMutationThresholdPropertyValue, getTerminalMutationThresholdProperty } = require('../../Properties/TerminalProperties/PostProperties/MutationThresholdProperty');
 
-const { cleanMutationThresholdConfiguration, setMutationThresholdConfiguration, setExecutionModeConfiguration } = require('../testModules/setProperties');
+const { setDefaultConfiguration, setCleanConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForMutationThresholdSet, executeWhenForExecutionModeCommandLineSet } = require('../testModules/executeWhenModule');
 
 getSimplePropertyTest("MutationThresholdProperty for Maven", 
 "mutationThreshold", 
-cleanMutationThresholdConfiguration, 
-setMutationThresholdConfiguration, 
+() => setCleanConfiguration("mutationThreshold"), 
+() => setDefaultConfiguration("mutationThreshold"), 
 getMutationThresholdPropertyValue, 
 getTerminalMutationThresholdProperty, 
 value => value ? ` -DmutationThreshold=${value}` : '', 
@@ -18,12 +18,12 @@ executeWhenForMutationThresholdSet);
 getSimplePropertyTest("MutationThresholdProperty for Java", 
 "mutationThreshold", 
 () => {
-    cleanMutationThresholdConfiguration();
-    setExecutionModeConfiguration();
+    setCleanConfiguration("mutationThreshold");
+    setDefaultConfiguration("executionMode");
 }, 
 () => {
-    setMutationThresholdConfiguration();
-    setExecutionModeConfiguration();
+    setDefaultConfiguration("mutationThreshold");
+    setDefaultConfiguration("executionMode");
 },
 getMutationThresholdPropertyValue, 
 getTerminalMutationThresholdProperty, 

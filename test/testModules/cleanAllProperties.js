@@ -1,17 +1,9 @@
-const { cleanOutputFileConfiguration, cleanExecutionModeConfiguration, cleanMavenExecutionConfiguration,
-    cleanCommandLineExecutionConfiguration, cleanWithHistoryConfiguration, cleanMutationThresholdConfiguration, 
-    cleanIncludeConfiguration, cleanGoalConfiguration, cleanShowWebResultsConfiguration } = require('./setProperties');
+const { cleanProperties, setCleanConfiguration } = require('./setProperties');
 
 const cleanAllProperties = () => {
-    cleanOutputFileConfiguration();
-    cleanExecutionModeConfiguration();
-    cleanMavenExecutionConfiguration();
-    cleanCommandLineExecutionConfiguration();
-    cleanWithHistoryConfiguration();
-    cleanMutationThresholdConfiguration();
-    cleanIncludeConfiguration();
-    cleanGoalConfiguration();
-    cleanShowWebResultsConfiguration();
+    cleanProperties.forEach(property => {
+        setCleanConfiguration(property); 
+    });
 }
 
 module.exports = {
