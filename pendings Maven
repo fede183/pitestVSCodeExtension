@@ -1,0 +1,214 @@
+
+Pendings command properties Maven:
+
+reportsDirectory
+
+Output directory for the reports
+targetClasses
+
+The classes to be mutated. This is expressed as a list of globs.
+
+For example
+
+<targetClasses>
+    <param>com.mycompany.*</param>
+</targetClasses>
+
+or
+
+<targetClasses>
+    <param>com.mycompany.package.*</param>
+    <param>com.mycompany.packageB.Foo*</param>
+    <param>com.partner.*</param>
+</targetClasses>
+
+If no targetClasses are supplied pitest will automatically determine what to mutate.
+
+Before 1.2.0 pitest assumed that all code lives in a package matching the maven group id. In 1.2.0 and later versions, the classes to mutate are determined by scanning the maven output directory.
+targetTests
+
+A list of globs can be supplied to this parameter to limit the tests available to be run.
+
+This parameter can be used to point PIT to a top level suite or suites. Custom suites such as ClassPathSuite are supported. Tests found via these suites can also be limited by the distance filter (see below).
+maxDependencyDistance
+
+PIT can optionally apply an additional filter to the supplied tests, such that only tests a certain distance from a mutated class will be considered for running. e.g A test that directly calls a method on a mutated class has a distance of 1 , a test that calls a method on a class that uses the mutee as an implementation detail has a distance of 2 etc.
+
+This filter will not work for tests that utilise classes via interfaces, reflection or other methods where the dependencies between classes cannot be determined from the byte code.
+
+The distance filter is particularly useful when performing a targeted mutation test of a subset of classes within a large project as it avoids the overheads of calculating the times and coverage of tests that cannot exercise the mutees.
+threads
+
+The number of threads to use when mutation testing. By default a single thread will be used.
+mutateStaticInitializers
+
+Whether or not to create mutations in static initializers. Defaults to false.
+
+mutators
+
+List of mutation operators to apply.
+
+for example
+
+<configuration>
+    <mutators>
+        <mutator>CONSTRUCTOR_CALLS</mutator>
+        <mutator>NON_VOID_METHOD_CALLS</mutator>
+    </mutators>
+</configuration>
+
+For details of the available mutators and the default set applied see mutation operators.
+excludedMethods
+
+List of globs to match against method names. Methods matching the globs will be excluded from mutation.
+excludedClasses
+
+List of globs to match against class names. Matching classes will be excluded from mutation.
+
+Prior to 1.3.0 matching test classes were also not run. From 1.3.0 onwards tests are excluded with the excludedTests parameter
+excludedTestClasses
+
+List of globs to match against test class names. Matching tests will not be run (note if a suite includes an excluded class, then it will “leak” back in).
+avoidCallsTo
+
+List of packages and classes which are to be considered outside the scope of mutation. Any lines of code containing calls to these classes will not be mutated.
+
+If a list is not explicitly supplied then PIT will default to a list of common logging packages as follows
+
+    java.util.logging
+    org.apache.log4j
+    org.slf4j
+    org.apache.commons.logging
+
+So, the configuration section must look like:
+
+<avoidCallsTo>
+    <avoidCallsTo>java.util.logging</avoidCallsTo>
+    <avoidCallsTo>org.apache.log4j</avoidCallsTo>
+    <avoidCallsTo>org.slf4j</avoidCallsTo>
+    <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+</avoidCallsTo>
+
+If the feature FLOGCALL is disabled, this parameter is ignored and logging calls are also mutated.
+verbose
+
+Output verbose logging. Defaults to off/false.
+timeoutFactor
+
+A factor to apply to the normal runtime of a test when considering if it is stuck in an infinite loop.
+
+Defaults to 1.25
+timeoutConstant
+
+Constant amount of additional time to allow a test to run for (after the application of the timeoutFactor) before considering it to be stuck in an infinite loop.
+
+Defaults to 4000
+maxMutationsPerClass
+
+The maximum number of mutations to create per class. Use 0 or -ve number to set no limit.
+
+Defaults to 0 (unlimited)
+jvmArgs
+
+List of arguments to use when PIT launches child processes. This is most commonly used to increase the amount of memory available to the process, but may be used to pass any valid JVM argument.
+
+For example when running on OpenJDK 7 the it is sometimes necessary to disable the split verifier.
+
+<jvmArgs>
+    <jvmArg>-XX:-UseSplitVerifier</jvmArg>
+</jvmArgs>
+
+jvm
+
+The path to tha java executable to be used to launch test with. If none is supplied defaults to the one pointed to by JAVA_HOME.
+outputFormats
+
+List of formats in which to write mutation results as the mutations are analysed. Supported formats are HTML, XML, CSV.
+
+Defaults to HTML.
+failWhenNoMutations
+
+Whether to throw error when no mutations found.
+
+Defaults to true.
+excludedGroups
+
+List of TestNG groups or JUnit Categories to exclude from mutation analysis.
+includedGroups
+
+List of TestNG groups or JUnit Categories to include in mutation analysis.
+mutationUnitSize
+
+Maximum number of mutations to include in a single analysis unit.
+
+Defaults to 0 (unlimited)
+exportLineCoverage
+
+Export line coverage data.
+
+Defaults to false
+mutationEngine
+
+Engine to use when generating mutations. Additional engines may be added via plugins.
+
+Defaults to gregor
+testPlugin
+
+The test framework to use. Support values are
+
+    junit (default) - runs junit 3 and 4 tests
+    testng - runs TestNG tests
+
+Support for other test frameoworks such as junit5 can be added via plugins.
+additionalClasspathElements
+
+List of additional classpath entries to use when looking for tests and mutable code. These will be used in addition to the classpath with which PIT is launched.
+detectInlinedCode
+
+Enabled by default since 0.29.
+
+Indicates if PIT should attempt to detect the inlined code generated by the java compiler in order to implement finally blocks. Each copy of the inlined code would normally be mutated separately, resulting in multiple identical looking mutations. When inlined code detection is enabled PIT will attempt to spot inlined code and create only a single mutation that mutates all affected instructions simultaneously.
+
+The algorithm cannot easily distinguish between inlined copies of code, and genuine duplicate instructions on the same line within a finally block.
+
+In the case of any doubt PIT will act cautiously and assume that the code is not inlined.
+
+This will be detected as two separate inlined instructions
+
+finally {
+    int++;
+    int++;
+}
+
+But this will look confusing so PIT will assume no in-lining is taking place.
+
+finally {
+    int++; int++;
+}
+
+This sort of pattern might not be common with integer addition, but things like string concatenation are likely to produce multiple similar instructions on the same line.
+
+Defaults to false.
+timestampedReports
+
+By default PIT will create a date and time stamped folder for its output each it is run. This can can make automation difficult, so the behaviour can be suppressed by setting timestampedReports to false.
+
+Defaults to true.
+
+Line coverage threshold at which to fail build.
+historyInputFile
+
+Path to a file containing history information for incremental analysis.
+historyOutputFile
+
+Path to write history information for incremental analysis. May be the same as historyInputFile.
+
+skip
+
+You can skip the launch by adding the parameter skip on configuration section:
+
+<configuration>
+    <skip>true</skip>
+</configuration>
+
+It’s very useful on maven module: when you need to skip an entire module, you can add this setting on the declaration of the plugin to ignore it.

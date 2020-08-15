@@ -81,6 +81,15 @@
 					"type": "boolean",
 					"default": false,
 					"description": "To speed-up repeated analysis of the same codebase."
+				},
+				"mutators.value": {
+					"type": "array",
+					"multipleOf": [
+						"CONSTRUCTOR_CALLS",
+						"NON_VOID_METHOD_CALLS"
+					],
+					"default": [],
+					"description": "List of mutation operators to apply."
 				}
 			}
 		}

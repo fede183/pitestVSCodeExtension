@@ -4,11 +4,13 @@ const { getTerminalMutationThresholdProperty } = require('./MutationThresholdPro
 
 const { getTerminalIncludeProperty } = require('./IncludeProperty');
 
+const { getTerminalMutatorsProperty } = require('./MutatorsProperty');
+
 const { getAllProperties } = require('../TerminalPropertiesCollectionExecution');
 
 const getAllPostProperties = () => { 
     const listOfProperties = [getTerminalWithHistoryProperty, getTerminalMutationThresholdProperty, 
-        getTerminalIncludeProperty];
+        getTerminalIncludeProperty, getTerminalMutatorsProperty];
         
     return getAllProperties(listOfProperties);
 };      

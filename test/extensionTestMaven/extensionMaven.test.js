@@ -20,7 +20,8 @@ const {	setOutputFileConfiguration,
 	setWithHistoryConfiguration,
 	setMutationThresholdConfiguration,
 	setIncludeConfiguration,
-	setGoalConfiguration, } = require('../testModules/setProperties');
+	setGoalConfiguration,
+	setMutatorsConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenBuildIsDone,
 	executeWhenPitestIsDone,
@@ -29,7 +30,8 @@ const { executeWhenBuildIsDone,
 	executeWhenForWithHistorySet,
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,
-	executeWhenForGoalSet, } = require('../testModules/executeWhenModule');
+	executeWhenForGoalSet,
+	executeWhenForMutatorsSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -167,6 +169,10 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 	
 	test("Stack Project mutation threshold for Maven", () => propertyTest(setMutationThresholdConfiguration, executeWhenForMutationThresholdSet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
+
+	test("Stack Project mutators for Maven", () => propertyTest(setMutatorsConfiguration, executeWhenForMutatorsSet,
+		`mvn org.pitest:pitest-maven:mutationCoverage -Dmutators=CONSTRUCTOR_CALLS,NON_VOID_METHOD_CALLS > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
 	test.skip("Stack Project goal", function() {

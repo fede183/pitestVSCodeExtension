@@ -19,6 +19,7 @@ const defaultCleanValues = {
 	include: [],
 	goal: "mutationCoverage",
 	showWebResults: false,
+	mutators: [],
 };
 
 const defaultSetValues = { 
@@ -30,6 +31,7 @@ const defaultSetValues = {
 	mutationThreshold: 85,
 	include: ["ADDED", "UNKNOWN"],
 	goal: "scmMutationCoverage",
+	mutators: ["CONSTRUCTOR_CALLS", "NON_VOID_METHOD_CALLS"],
 };
 
 const setConfigurationWithDefaultValues = (configName, defaultValues) => 
@@ -107,6 +109,14 @@ const cleanShowWebResultsConfiguration = () => {
 	setCleanConfiguration("showWebResults");
 }
 
+const cleanMutatorsConfiguration = () => {
+	setCleanConfiguration("mutators");
+}
+
+const setMutatorsConfiguration = () => {
+	setSetConfiguration("mutators");
+}
+
 
 module.exports = {
     cleanOutputFileConfiguration,
@@ -126,4 +136,6 @@ module.exports = {
 	cleanGoalConfiguration,
 	setGoalConfiguration,
 	cleanShowWebResultsConfiguration,
+	cleanMutatorsConfiguration,
+	setMutatorsConfiguration,
 }

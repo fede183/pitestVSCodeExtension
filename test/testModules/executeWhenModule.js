@@ -89,6 +89,8 @@ const conditionForMutationThresholdSet = () => conditionForBooleanProperty('muta
 
 const conditionForIncludeSet = () => conditionForDiffProperties('include', []);
 
+const conditionForMutatorsSet = () => conditionForDiffProperties('mutators', []);
+
 const conditionForGoalSet = () => conditionForDiffProperties('goal', 'mutationCoverage');
 
 const conditionTerminalIsOutOfUse = () => vscode.window.terminals.length === 0;
@@ -133,6 +135,10 @@ const executeWhenTerminalIsOutOfUse = (program) =>
 	executeWhenConditionIsReach(conditionTerminalIsOutOfUse, program);
 
 
+const executeWhenForMutatorsSet = (program) => {
+	executeWhenConditionIsReach(conditionForMutatorsSet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -149,4 +155,5 @@ module.exports = {
 	executeWhenForMutationThresholdSet,
 	executeWhenForIncludeSet,
 	executeWhenForGoalSet,
+	executeWhenForMutatorsSet,
 }
