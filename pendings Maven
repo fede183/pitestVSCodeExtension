@@ -44,20 +44,6 @@ mutateStaticInitializers
 
 Whether or not to create mutations in static initializers. Defaults to false.
 
-mutators
-
-List of mutation operators to apply.
-
-for example
-
-<configuration>
-    <mutators>
-        <mutator>CONSTRUCTOR_CALLS</mutator>
-        <mutator>NON_VOID_METHOD_CALLS</mutator>
-    </mutators>
-</configuration>
-
-For details of the available mutators and the default set applied see mutation operators.
 excludedMethods
 
 List of globs to match against method names. Methods matching the globs will be excluded from mutation.
@@ -98,11 +84,6 @@ timeoutFactor
 A factor to apply to the normal runtime of a test when considering if it is stuck in an infinite loop.
 
 Defaults to 1.25
-timeoutConstant
-
-Constant amount of additional time to allow a test to run for (after the application of the timeoutFactor) before considering it to be stuck in an infinite loop.
-
-Defaults to 4000
 maxMutationsPerClass
 
 The maximum number of mutations to create per class. Use 0 or -ve number to set no limit.

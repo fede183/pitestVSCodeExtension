@@ -8,10 +8,12 @@ const { executeWhenForMutatorsSet } = require('../testModules/executeWhenModule'
 
 const getMurators = (acumulator, value) => `${acumulator}${acumulator === "" ? "" : ","}${value}`
 
+const configurationPropery = "mutators";
+
 getSimplePropertyTest("MutatorsProperty", 
-"mutators", 
-() => setCleanConfiguration("mutators"), 
-() => setDefaultConfiguration("mutators"), 
+configurationPropery, 
+() => setCleanConfiguration(configurationPropery), 
+() => setDefaultConfiguration(configurationPropery), 
 getMutatorsPropertyValue, 
 getTerminalMutatorsProperty, 
 value => value && value.length > 0 ? 

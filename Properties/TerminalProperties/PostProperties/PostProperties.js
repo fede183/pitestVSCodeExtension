@@ -6,11 +6,14 @@ const { getTerminalIncludeProperty } = require('./IncludeProperty');
 
 const { getTerminalMutatorsProperty } = require('./MutatorsProperty');
 
+const { getTerminalTimeoutConstantProperty } = require('./TimeoutConstantProperty');
+
+
 const { getAllProperties } = require('../TerminalPropertiesCollectionExecution');
 
 const getAllPostProperties = () => { 
     const listOfProperties = [getTerminalWithHistoryProperty, getTerminalMutationThresholdProperty, 
-        getTerminalIncludeProperty, getTerminalMutatorsProperty];
+        getTerminalIncludeProperty, getTerminalMutatorsProperty, getTerminalTimeoutConstantProperty];
         
     return getAllProperties(listOfProperties);
 };      

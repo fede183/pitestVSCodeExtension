@@ -91,6 +91,8 @@ const conditionForIncludeSet = () => conditionForDiffProperties('include', []);
 
 const conditionForMutatorsSet = () => conditionForDiffProperties('mutators', []);
 
+const conditionForTimeoutConstantSet = () => conditionForBooleanProperty('timeoutConstant');
+
 const conditionForGoalSet = () => conditionForDiffProperties('goal', 'mutationCoverage');
 
 const conditionTerminalIsOutOfUse = () => vscode.window.terminals.length === 0;
@@ -139,6 +141,10 @@ const executeWhenForMutatorsSet = (program) => {
 	executeWhenConditionIsReach(conditionForMutatorsSet, program);
 }
 
+const executeWhenForTimeoutConstantSet = (program) => {
+	executeWhenConditionIsReach(conditionForTimeoutConstantSet, program);
+}
+
 module.exports = {
 	executeWhenFileIsAvailable,
 	executeWhenConditionIsReach,
@@ -156,4 +162,5 @@ module.exports = {
 	executeWhenForIncludeSet,
 	executeWhenForGoalSet,
 	executeWhenForMutatorsSet,
+	executeWhenForTimeoutConstantSet,
 }
