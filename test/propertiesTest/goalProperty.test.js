@@ -8,10 +8,12 @@ const { setCleanConfiguration, setDefaultConfiguration } = require('../testModul
 
 const { executeWhenForGoalSet } = require('../testModules/executeWhenModule');
 
+const configurationName = "goal";
+
 getSimplePropertyTest("GoalProperty", 
-"goal", 
-() => setCleanConfiguration("goal"), 
-() => setDefaultConfiguration("goal"), 
+configurationName, 
+() => setCleanConfiguration(configurationName), 
+() => setDefaultConfiguration(configurationName), 
 getGoalPropertyValue, 
 getTerminalGoalProperty, 
 value => getExecutionModePropertyValue() === "Maven" ? `org.pitest:pitest-maven:${value}` : "org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/", 

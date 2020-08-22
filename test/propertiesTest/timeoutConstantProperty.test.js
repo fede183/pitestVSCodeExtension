@@ -1,6 +1,6 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getTimeoutConstantPropertyValue, getTerminalTimeoutConstantProperty } = require('../../Properties/TerminalProperties/PostProperties/TimeoutConstantProperty');
+const { getTimeoutConstantPropertyValue, getTerminalTimeoutConstantProperty, getTerminalTimeoutConstantPropertyFunctionForMaven } = require('../../Properties/TerminalProperties/PostProperties/TimeoutConstantProperty');
 
 const { setDefaultConfiguration, setCleanConfiguration } = require('../testModules/setProperties');
 
@@ -14,5 +14,5 @@ configurationName,
 () => setDefaultConfiguration(configurationName), 
 getTimeoutConstantPropertyValue, 
 getTerminalTimeoutConstantProperty, 
-value => value ? ` -DtimeoutConstant=${value}` : '', 
+getTerminalTimeoutConstantPropertyFunctionForMaven, 
 executeWhenForTimeoutConstantSet);

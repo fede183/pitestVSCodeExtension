@@ -1,20 +1,18 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getIncludePropertyValue, getTerminalIncludeProperty } = require('../../Properties/TerminalProperties/PostProperties/IncludeProperty');
+const { getIncludePropertyValue, getTerminalIncludeProperty, getTerminalIncludePropertyFunctionForMaven } = require('../../Properties/TerminalProperties/PostProperties/IncludeProperty');
 
 const { setCleanConfiguration, setDefaultConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForIncludeSet } = require('../testModules/executeWhenModule');
 
-const getInclude = (acumulator, value) => `${acumulator}${acumulator === "" ? "" : ","}${value}`
+const configurationName = "include";
 
 getSimplePropertyTest("IncludeProperty", 
-"include", 
-() => setCleanConfiguration("include"), 
-() => setDefaultConfiguration("include"), 
+configurationName, 
+() => setCleanConfiguration(configurationName), 
+() => setDefaultConfiguration(configurationName), 
 getIncludePropertyValue, 
 getTerminalIncludeProperty, 
-value => value && value.length > 0 ? 
-    ` -Dinclude=${value.reduce(getInclude, "") }` : 
-    '', 
+getTerminalIncludePropertyFunctionForMaven, 
 executeWhenForIncludeSet);

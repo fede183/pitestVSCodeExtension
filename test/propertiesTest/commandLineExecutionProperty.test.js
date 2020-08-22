@@ -1,21 +1,22 @@
 const { getSimplePropertyTest } = require('./simplePropertyTest');
 
-const { getCommandLineExecutionPropertyValue, getTerminalExecutionProperty } = require('../../Properties/TerminalProperties/ExecutionProperties/ExecutionProperty');
+const { getCommandLineExecutionPropertyValue, getTerminalExecutionProperty, getTerminalExecutionPropertyFunctionForCommandLine } = require('../../Properties/TerminalProperties/ExecutionProperties/ExecutionProperty');
 
 const { setCleanConfiguration, setDefaultConfiguration } = require('../testModules/setProperties');
 
 const { executeWhenForCommandLineExecutionSet, executeWhenForExecutionModeCommandLineSet } = require('../testModules/executeWhenModule');
 
+const configurationName = "commandLineExecution";
+
 getSimplePropertyTest("CommandLineExecutionProperty", 
-"commandLineExecution", 
+configurationName, 
 () => {
     setDefaultConfiguration("executionMode");
-    setCleanConfiguration("commandLineExecution");
+    setCleanConfiguration(configurationName);
 }, 
-() => setDefaultConfiguration("commandLineExecution"), 
+() => setDefaultConfiguration(configurationName), 
 getCommandLineExecutionPropertyValue, 
 getTerminalExecutionProperty, 
-value => (value ? value + ".exe" : "java") + 
-" -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" ", 
+getTerminalExecutionPropertyFunctionForCommandLine,
 executeWhenForCommandLineExecutionSet, 
 executeWhenForExecutionModeCommandLineSet);

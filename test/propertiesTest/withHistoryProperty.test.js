@@ -6,12 +6,12 @@ const { setCleanConfiguration, setDefaultConfiguration } = require('../testModul
 
 const { executeWhenForWithHistorySet } = require('../testModules/executeWhenModule');
 
-const configurationPropery = "withHistory";
+const configurationName = "withHistory";
 
 getSimplePropertyTest("WithHistoryProperty", 
-configurationPropery, 
-() => setCleanConfiguration(configurationPropery), 
-() => setDefaultConfiguration(configurationPropery), 
+configurationName, 
+() => setCleanConfiguration(configurationName), 
+() => setDefaultConfiguration(configurationName), 
 getWithHistoryPropertyValue, 
 getTerminalWithHistoryProperty, 
 value => value ? ' -DwithHistory' : '', 

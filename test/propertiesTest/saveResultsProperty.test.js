@@ -6,12 +6,12 @@ const { setCleanConfiguration, setDefaultConfiguration } = require('../testModul
 
 const { executeWhenForSaveResultSet } = require('../testModules/executeWhenModule');
 
-const configurationPropery = "saveResult";
+const configurationName = "saveResult";
 
 getSimplePropertyTest("SaveResultProperty For Maven", 
-configurationPropery, 
-() => setCleanConfiguration(configurationPropery), 
-() => setDefaultConfiguration(configurationPropery), 
+configurationName, 
+() => setCleanConfiguration(configurationName), 
+() => setDefaultConfiguration(configurationName), 
 getSaveResultsPropertyValue, 
 getTerminalSaveResultsProperty, 
 value => value ? ` > ${value}` : '', 

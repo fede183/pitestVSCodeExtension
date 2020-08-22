@@ -1,14 +1,15 @@
 const { getValue, getTerminalProperty } = require('../../Property');
+const { getListPropertyTerminal } = require('../../../test/testModules/constructListProperty');
 
 const getMutatorsPropertyValue = () => getValue('mutators', 'value');
 
-const getMutators = (acumulator, value) => `${acumulator}${acumulator === "" ? "" : ","}${value}`
+const getTerminalMutatorsPropertyFunctionForMaven = value => value && value.length > 0 ? ` -Dmutators=${getListPropertyTerminal(value)}` : ''; 
 
 const getTerminalMutatorsProperty = () => 
-        getTerminalProperty('mutators', 'value', 
-            value => value && value.length > 0 ? ` -Dmutators=${value.reduce(getMutators, "")}` : '');
+        getTerminalProperty('mutators', 'value', getTerminalMutatorsPropertyFunctionForMaven);
 
 module.exports = {
     getMutatorsPropertyValue,
     getTerminalMutatorsProperty,
+    getTerminalMutatorsPropertyFunctionForMaven,
 }

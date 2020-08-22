@@ -6,15 +6,17 @@ const { setCleanConfiguration, setDefaultConfiguration } = require('../testModul
 
 const { executeWhenForMavenExecutionSet, executeWhenForExecutionModeMavenSet } = require('../testModules/executeWhenModule');
 
+const configurationName = "mavenExecution";
+
 getSimplePropertyTest("MavenExecutionProperty", 
-"mavenExecution", 
+configurationName, 
 () => {
     setCleanConfiguration("executionMode");
-    setCleanConfiguration("mavenExecution");
+    setCleanConfiguration(configurationName);
 },  
 () => {
     setCleanConfiguration("executionMode");
-    setDefaultConfiguration("mavenExecution")
+    setDefaultConfiguration(configurationName)
 }, 
 getMavenExecutionPropertyValue, 
 getTerminalExecutionProperty, 

@@ -4,7 +4,7 @@ const vscode = require('vscode');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');	
 
-const getSimplePropertyTest = (name, configName, clean, set, getValue, getTerminalToTest, getTerminal, executeWhen, executeWhenDefault = (program) => program() ) => {
+const getSimplePropertyTest = (name, configName, clean, set, getValue, getTerminalToTest, getTerminal, executeWhen, executeWhenDefault = (program) => program()) => {
 
 	const testProperty = (resolve, reject) => {
 		const config = vscode.workspace.getConfiguration(configName);
