@@ -21,6 +21,7 @@ const cleanProperties = [
 	"showWebResults",
 	"mutators",
 	"timeoutConstant",
+	"timeoutFactor",
 ];
 
 const defaultCleanValues = { 
@@ -35,6 +36,7 @@ const defaultCleanValues = {
 	showWebResults: false,
 	mutators: [],
 	timeoutConstant: 4000,
+	timeoutFactor: 1.25,
 };
 
 const defaultSetValues = { 
@@ -48,6 +50,7 @@ const defaultSetValues = {
 	goal: "scmMutationCoverage",
 	mutators: ["CONSTRUCTOR_CALLS", "NON_VOID_METHOD_CALLS"],
 	timeoutConstant: 6000,
+	timeoutFactor: 2,
 };
 
 const setConfigurationWithDefaultValues = (configName, defaultValues) => 

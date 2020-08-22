@@ -95,6 +95,11 @@
 					"type": "integer",
 					"default": 4000,
 					"description": "Constant amount of additional time to allow a test to run for (after the application of the timeoutFactor) before considering it to be stuck in an infinite loop."
+				},
+				"timeoutFactor.value": {
+					"type": "float",
+					"default": 1.25,
+					"description": "A factor to apply to the normal runtime of a test when considering if it is stuck in an infinite loop."
 				}
 			}
 		}

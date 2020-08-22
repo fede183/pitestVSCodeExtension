@@ -79,11 +79,7 @@ If the feature FLOGCALL is disabled, this parameter is ignored and logging calls
 verbose
 
 Output verbose logging. Defaults to off/false.
-timeoutFactor
 
-A factor to apply to the normal runtime of a test when considering if it is stuck in an infinite loop.
-
-Defaults to 1.25
 maxMutationsPerClass
 
 The maximum number of mutations to create per class. Use 0 or -ve number to set no limit.

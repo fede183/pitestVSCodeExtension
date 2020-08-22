@@ -27,7 +27,8 @@ const { executeWhenBuildIsDone,
 	executeWhenForIncludeSet,
 	executeWhenForGoalSet,
 	executeWhenForMutatorsSet,
-	executeWhenForTimeoutConstantSet, } = require('../testModules/executeWhenModule');
+	executeWhenForTimeoutConstantSet,
+	executeWhenForTimeoutFactorSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -173,6 +174,10 @@ suite("Stack Pitest Execution Extension Tests for Maven", function() {
 
 	test("Stack Project timeoutConstant for Maven", () => propertyTest(() => setDefaultConfiguration("timeoutConstant"), executeWhenForTimeoutConstantSet,
 		`mvn org.pitest:pitest-maven:mutationCoverage -DtimeoutConstant=6000 > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
+
+	test("Stack Project timeoutFactor for Maven", () => propertyTest(() => setDefaultConfiguration("timeoutFactor"), executeWhenForTimeoutFactorSet,
+		`mvn org.pitest:pitest-maven:mutationCoverage -DtimeoutFactor=2 > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
 	test.skip("Stack Project goal", function() {
