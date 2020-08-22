@@ -1,16 +1,16 @@
 const { getValue, getTerminalProperty } = require('../../Property');
+const { getTerminalPropertyGeneric } = require('../../../test/testModules/getTerminalPropertyGeneric');
 
 const getMutationThresholdPropertyValue = () => getValue('mutationThreshold', 'value');
 
+const getTerminalMutationThresholdPropertyForMaven = value => value ? value : ''
+
+const getTerminalMutationThresholdPropertyForCommandLine = getTerminalMutationThresholdPropertyForMaven;
+
 const getTerminalMutationThresholdProperty = () => 
-    getTerminalProperty('executionMode', 'value', executionMode => {
-        if (executionMode === "Maven") {
-            return getTerminalProperty('mutationThreshold', 'value', 
-                value => value ? ` -DmutationThreshold=${value}` : '');
-        }
-        return getTerminalProperty('mutationThreshold', 'value', 
-            value => value ? ` --mutationThreshold=${value}` : '');
-    });
+getTerminalPropertyGeneric('mutationThreshold', 
+getTerminalMutationThresholdPropertyForMaven, 
+getTerminalMutationThresholdPropertyForCommandLine);
 
 module.exports = {
     getMutationThresholdPropertyValue,

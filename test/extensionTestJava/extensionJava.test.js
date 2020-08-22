@@ -23,7 +23,8 @@ const { executeWhenBuildIsDone,
 	executeWhenForExecutionModeCommandLineSet,
 	executeWhenForSaveResultSet, 
 	executeWhenTestCommandLineResultFileIsAvailable,
-	executeWhenForMutationThresholdSet, } = require('../testModules/executeWhenModule');
+	executeWhenForMutationThresholdSet,
+	executeWhenForTimeoutFactorSet, } = require('../testModules/executeWhenModule');
 
 const { defaultTestTimeout } = require('../testModules/timeoutsForTests');
 
@@ -157,8 +158,14 @@ suite("Stack Pitest Execution Extension Tests for Java", function() {
 		  }));
 	}
 
+	const executionJavaLineForPropertiesTests = "java -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/";
+
 	test("Stack Project mutation threshold for Java", () => propertyTest(() => setDefaultConfiguration("mutationThreshold"), executeWhenForMutationThresholdSet,
-		`java -classpath \"target/classes:target/test-classes:../../PiTEST/pitest-1.4.10.jar:../../PiTEST/pitest-command-line-1.4.10.jar:../../PiTEST/pitest-entry-1.4.10.jar:../../PiTEST/junit-4.11.jar\" org.pitest.mutationtest.commandline.MutationCoverageReport --reportDir target/pit-reports --targetClasses org.autotest.StackAr --targetTests org.autotest.TestStackAr --sourceDirs src/main/,src/test/ --mutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
+		`${executionJavaLineForPropertiesTests} --mutationThreshold=${85} > ${testCommandLineResults.getDir()}`)
+	).timeout(defaultTestTimeout);
+
+	test("Stack Project timeout factor for Java", () => propertyTest(() => setDefaultConfiguration("timeoutFactor"), executeWhenForTimeoutFactorSet,
+		`${executionJavaLineForPropertiesTests} --timeoutFactor=${2} > ${testCommandLineResults.getDir()}`)
 	).timeout(defaultTestTimeout);
 
 });
