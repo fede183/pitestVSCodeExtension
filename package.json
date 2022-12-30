@@ -117,6 +117,6 @@
 	},
 	"dependencies": {
 		"babel-plugin-transform-async-to-generator": "^6.24.1",
-		"mocha": "^6.2.3"
+		"mocha": "^10.2.0"
 	}
 }
